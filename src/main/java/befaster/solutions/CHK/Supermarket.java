@@ -23,12 +23,16 @@ public final class Supermarket {
 
     //TODO: return only offers that can be applied
     private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
-        List<Offerable> availableOffers = new ArrayList<>(SPECIAL_OFFERS.get(sku)).stream()
-                .filter(specialOffer -> specialOffer.getNumberOfItems() <= numberOfItems)
+        List<Offerable> sortedOffers = new ArrayList<>(SPECIAL_OFFERS.get(sku)).stream()
                 .sorted((Comparator.comparingInt(Offerable::getNumberOfItems).reversed()))
                 .toList();
 
-       return availableOffers;
+       return sortedOffers.stream().map(offer -> {
+           if(offer.getNumberOfItems() <= numberOfItems) {
+               int eligibleOffers = numberOfItems / offer.getNumberOfItems();
+           }
+           return  offer;
+       }).toList();
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -37,24 +41,22 @@ public final class Supermarket {
         }
         List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int totalPrice = 0;
-        int missingViewItems = numberOfItems;
         for(Offerable specialOffer : availableOffersBySku) {
-            if (missingViewItems >= specialOffer.getNumberOfItems()) {
-                int remainingItems = missingViewItems % specialOffer.getNumberOfItems();
-                int eligibleOffers = missingViewItems / specialOffer.getNumberOfItems();
+            if (numberOfItems >= specialOffer.getNumberOfItems()) {
+                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
                 totalPrice += specialOffer.getPrice() * eligibleOffers;
                 if(remainingItems > 0) {
                     totalPrice += PRICES.get(sku) * remainingItems;
-                    missingViewItems = remainingItems;
                 }
             } else {
-                totalPrice += PRICES.get(sku) * missingViewItems;
-                //missingViewItems -= missingViewItems;
+                totalPrice += PRICES.get(sku) * numberOfItems;
             }
         }
         return totalPrice;
     }
 }
+
 
 
 
