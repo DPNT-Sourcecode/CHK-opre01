@@ -1,9 +1,6 @@
 package befaster.solutions.CHK;
 
-import befaster.runner.SolutionNotImplementedException;
-
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -14,14 +11,21 @@ public class CheckoutSolution {
         }
 
         int total = 0;
-        Map<StockKeepingUnits, Integer> skuCounts = new EnumMap<>(StockKeepingUnits.class);
+        Map<StockKeepingUnit, Integer> basketCount = new EnumMap<>(StockKeepingUnit.class);
         // Count the occurrences of each item
-        for (char item : skus.toCharArray()) {
-            skuCounts.put(item, skuCounts.getOrDefault(item, 0) + 1);
+        try {
+            skus.chars()
+                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
+                    .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+        } catch (IllegalArgumentException e) {
+            return -1;
         }
 
+        
 
+    return total;
     }
 }
+
 
 
