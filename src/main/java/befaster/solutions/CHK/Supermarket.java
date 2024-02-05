@@ -27,12 +27,16 @@ public final class Supermarket {
                 .sorted((Comparator.comparingInt(Offerable::getNumberOfItems).reversed()))
                 .toList();
 
-       return sortedOffers.stream().map(offer -> {
-           if(offer.getNumberOfItems() <= numberOfItems) {
-               int eligibleOffers = numberOfItems / offer.getNumberOfItems();
+        List<Offerable> offers = new ArrayList<>();
+        int missingItems = numberOfItems;
+        sortedOffers.stream().forEach(offer -> {
+           if(offer.getNumberOfItems() <= missingItems) {
+               int eligibleOffers = missingItems / offer.getNumberOfItems();
+               offers.addAll(Collections.nCopies(eligibleOffers, offer));
            }
-           return  offer;
-       }).toList();
+       });
+
+        return offers;
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -56,6 +60,7 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 
 
