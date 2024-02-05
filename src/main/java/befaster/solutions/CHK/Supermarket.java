@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
@@ -28,11 +29,12 @@ public final class Supermarket {
                 .toList();
 
         List<Offerable> offers = new ArrayList<>();
-        int missingItems = numberOfItems;
-        sortedOffers.stream().forEach(offer -> {
-           if(offer.getNumberOfItems() <= missingItems) {
-               int eligibleOffers = missingItems / offer.getNumberOfItems();
+        AtomicInteger missingItems = new AtomicInteger(numberOfItems);
+        sortedOffers.forEach(offer -> {
+           if(offer.getNumberOfItems() <= missingItems.get()) {
+               int eligibleOffers = missingItems.get() / offer.getNumberOfItems();
                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+               missingItems.addAndGet(-(offer.getNumberOfItems() * eligibleOffers));
            }
        });
 
@@ -60,6 +62,7 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 
 
