@@ -40,9 +40,26 @@ class CheckoutSolutionTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void testIfGetsZeroWhenReceivedEmptyValue() {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout("");
+        int expected = 0;
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testIfGetsNegative1WhenReceivedInvalidInput() {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout("x");
+        int expected = -1;
+        assertEquals(expected, result);
+    }
+
 
 
 
 }
+
 
 
