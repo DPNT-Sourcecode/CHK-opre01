@@ -37,20 +37,24 @@ public final class Supermarket {
         }
         List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int totalPrice = 0;
+        int missingViewItems = numberOfItems;
         for(Offerable specialOffer : availableOffersBySku) {
-            if (numberOfItems >= specialOffer.getNumberOfItems()) {
-                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
-                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
+            if (missingViewItems >= specialOffer.getNumberOfItems()) {
+                int remainingItems = missingViewItems % specialOffer.getNumberOfItems();
+                int eligibleOffers = missingViewItems / specialOffer.getNumberOfItems();
                 totalPrice += specialOffer.getPrice() * eligibleOffers;
                 if(remainingItems > 0) {
                     totalPrice += PRICES.get(sku) * remainingItems;
+                    missingViewItems -= remainingItems;
                 }
             } else {
-                totalPrice += PRICES.get(sku) * numberOfItems;
+                totalPrice += PRICES.get(sku) * missingViewItems;
+                missingViewItems -= missingViewItems;
             }
         }
         return totalPrice;
     }
 }
+
 
 
