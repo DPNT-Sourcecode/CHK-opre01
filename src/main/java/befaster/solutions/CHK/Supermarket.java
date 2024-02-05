@@ -22,12 +22,12 @@ public final class Supermarket {
             return PRICES.get(sku) * numberOfItems;
         }
         int totalPrice = 0;
-        SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku).getFinalOffer();
+        Offerable specialOffer = SPECIAL_OFFERS.get(sku);
 
-        if (numberOfItems >= specialOffer.numberOfItems()) {
-            int remainingItems = numberOfItems % specialOffer.numberOfItems();
-            int eligibleOffers = numberOfItems / specialOffer.numberOfItems();
-            totalPrice += specialOffer.finalSellingPrice() * eligibleOffers;
+        if (numberOfItems >= specialOffer.getNumberOfItems()) {
+            int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+            int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
+            totalPrice += specialOffer.getPrice() * eligibleOffers;
             if(remainingItems > 0) {
                 totalPrice += PRICES.get(sku) * remainingItems;
             }
@@ -37,5 +37,6 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 

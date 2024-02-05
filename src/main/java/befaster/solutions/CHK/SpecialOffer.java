@@ -1,11 +1,16 @@
 package befaster.solutions.CHK;
 
-public record SpecialOffer(int numberOfItems, int finalSellingPrice) implements Offerable{
+public record SpecialOffer(int numberOfItems, int price) implements Offerable{
     @Override
-    public SpecialOffer getFinalOffer() {
-        return null;
+    public int getNumberOfItems() {
+        return this.numberOfItems;
     }
 
+    @Override
+    public int getPrice() {
+        return this.numberOfItems;
+    }
 }
+
 
 

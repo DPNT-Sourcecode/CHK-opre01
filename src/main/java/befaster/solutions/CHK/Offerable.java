@@ -1,7 +1,10 @@
 package befaster.solutions.CHK;
 
 public interface Offerable {
-    SpecialOffer getFinalOffer();
+    int getNumberOfItems();
+    int getPrice();
+
 }
+
 
 
