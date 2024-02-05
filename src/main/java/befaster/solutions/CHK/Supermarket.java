@@ -1,11 +1,12 @@
 package befaster.solutions.CHK;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
-    private static final Map<StockKeepingUnit, Offerable> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
+    private static final Map<StockKeepingUnit, List<Offerable>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
 
     static {
         PRICES.put(StockKeepingUnit.A, 50);
@@ -13,8 +14,8 @@ public final class Supermarket {
         PRICES.put(StockKeepingUnit.C, 20);
         PRICES.put(StockKeepingUnit.D, 15);
 
-        SPECIAL_OFFERS.put(StockKeepingUnit.A, new SpecialOffer(3, 130));
-        SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));-
+        SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(new SpecialOffer(3, 130), new SpecialOffer(5,200)));
+        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45)));
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -22,22 +23,18 @@ public final class Supermarket {
             return PRICES.get(sku) * numberOfItems;
         }
         int totalPrice = 0;
-        Offerable specialOffer = SPECIAL_OFFERS.get(sku);
-
-        if (numberOfItems >= specialOffer.getNumberOfItems()) {
-            int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
-            int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
-            totalPrice += specialOffer.getPrice() * eligibleOffers;
-            if(remainingItems > 0) {
-                totalPrice += PRICES.get(sku) * remainingItems;
+        for(Offerable specialOffer : SPECIAL_OFFERS.get(sku)) {
+            if (numberOfItems >= specialOffer.getNumberOfItems()) {
+                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
+                totalPrice += specialOffer.getPrice() * eligibleOffers;
+                if(remainingItems > 0) {
+                    totalPrice += PRICES.get(sku) * remainingItems;
+                }
+            } else {
+                totalPrice += PRICES.get(sku) * numberOfItems;
             }
-        } else {
-            totalPrice += PRICES.get(sku) * numberOfItems;
         }
         return totalPrice;
     }
 }
-
-
-
-

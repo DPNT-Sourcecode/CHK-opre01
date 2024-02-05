@@ -12,6 +12,3 @@ public record MultiOffer(StockKeepingUnit sku, SpecialOffer specialOffer) implem
         return this.specialOffer.getPrice();
     }
 }
-
-
-

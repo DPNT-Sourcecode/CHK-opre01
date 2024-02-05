@@ -10,7 +10,3 @@ public record SpecialOffer(int numberOfItems, int price) implements Offerable{
         return this.price;
     }
 }
-
-
-
-

@@ -5,6 +5,3 @@ public interface Offerable {
     int getPrice();
 
 }
-
-
-
