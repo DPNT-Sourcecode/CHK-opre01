@@ -27,8 +27,8 @@ public class CheckoutSolution {
             int count = entry.getValue();
 
             int price = Supermarket.getPriceBySku(sku);
-            int specialOfferCount = specialOffers.containsKey(item) ? specialOffers.get(item).count : 1;
-            int specialOfferPrice = specialOffers.containsKey(item) ? specialOffers.get(item).price : 0;
+            int specialOfferCount = Supermarket.getSpecialOfferNumberOfItems(sku);
+            int specialOfferPrice = Supermarket.getSpecialOfferPrice(sku);
 
             int regularPrice = (count % specialOfferCount) * price;
             int specialOfferPriceTotal = (count / specialOfferCount) * specialOfferPrice;
@@ -36,11 +36,6 @@ public class CheckoutSolution {
             total += regularPrice + specialOfferPriceTotal;
         }
 
-
     return total;
     }
 }
-
-
-
-

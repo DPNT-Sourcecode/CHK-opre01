@@ -30,6 +30,3 @@ public final class Supermarket {
     }
 
 }
-
-
-
