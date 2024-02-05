@@ -1,5 +1,8 @@
 package befaster.solutions.CHK;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +19,13 @@ public final class Supermarket {
 
         SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(new SpecialOffer(3, 130), new SpecialOffer(5,200)));
         SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45)));
+    }
+
+    private List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku){
+        List<Offerable> offers = new ArrayList<>(SPECIAL_OFFERS.get(sku));
+        offers.stream().sorted(((o1, o2) -> {
+
+        }))
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -38,3 +48,4 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
