@@ -6,7 +6,7 @@ import befaster.runner.SolutionNotImplementedException;
 public class SumSolution {
 
     public int compute(int x, int y) {
-        if(validateNumberRangeBetweenZeroAndOneHundred(x) && validateNumberRangeBetweenZeroAndOneHundred(y)) {
+        if(!validateNumberRangeBetweenZeroAndOneHundred(x) && !validateNumberRangeBetweenZeroAndOneHundred(y)) {
             return -1;
         }
         return Integer.sum(x,y);
@@ -17,4 +17,5 @@ public class SumSolution {
     }
 
 }
+
 
