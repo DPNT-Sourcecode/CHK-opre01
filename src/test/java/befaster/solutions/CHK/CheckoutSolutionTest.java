@@ -64,8 +64,6 @@ class CheckoutSolutionTest {
         assertEquals(expected, result);
     }
 
-
-
-
 }
+
 
