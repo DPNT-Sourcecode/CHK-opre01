@@ -26,7 +26,7 @@ public class CheckoutSolution {
             StockKeepingUnit sku = entry.getKey();
             int count = entry.getValue();
 
-            int price = Supermarket.getPriceBySku(sku);
+            int price = Supermarket.getTotalPriceBySku(sku, count);
             int specialOfferCount = Supermarket.getSpecialOfferNumberOfItems(sku);
             int specialOfferPrice = Supermarket.getSpecialOfferPrice(sku);
 
@@ -39,3 +39,4 @@ public class CheckoutSolution {
     return total;
     }
 }
+

@@ -17,15 +17,23 @@ public final class Supermarket {
         SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));
     }
 
-    public static int getPriceBySku(StockKeepingUnit sku, int numberOfItems){
-        int numberOfItems
-        if(SPECIAL_OFFERS.containsKey(sku)) {
-            SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
-            if(specialOffer.numberOfItems() == numberOfItems) {
-                return specialOffer.finalSellingPrice();
+    public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems){
+        int numberOfItemsAccounted = 0;
+        int totalPrice = 0;
+        while (numberOfItemsAccounted < numberOfItems) {
+            if(SPECIAL_OFFERS.containsKey(sku)) {
+                SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
+                if(numberOfItems >= specialOffer.numberOfItems()) {
+                    totalPrice += specialOffer.finalSellingPrice();
+                    numberOfItemsAccounted += specialOffer.numberOfItems();
+                }else {
+                    totalPrice += PRICES.get(sku) * numberOfItems;
+                    numberOfItemsAccounted += numberOfItems;
+                }
             }
         }
-        return PRICES.get(sku);
+
+        return totalPrice;
     }
 
 
@@ -39,5 +47,6 @@ public final class Supermarket {
     }
 
 }
+
 
 
