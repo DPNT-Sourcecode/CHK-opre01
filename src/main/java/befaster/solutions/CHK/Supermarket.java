@@ -24,9 +24,10 @@ public final class Supermarket {
             SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
             int remainingItems = numberOfItems % specialOffer.numberOfItems();
             if(remainingItems == 0) {
-                totalPrice += specialOffer.finalSellingPrice();
+                int eligibleOffers = numberOfItems / specialOffer.numberOfItems();
+                totalPrice += specialOffer.finalSellingPrice() * eligibleOffers;
             } else {
-               totalPrice +=  PRICES.get(sku) * remainingItems;
+               totalPrice +=  specialOffer.finalSellingPrice() + PRICES.get(sku) * remainingItems;
             }
         }
 
@@ -50,5 +51,6 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 
