@@ -21,17 +21,19 @@ public final class Supermarket {
         SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45)));
     }
 
-    private List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku){
+    private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
         List<Offerable> offers = new ArrayList<>(SPECIAL_OFFERS.get(sku));
-        offers.stream().sorted(((o1, o2) -> {
-
-        }))
+        return offers.stream()
+                .filter(offer -> offer.getNumberOfItems() <= numberOfItems)
+                .sorted((Comparator.comparingInt(Offerable::getNumberOfItems)))
+                .toList();
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
         if (!SPECIAL_OFFERS.containsKey(sku)) {
             return PRICES.get(sku) * numberOfItems;
         }
+        List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int totalPrice = 0;
         for(Offerable specialOffer : SPECIAL_OFFERS.get(sku)) {
             if (numberOfItems >= specialOffer.getNumberOfItems()) {
@@ -48,4 +50,5 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
