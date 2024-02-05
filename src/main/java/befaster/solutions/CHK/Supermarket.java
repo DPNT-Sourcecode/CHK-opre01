@@ -17,9 +17,16 @@ public final class Supermarket {
         SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));
     }
 
-    public static int getPriceBySku(StockKeepingUnit sku){
+    public static int getPriceBySku(StockKeepingUnit sku, int numberOfItems){
+        if(SPECIAL_OFFERS.containsKey(sku)) {
+            SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
+            if(specialOffer)
+        }
+
         return PRICES.get(sku);
     }
+
+
 
     public static int getSpecialOfferNumberOfItems(StockKeepingUnit sku){
         return SPECIAL_OFFERS.containsKey(sku) ? SPECIAL_OFFERS.get(sku).numberOfItems() : 1;
@@ -30,3 +37,4 @@ public final class Supermarket {
     }
 
 }
+
