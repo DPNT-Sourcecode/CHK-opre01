@@ -60,10 +60,3 @@ class CheckoutSolutionTest {
 
 
 }
-
-
-
-
-
-
-
