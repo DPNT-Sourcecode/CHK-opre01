@@ -23,5 +23,26 @@ class CheckoutSolutionTest {
         int result = checkoutSolution.checkout(input);
         assertEquals(Integer.parseInt(expected), result);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"AAABBC:195", "CCDDD:85"}, delimiter = ':')
+    void testIfGetsTheCorrectPrice(String input, String expected) {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
+    }
+
+    @Test
+    void testIfGetsZeroWhenReceivedNullValue() {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout(null);
+        int expected = 0;
+        assertEquals(expected, result);
+    }
+
+
+
+
 }
+
 
