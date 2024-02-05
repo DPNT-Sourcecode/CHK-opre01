@@ -26,10 +26,10 @@ public final class Supermarket {
                 if(numberOfItems >= specialOffer.numberOfItems()) {
                     totalPrice += specialOffer.finalSellingPrice();
                     numberOfItemsAccounted += specialOffer.numberOfItems();
-                }else {
-                    totalPrice += PRICES.get(sku) * numberOfItems;
-                    numberOfItemsAccounted += numberOfItems;
                 }
+            } else{
+                totalPrice += PRICES.get(sku) * numberOfItems;
+                numberOfItemsAccounted += numberOfItems;
             }
         }
 
@@ -47,6 +47,7 @@ public final class Supermarket {
     }
 
 }
+
 
 
 
