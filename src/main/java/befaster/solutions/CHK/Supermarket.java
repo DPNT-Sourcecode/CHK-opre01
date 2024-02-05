@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
-    private static final Map<StockKeepingUnit, Offerable<SpecialOffer>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
+    private static final Map<StockKeepingUnit, Offerable> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
 
     static {
         PRICES.put(StockKeepingUnit.A, 50);
@@ -22,7 +22,7 @@ public final class Supermarket {
             return PRICES.get(sku) * numberOfItems;
         }
         int totalPrice = 0;
-        SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku).getOffer();
+        SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku).getFinalOffer();
 
         if (numberOfItems >= specialOffer.numberOfItems()) {
             int remainingItems = numberOfItems % specialOffer.numberOfItems();
@@ -37,4 +37,5 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
