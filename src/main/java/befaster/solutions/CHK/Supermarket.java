@@ -22,31 +22,33 @@ public final class Supermarket {
         int totalPrice = 0;
         if(SPECIAL_OFFERS.containsKey(sku)) {
             SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
-            if(numberOfItems % specialOffer.numberOfItems() == 0) {
+            int remainingItems = numberOfItems % specialOffer.numberOfItems();
+            if(remainingItems == 0) {
                 totalPrice += specialOffer.finalSellingPrice();
             } else {
-                int remainingItems = numberOfItems / specialOffer.numberOfItems();
+               totalPrice +=  PRICES.get(sku) * remainingItems;
             }
         }
 
 
-        while (numberOfItemsAccounted < numberOfItems) {
-            if(SPECIAL_OFFERS.containsKey(sku)) {
-                SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
-                if(numberOfItems >= specialOffer.numberOfItems()) {
-                    totalPrice += specialOffer.finalSellingPrice();
-                    numberOfItemsAccounted += specialOffer.numberOfItems();
-                } else{
-                    totalPrice += PRICES.get(sku) * numberOfItems;
-                    numberOfItemsAccounted += numberOfItems;
-                }
-            } else{
-                totalPrice += PRICES.get(sku) * numberOfItems;
-                numberOfItemsAccounted += numberOfItems;
-            }
-        }
+//        while (numberOfItemsAccounted < numberOfItems) {
+//            if(SPECIAL_OFFERS.containsKey(sku)) {
+//                SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
+//                if(numberOfItems >= specialOffer.numberOfItems()) {
+//                    totalPrice += specialOffer.finalSellingPrice();
+//                    numberOfItemsAccounted += specialOffer.numberOfItems();
+//                } else{
+//                    totalPrice += PRICES.get(sku) * numberOfItems;
+//                    numberOfItemsAccounted += numberOfItems;
+//                }
+//            } else{
+//                totalPrice += PRICES.get(sku) * numberOfItems;
+//                numberOfItemsAccounted += numberOfItems;
+//            }
+//        }
 
         return totalPrice;
     }
 }
+
 
