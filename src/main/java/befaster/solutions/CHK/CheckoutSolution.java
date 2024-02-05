@@ -10,7 +10,6 @@ public class CheckoutSolution {
             return 0; // Empty basket, total price is zero
         }
 
-        int total = 0;
         Map<StockKeepingUnit, Integer> basketCount = new EnumMap<>(StockKeepingUnit.class);
         // Count the occurrences of each item
         try {
@@ -22,21 +21,11 @@ public class CheckoutSolution {
         }
 
         // Calculate total price based on prices and special offers
-        for (Map.Entry<StockKeepingUnit, Integer> entry : basketCount.entrySet()) {
-            StockKeepingUnit sku = entry.getKey();
-            int count = entry.getValue();
+        return basketCount.entrySet().stream()
+                .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
+                .reduce(0, Integer::sum);
 
-            int price = Supermarket.getTotalPriceBySku(sku, count);
-            int specialOfferCount = Supermarket.getSpecialOfferNumberOfItems(sku);
-            int specialOfferPrice = Supermarket.getSpecialOfferPrice(sku);
-
-            int regularPrice = (count % specialOfferCount) * price;
-            int specialOfferPriceTotal = (count / specialOfferCount) * specialOfferPrice;
-
-            total += regularPrice + specialOfferPriceTotal;
-        }
-
-    return total;
     }
 }
+
 

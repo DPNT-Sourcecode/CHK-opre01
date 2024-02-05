@@ -10,10 +10,11 @@ class CheckoutSolutionTest {
     void checkout() {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout("AA");
-        int expectedResult = 0;
+        int expectedResult = 100;
 
         assertEquals(expectedResult, result);
     }
 }
+
 
 
