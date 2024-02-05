@@ -21,6 +21,15 @@ public final class Supermarket {
         return PRICES.get(sku);
     }
 
+    public static int getSpecialOfferNumberOfItems(StockKeepingUnit sku){
+        return SPECIAL_OFFERS.containsKey(sku) ? SPECIAL_OFFERS.get(sku).numberOfItems() : 1;
+    }
+
+    public static int getSpecialOfferPrice(StockKeepingUnit sku){
+        return SPECIAL_OFFERS.containsKey(sku) ? SPECIAL_OFFERS.get(sku).finalSellingPrice() : 0;
+    }
+
 }
+
 
 

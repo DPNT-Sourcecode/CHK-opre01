@@ -18,14 +18,29 @@ public class CheckoutSolution {
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                     .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
         } catch (IllegalArgumentException e) {
-            return -1;
+            return -1; // Illegal input, unknown item
         }
 
-        
+        // Calculate total price based on prices and special offers
+        for (Map.Entry<StockKeepingUnit, Integer> entry : basketCount.entrySet()) {
+            StockKeepingUnit sku = entry.getKey();
+            int count = entry.getValue();
+
+            int price = Supermarket.getPriceBySku(sku);
+            int specialOfferCount = specialOffers.containsKey(item) ? specialOffers.get(item).count : 1;
+            int specialOfferPrice = specialOffers.containsKey(item) ? specialOffers.get(item).price : 0;
+
+            int regularPrice = (count % specialOfferCount) * price;
+            int specialOfferPriceTotal = (count / specialOfferCount) * specialOfferPrice;
+
+            total += regularPrice + specialOfferPriceTotal;
+        }
+
 
     return total;
     }
 }
+
 
 
 
