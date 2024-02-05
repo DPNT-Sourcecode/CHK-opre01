@@ -9,9 +9,10 @@ class CheckoutSolutionTest {
     @Test
     void checkout() {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
-        int result = checkoutSolution.checkout("AAABBBCCCD");
+        int result = checkoutSolution.checkout("AAABBD");
         int expectedResult = 0;
 
         assertEquals(expectedResult, result);
     }
 }
+
