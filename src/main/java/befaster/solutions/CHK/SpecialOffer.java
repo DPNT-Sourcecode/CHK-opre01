@@ -1,4 +1,5 @@
 package befaster.solutions.CHK;
 
-public record SpecialOffer(int numberOfItems, int finalSellingPrice) {
+public record SpecialOffer(int numberOfItems, int finalSellingPrice) implements Offerable{
 }
+
