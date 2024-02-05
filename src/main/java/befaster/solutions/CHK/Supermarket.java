@@ -17,40 +17,24 @@ public final class Supermarket {
         SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));
     }
 
-    public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems){
-        int numberOfItemsAccounted = 0;
+    public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
         int totalPrice = 0;
-        if(SPECIAL_OFFERS.containsKey(sku)) {
+        if (SPECIAL_OFFERS.containsKey(sku)) {
             SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
             int remainingItems = numberOfItems % specialOffer.numberOfItems();
-            if(remainingItems == 0) {
+            if (remainingItems == 0) {
                 int eligibleOffers = numberOfItems / specialOffer.numberOfItems();
                 totalPrice += specialOffer.finalSellingPrice() * eligibleOffers;
             } else {
-               totalPrice +=  specialOffer.finalSellingPrice() + PRICES.get(sku) * remainingItems;
+                totalPrice += specialOffer.finalSellingPrice() + PRICES.get(sku) * remainingItems;
             }
+        }  else {
+            totalPrice += PRICES.get(sku) * numberOfItems;
         }
-
-
-//        while (numberOfItemsAccounted < numberOfItems) {
-//            if(SPECIAL_OFFERS.containsKey(sku)) {
-//                SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
-//                if(numberOfItems >= specialOffer.numberOfItems()) {
-//                    totalPrice += specialOffer.finalSellingPrice();
-//                    numberOfItemsAccounted += specialOffer.numberOfItems();
-//                } else{
-//                    totalPrice += PRICES.get(sku) * numberOfItems;
-//                    numberOfItemsAccounted += numberOfItems;
-//                }
-//            } else{
-//                totalPrice += PRICES.get(sku) * numberOfItems;
-//                numberOfItemsAccounted += numberOfItems;
-//            }
-//        }
-
         return totalPrice;
     }
 }
+
 
 
 
