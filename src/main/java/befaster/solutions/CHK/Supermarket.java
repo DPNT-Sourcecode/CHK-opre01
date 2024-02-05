@@ -51,6 +51,8 @@ public final class Supermarket {
         for(Offerable specialOffer : availableOffersBySku) {
             totalPrice += specialOffer.getPrice();
             missingItems -= specialOffer.getNumberOfItems();
+            int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+            boolean t = remainingItems > 0;
 //            if (numberOfItems >= specialOffer.getNumberOfItems()) {
 //                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
 //                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
@@ -86,3 +88,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
