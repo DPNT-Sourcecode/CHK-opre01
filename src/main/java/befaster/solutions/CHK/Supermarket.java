@@ -14,7 +14,7 @@ public final class Supermarket {
         PRICES.put(StockKeepingUnit.D, 15);
 
         SPECIAL_OFFERS.put(StockKeepingUnit.A, new SpecialOffer(3, 130));
-        SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));
+        SPECIAL_OFFERS.put(StockKeepingUnit.B, new SpecialOffer(2, 45));-
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -37,6 +37,7 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 
 

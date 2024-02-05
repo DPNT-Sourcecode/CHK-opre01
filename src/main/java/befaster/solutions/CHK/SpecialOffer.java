@@ -5,12 +5,12 @@ public record SpecialOffer(int numberOfItems, int price) implements Offerable{
     public int getNumberOfItems() {
         return this.numberOfItems;
     }
-
     @Override
     public int getPrice() {
-        return this.numberOfItems;
+        return this.price;
     }
 }
+
 
 
 
