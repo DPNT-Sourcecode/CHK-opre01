@@ -46,26 +46,43 @@ public final class Supermarket {
             return PRICES.get(sku) * numberOfItems;
         }
         List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
+        int missingItems = numberOfItems;
         int totalPrice = 0;
         for(Offerable specialOffer : availableOffersBySku) {
-            if (numberOfItems >= specialOffer.getNumberOfItems()) {
-                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
-                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
-                totalPrice += specialOffer.getPrice() * eligibleOffers;
-                if(remainingItems > 0) {
-                    totalPrice += PRICES.get(sku) * remainingItems;
-                }
-            } else {
-                totalPrice += PRICES.get(sku) * numberOfItems;
-            }
+            totalPrice += specialOffer.getPrice();
+            missingItems -= specialOffer.getNumberOfItems();
+//            if (numberOfItems >= specialOffer.getNumberOfItems()) {
+//                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+//                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
+//                totalPrice += specialOffer.getPrice() * eligibleOffers;
+//                if(remainingItems > 0) {
+//                    totalPrice += PRICES.get(sku) * remainingItems;
+//                }
+//            } else {
+//                totalPrice += PRICES.get(sku) * numberOfItems;
+//            }
         }
         return totalPrice;
     }
+
+//    public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
+//        if (!SPECIAL_OFFERS.containsKey(sku)) {
+//            return PRICES.get(sku) * numberOfItems;
+//        }
+//        List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
+//        int totalPrice = 0;
+//        for(Offerable specialOffer : availableOffersBySku) {
+//            if (numberOfItems >= specialOffer.getNumberOfItems()) {
+//                int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
+//                int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
+//                totalPrice += specialOffer.getPrice() * eligibleOffers;
+//                if(remainingItems > 0) {
+//                    totalPrice += PRICES.get(sku) * remainingItems;
+//                }
+//            } else {
+//                totalPrice += PRICES.get(sku) * numberOfItems;
+//            }
+//        }
+//        return totalPrice;
+//    }
 }
-
-
-
-
-
-
-
