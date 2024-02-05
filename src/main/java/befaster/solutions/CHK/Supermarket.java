@@ -20,6 +20,16 @@ public final class Supermarket {
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems){
         int numberOfItemsAccounted = 0;
         int totalPrice = 0;
+        if(SPECIAL_OFFERS.containsKey(sku)) {
+            SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
+            if(numberOfItems % specialOffer.numberOfItems() == 0) {
+                totalPrice += specialOffer.finalSellingPrice();
+            } else {
+                int remainingItems = numberOfItems / specialOffer.numberOfItems();
+            }
+        }
+
+
         while (numberOfItemsAccounted < numberOfItems) {
             if(SPECIAL_OFFERS.containsKey(sku)) {
                 SpecialOffer specialOffer = SPECIAL_OFFERS.get(sku);
@@ -39,3 +49,4 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
