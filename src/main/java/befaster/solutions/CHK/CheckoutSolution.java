@@ -15,8 +15,13 @@ public class CheckoutSolution {
 
         int total = 0;
         Map<StockKeepingUnits, Integer> skuCounts = new EnumMap<>(StockKeepingUnits.class);
-        
+        // Count the occurrences of each item
+        for (char item : skus.toCharArray()) {
+            skuCounts.put(item, skuCounts.getOrDefault(item, 0) + 1);
+        }
+
 
     }
 }
+
 
