@@ -9,12 +9,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class CheckoutSolutionTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"A:50","AA:100", "B:30", "C:20", "CCC:60", "D:15", "DDDD:30"}, delimiter = ':')
-    void testIfGetsTheCorrectPrice() {
+    @CsvSource(value = {"A:50","AA:100", "B:30", "C:20", "CCC:60", "D:15", "DDDD:60"}, delimiter = ':')
+    void testIfGetsTheCorrectOriginalPrice(String input, String expected) {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
-        int result = checkoutSolution.checkout("AA");
-        int expectedResult = 100;
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
+    }
 
-        assertEquals(expectedResult, result);
+    @ParameterizedTest
+    @CsvSource(value = {"AAA:130", "AAAAAA:260", "BB:45", "BBBB:90"}, delimiter = ':')
+    void testIfGetsTheCorrectSpecialOfferPrice(String input, String expected) {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
     }
 }
+
