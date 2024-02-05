@@ -21,11 +21,12 @@ public final class Supermarket {
         SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45)));
     }
 
+    //TODO: return only offers that can be applied
     private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
         List<Offerable> offers = new ArrayList<>(SPECIAL_OFFERS.get(sku));
         return offers.stream()
                 .filter(offer -> offer.getNumberOfItems() <= numberOfItems)
-                .sorted((Comparator.comparingInt(Offerable::getNumberOfItems)))
+                .sorted((Comparator.comparingInt(Offerable::getNumberOfItems).reversed()))
                 .toList();
     }
 
@@ -50,5 +51,6 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
 
