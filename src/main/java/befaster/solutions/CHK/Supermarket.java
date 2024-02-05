@@ -37,7 +37,7 @@ public final class Supermarket {
         }
         List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int totalPrice = 0;
-        for(Offerable specialOffer : SPECIAL_OFFERS.get(sku)) {
+        for(Offerable specialOffer : availableOffersBySku) {
             if (numberOfItems >= specialOffer.getNumberOfItems()) {
                 int remainingItems = numberOfItems % specialOffer.getNumberOfItems();
                 int eligibleOffers = numberOfItems / specialOffer.getNumberOfItems();
@@ -52,4 +52,5 @@ public final class Supermarket {
         return totalPrice;
     }
 }
+
 
