@@ -45,16 +45,17 @@ public final class Supermarket {
                 totalPrice += specialOffer.getPrice() * eligibleOffers;
                 if(remainingItems > 0) {
                     totalPrice += PRICES.get(sku) * remainingItems;
-                    missingViewItems -= remainingItems;
+                    missingViewItems = remainingItems;
                 }
             } else {
                 totalPrice += PRICES.get(sku) * missingViewItems;
-                missingViewItems -= missingViewItems;
+                //missingViewItems -= missingViewItems;
             }
         }
         return totalPrice;
     }
 }
+
 
 
 
