@@ -1,2 +1,5 @@
-package befaster.solutions.CHK;public interface Offerable {
+package befaster.solutions.CHK;
+
+public interface Offerable extends Comparable<Offerable>{
 }
+
