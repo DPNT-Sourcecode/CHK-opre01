@@ -24,9 +24,12 @@ public class CheckoutSolution {
         //List<List<Offerable>> t = Supermarket.getAllAvailableOffers(basketCount);
 
         // Calculate total price based on prices and special offers
-        return basketCount.entrySet().stream()
-                .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
-                .reduce(0, Integer::sum);
+//        return basketCount.entrySet().stream()
+//                .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
+//                .reduce(0, Integer::sum);
+
+        return -1;
 
     }
 }
+

@@ -9,7 +9,8 @@ import java.util.Map;
 
 public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
-    private static final Map<StockKeepingUnit, List<Offerable>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
+    //private static final Map<StockKeepingUnit, List<Offerable>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
+    private static final List<Offerable> SPECIAL_OFFERS = new ArrayList<>();
 
     static {
         PRICES.put(StockKeepingUnit.A, 50);
@@ -18,26 +19,32 @@ public final class Supermarket {
         PRICES.put(StockKeepingUnit.D, 15);
         PRICES.put(StockKeepingUnit.E, 40);
 
-        SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(
-                new SpecialOffer(StockKeepingUnit.A,3, 130),
-                new SpecialOffer(StockKeepingUnit.A,5,200)));
-        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(StockKeepingUnit.B,2, 45)));
-        SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(
-                new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
-                new SpecialOffer(StockKeepingUnit.B, 1, 0))));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A,3, 130));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A,5, 200));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.B,2, 45));
+        SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
+                new SpecialOffer(StockKeepingUnit.B, 1, 0)));
+
+//        SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(
+//                new SpecialOffer(StockKeepingUnit.A,3, 130),
+//                new SpecialOffer(StockKeepingUnit.A,5,200)));
+//        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(StockKeepingUnit.B,2, 45)));
+//        SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(
+//                new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
+//                new SpecialOffer(StockKeepingUnit.B, 1, 0))));
     }
 
-    public static List<List<Offerable>> getAllAvailableOffers( Map<StockKeepingUnit, Integer> basket) {
-       return basket.entrySet().stream()
-                .map(entry -> getAvailableOffersBySku(entry.getKey(), entry.getValue()))
-                //.flatMap(List::stream)
-//                .sorted((s1, s2) -> {
-//                    double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getOffer().getSku()), s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-//                    double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getOffer().getSku()), s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-//                    return Double.compare(s2Discount, s1Discount);
-//                })
-                .toList();
-    }
+//    public static List<List<Offerable>> getAllAvailableOffers( Map<StockKeepingUnit, Integer> basket) {
+//       return basket.entrySet().stream()
+//                .map(entry -> getAvailableOffersBySku(entry.getKey(), entry.getValue()))
+//                //.flatMap(List::stream)
+////                .sorted((s1, s2) -> {
+////                    double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getOffer().getSku()), s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+////                    double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getOffer().getSku()), s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+////                    return Double.compare(s2Discount, s1Discount);
+////                })
+//                .toList();
+//    }
 
 
     //TODO: return only offers that can be applied
@@ -112,3 +119,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
