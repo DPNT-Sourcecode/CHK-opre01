@@ -23,4 +23,3 @@ public class MultiOffer {
         return (discountPrice / originalPrice) * 100;
     }
 }
-
