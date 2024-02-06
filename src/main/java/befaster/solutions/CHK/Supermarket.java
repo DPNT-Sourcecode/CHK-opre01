@@ -16,9 +16,11 @@ public final class Supermarket {
         PRICES.put(StockKeepingUnit.B, 30);
         PRICES.put(StockKeepingUnit.C, 20);
         PRICES.put(StockKeepingUnit.D, 15);
+        PRICES.put(StockKeepingUnit.E, 40);
 
         SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(new SpecialOffer(3, 130, PRICES.get(StockKeepingUnit.A)), new SpecialOffer(5,200, PRICES.get(StockKeepingUnit.A))));
         SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45, PRICES.get(StockKeepingUnit.B))));
+        SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(new MultiOffer(2, PRICES.get(StockKeepingUnit.E))))
     }
 
     //TODO: return only offers that can be applied
@@ -81,3 +83,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
