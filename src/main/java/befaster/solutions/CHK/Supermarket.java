@@ -35,6 +35,9 @@ public final class Supermarket {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
+                if(missingItems == 0) {
+                    break;
+                }
             }
         }
 
@@ -79,4 +82,5 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
