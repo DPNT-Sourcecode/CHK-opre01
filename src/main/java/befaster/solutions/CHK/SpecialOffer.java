@@ -17,6 +17,10 @@ public final class SpecialOffer implements Comparable<SpecialOffer> {
         this(numberOfItems, specialPrice, calculateDiscountPercentage(numberOfItems, specialPrice, unitOriginalPrice));
     }
 
+    public SpecialOffer(final int numberOfItems, final int specialPrice){
+        this(numberOfItems, specialPrice, calculateDiscountPercentage(numberOfItems, specialPrice, 0));
+    }
+
     private static Double calculateDiscountPercentage(int numberOfItems, int specialPrice, int unitOriginalPrice) {
         double originalPrice = (unitOriginalPrice * numberOfItems);
         double discountPrice = originalPrice - specialPrice;
@@ -36,3 +40,4 @@ public final class SpecialOffer implements Comparable<SpecialOffer> {
         return Double.compare(this.discountPercentage, o.discountPercentage);
     }
 }
+

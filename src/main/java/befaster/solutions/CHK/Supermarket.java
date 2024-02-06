@@ -11,16 +11,19 @@ public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
     private static final Map<StockKeepingUnit, List<SpecialOffer>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
 
-    static {
-        PRICES.put(StockKeepingUnit.A, 50);
-        PRICES.put(StockKeepingUnit.B, 30);
-        PRICES.put(StockKeepingUnit.C, 20);
-        PRICES.put(StockKeepingUnit.D, 15);
-        PRICES.put(StockKeepingUnit.E, 40);
+    private static Map<StockKeepingUnit, Offer> offers = new EnumMap<>(StockKeepingUnit.class);
 
-        SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(new SpecialOffer(3, 130, PRICES.get(StockKeepingUnit.A)), new SpecialOffer(5,200, PRICES.get(StockKeepingUnit.A))));
-        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45, PRICES.get(StockKeepingUnit.B))));
-        SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(new MultiOffer(2, PRICES.get(StockKeepingUnit.E))))
+    static {
+        offers.put(StockKeepingUnit.A, new Offer(StockKeepingUnit.A, 50, List.of(new SpecialOffer(3,130), new SpecialOffer(5, 200))))
+//        PRICES.put(StockKeepingUnit.A, 50);
+//        PRICES.put(StockKeepingUnit.B, 30);
+//        PRICES.put(StockKeepingUnit.C, 20);
+//        PRICES.put(StockKeepingUnit.D, 15);
+//        PRICES.put(StockKeepingUnit.E, 40);
+//
+//        SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(new SpecialOffer(3, 130, PRICES.get(StockKeepingUnit.A)), new SpecialOffer(5,200, PRICES.get(StockKeepingUnit.A))));
+//        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(2, 45, PRICES.get(StockKeepingUnit.B))));
+        //SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(new MultiOffer(2, PRICES.get(StockKeepingUnit.E))))
     }
 
     //TODO: return only offers that can be applied
@@ -83,3 +86,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
