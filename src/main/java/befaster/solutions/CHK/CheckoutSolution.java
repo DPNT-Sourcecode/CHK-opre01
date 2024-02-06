@@ -1,6 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,6 +21,8 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
+        List<Offerable> t = Supermarket.getAllAvailableOffers(basketCount);
+
         // Calculate total price based on prices and special offers
         return basketCount.entrySet().stream()
                 .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
@@ -27,3 +30,4 @@ public class CheckoutSolution {
 
     }
 }
+
