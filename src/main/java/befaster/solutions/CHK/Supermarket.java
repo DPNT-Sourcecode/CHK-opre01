@@ -33,7 +33,7 @@ public final class Supermarket {
                 .sorted((s1, s2) -> {
                     double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getSku()), s1.getNumberOfItems(), s1.getPrice());
                     double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getSku()), s2.getNumberOfItems(), s2.getPrice());
-                    return Double.compare(s2Discount,);
+                    return Double.compare(s2Discount, s1Discount);
                 })
                 .toList();
 
@@ -67,7 +67,7 @@ public final class Supermarket {
         int remainingItems = numberOfItems;
         int totalPrice = 0;
         for(SpecialOffer specialOffer : availableOffersBySku) {
-            totalPrice += specialOffer.getSpecialPrice();
+            totalPrice += specialOffer.getPrice();
             remainingItems = numberOfItems % specialOffer.getNumberOfItems();
         }
         if(remainingItems > 0){
@@ -97,4 +97,5 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
