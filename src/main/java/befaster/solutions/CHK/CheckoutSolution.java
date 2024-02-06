@@ -21,7 +21,7 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        List<Offerable> t = Supermarket.getAllAvailableOffers(basketCount);
+        //List<List<Offerable>> t = Supermarket.getAllAvailableOffers(basketCount);
 
         // Calculate total price based on prices and special offers
         return basketCount.entrySet().stream()
@@ -30,4 +30,5 @@ public class CheckoutSolution {
 
     }
 }
+
 
