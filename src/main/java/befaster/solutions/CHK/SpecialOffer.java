@@ -25,5 +25,16 @@ public final class SpecialOffer implements Offerable{
     public int getNumberOfItems() {
         return this.numberOfItems;
     }
+
+    @Override
+    public boolean hasNewOffer() {
+        return false;
+    }
+
+    @Override
+    public Offerable getOffer() {
+        return this;
+    }
 }
+
 

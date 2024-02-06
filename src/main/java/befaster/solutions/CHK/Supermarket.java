@@ -9,9 +9,7 @@ import java.util.Map;
 
 public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
-    private static final Map<StockKeepingUnit, List<SpecialOffer>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
-
-    private static List<Offer> offers = new ArrayList<>();
+    private static final Map<StockKeepingUnit, List<Offerable>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
 
     static {
         PRICES.put(StockKeepingUnit.A, 50);
@@ -28,8 +26,8 @@ public final class Supermarket {
     }
 
     //TODO: return only offers that can be applied
-    private static List<SpecialOffer> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
-        List<SpecialOffer> sortedOffers = new ArrayList<>(SPECIAL_OFFERS.get(sku)).stream()
+    private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
+        List<Offerable> sortedOffers = new ArrayList<>(SPECIAL_OFFERS.get(sku)).stream()
                 .sorted((s1, s2) -> {
                     double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getSku()), s1.getNumberOfItems(), s1.getPrice());
                     double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getSku()), s2.getNumberOfItems(), s2.getPrice());
@@ -37,9 +35,9 @@ public final class Supermarket {
                 })
                 .toList();
 
-        List<SpecialOffer> offers = new ArrayList<>();
+        List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
-        for(SpecialOffer offer : sortedOffers) {
+        for(Offerable offer : sortedOffers) {
             if(offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
@@ -63,10 +61,10 @@ public final class Supermarket {
         if (!SPECIAL_OFFERS.containsKey(sku)) {
             return PRICES.get(sku) * numberOfItems;
         }
-        List<SpecialOffer> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
+        List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int remainingItems = numberOfItems;
         int totalPrice = 0;
-        for(SpecialOffer specialOffer : availableOffersBySku) {
+        for(Offerable specialOffer : availableOffersBySku) {
             totalPrice += specialOffer.getPrice();
             remainingItems = numberOfItems % specialOffer.getNumberOfItems();
         }
@@ -97,5 +95,6 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
 
