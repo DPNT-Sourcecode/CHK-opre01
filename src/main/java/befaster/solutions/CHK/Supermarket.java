@@ -2,6 +2,7 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -18,24 +19,25 @@ public final class Supermarket {
         PRICES.put(StockKeepingUnit.E, 40);
 
         SPECIAL_OFFERS.put(StockKeepingUnit.A, List.of(
-                new SpecialOffer(StockKeepingUnit.A, 3, 130),
-                new SpecialOffer(StockKeepingUnit.A, 5, 200)));
-        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(StockKeepingUnit.B, 2, 45)));
+                new SpecialOffer(StockKeepingUnit.A,3, 130),
+                new SpecialOffer(StockKeepingUnit.A,5,200)));
+        SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(StockKeepingUnit.B,2, 45)));
         SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(
                 new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
-                        new SpecialOffer(StockKeepingUnit.B, 1, 0))));
+                new SpecialOffer(StockKeepingUnit.B, 1, 0))));
     }
 
     //TODO: return only offers that can be applied
-    private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems) {
+    private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
-        for (Offerable offer : getSortedOffers(sku)) {
-            if (offer.getNumberOfItems() <= missingItems) {
+        List<Offerable> sortedOffers = getSortedOffers(sku);
+        for(Offerable offer : sortedOffers) {
+            if(offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
-                if (missingItems == 0) {
+                if(missingItems == 0) {
                     break;
                 }
             }
@@ -53,10 +55,10 @@ public final class Supermarket {
                 .toList();
     }
 
-    private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice) {
+    private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice){
         double originalPrice = (unitPrice * numberOfItems);
         double discountPrice = originalPrice - finalSellingPrice;
-        return (discountPrice / originalPrice) * 100;
+        return (discountPrice/originalPrice) * 100;
     }
 
     public static int getTotalPriceBySku(StockKeepingUnit sku, int numberOfItems) {
@@ -66,11 +68,11 @@ public final class Supermarket {
         List<Offerable> availableOffersBySku = getAvailableOffersBySku(sku, numberOfItems);
         int remainingItems = numberOfItems;
         int totalPrice = 0;
-        for (Offerable specialOffer : availableOffersBySku) {
+        for(Offerable specialOffer : availableOffersBySku) {
             totalPrice += specialOffer.getPrice();
             remainingItems = numberOfItems % specialOffer.getNumberOfItems();
         }
-        if (remainingItems > 0) {
+        if(remainingItems > 0){
             totalPrice += PRICES.get(sku) * remainingItems;
         }
         return totalPrice;
@@ -97,4 +99,5 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
