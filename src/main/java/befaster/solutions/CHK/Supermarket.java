@@ -29,14 +29,14 @@ public final class Supermarket {
                 .toList();
 
         List<Offerable> offers = new ArrayList<>();
-        AtomicInteger missingItems = new AtomicInteger(numberOfItems);
-        sortedOffers.forEach(offer -> {
-           if(offer.getNumberOfItems() <= missingItems.get()) {
-               int eligibleOffers = missingItems.get() / offer.getNumberOfItems();
-               offers.addAll(Collections.nCopies(eligibleOffers, offer));
-               missingItems.addAndGet(-(offer.getNumberOfItems() * eligibleOffers));
-           }
-       });
+        int missingItems = numberOfItems;
+        for(Offerable offer : sortedOffers) {
+            if(offer.getNumberOfItems() <= missingItems) {
+                int eligibleOffers = missingItems / offer.getNumberOfItems();
+                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+            }
+        }
 
         return offers;
     }
@@ -79,3 +79,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
