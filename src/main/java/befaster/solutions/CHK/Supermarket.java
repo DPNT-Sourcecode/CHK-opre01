@@ -26,6 +26,7 @@ public final class Supermarket {
                 new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
                 new SpecialOffer(StockKeepingUnit.B, 1, 0))));
     }
+    
 
     //TODO: return only offers that can be applied
     private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
@@ -99,5 +100,6 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
 
