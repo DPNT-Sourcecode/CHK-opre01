@@ -60,11 +60,11 @@ class CheckoutSolutionTest {
     void testIfGetsCorrectValueWithMultipleSkus() {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout("ABCDCBAABCABBAAA");
-        "CC"
-        int expected = 505;
+        int expected = 495;
         assertEquals(expected, result);
     }
 
 }
+
 
 
