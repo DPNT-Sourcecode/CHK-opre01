@@ -23,4 +23,3 @@
 //        return (discountPrice / originalPrice) * 100;
 //    }
 //}
-

@@ -13,4 +13,3 @@ public class Offer {
         this.specialOffers = specialOffers;
     }
 }
-

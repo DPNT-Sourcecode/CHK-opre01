@@ -40,4 +40,3 @@ public final class SpecialOffer implements Comparable<SpecialOffer> {
         return Double.compare(this.discountPercentage, o.discountPercentage);
     }
 }
-
