@@ -22,15 +22,17 @@ public final class Supermarket {
                 new SpecialOffer(StockKeepingUnit.A,3, 130),
                 new SpecialOffer(StockKeepingUnit.A,5,200)));
         SPECIAL_OFFERS.put(StockKeepingUnit.B, List.of(new SpecialOffer(StockKeepingUnit.B,2, 45)));
-        //SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(new MultiOffer(2, PRICES.get(StockKeepingUnit.E))))
+        SPECIAL_OFFERS.put(StockKeepingUnit.E, List.of(
+                new MultiOffer(StockKeepingUnit.E, 2, PRICES.get(StockKeepingUnit.E) * 2,
+                new SpecialOffer(StockKeepingUnit.B, 1, 0))));
     }
 
     //TODO: return only offers that can be applied
     private static List<Offerable> getAvailableOffersBySku(StockKeepingUnit sku, int numberOfItems){
         List<Offerable> sortedOffers = new ArrayList<>(SPECIAL_OFFERS.get(sku)).stream()
                 .sorted((s1, s2) -> {
-                    double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getSku()), s1.getNumberOfItems(), s1.getPrice());
-                    double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getSku()), s2.getNumberOfItems(), s2.getPrice());
+                    double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getOffer().getSku()), s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+                    double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getOffer().getSku()), s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
                     return Double.compare(s2Discount, s1Discount);
                 })
                 .toList();
@@ -95,6 +97,3 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
-
-
-
