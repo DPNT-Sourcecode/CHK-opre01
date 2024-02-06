@@ -1,2 +1,10 @@
-package befaster.solutions.CHK;public interface Offerable {
+package befaster.solutions.CHK;
+
+public interface Offerable {
+
+    StockKeepingUnit getSku();
+    int getPrice();
+    int getNumberOfItems();
+
 }
+

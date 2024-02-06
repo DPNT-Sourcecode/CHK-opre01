@@ -1,48 +1,29 @@
 package befaster.solutions.CHK;
 
-public final class SpecialOffer {
+public final class SpecialOffer implements Offerable{
+    private final StockKeepingUnit sku;
     private final int numberOfItems;
     private final int specialPrice;
-   // private final double discountPercentage;
 
-//    private SpecialOffer(final int numberOfItems,
-//                         final int specialPrice,
-//                         final double discountPercentage) {
-//        this.numberOfItems = numberOfItems;
-//        this.specialPrice = specialPrice;
-//        this.discountPercentage = discountPercentage;
-//    }
-//
-//    public SpecialOffer(final int numberOfItems, final int specialPrice, final int unitOriginalPrice) {
-//        this(numberOfItems, specialPrice, calculateDiscountPercentage(numberOfItems, specialPrice, unitOriginalPrice));
-//    }
-//
-//    public SpecialOffer(final int numberOfItems, final int specialPrice){
-//        this(numberOfItems, specialPrice, calculateDiscountPercentage(numberOfItems, specialPrice, 0));
-//    }
-
-
-    public SpecialOffer(final int numberOfItems, final int specialPrice) {
+    public SpecialOffer(final StockKeepingUnit sku, final int numberOfItems, final int specialPrice) {
+        this.sku = sku;
         this.numberOfItems = numberOfItems;
         this.specialPrice = specialPrice;
     }
 
-//    private static Double calculateDiscountPercentage(int numberOfItems, int specialPrice, int unitOriginalPrice) {
-//        double originalPrice = (unitOriginalPrice * numberOfItems);
-//        double discountPrice = originalPrice - specialPrice;
-//        return (discountPrice / originalPrice) * 100;
-//    }
+    @Override
+    public StockKeepingUnit getSku() {
+        return this.sku;
+    }
 
+    @Override
+    public int getPrice() {
+        return this.specialPrice;
+    }
+
+    @Override
     public int getNumberOfItems() {
-        return numberOfItems;
+        return this.numberOfItems;
     }
-
-    public int getSpecialPrice() {
-        return specialPrice;
-    }
-
-//    @Override
-//    public int compareTo(final SpecialOffer o) {
-//        return Double.compare(this.discountPercentage, o.discountPercentage);
-//    }
 }
+
