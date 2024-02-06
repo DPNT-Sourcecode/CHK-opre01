@@ -1,12 +1,38 @@
 package befaster.solutions.CHK;
 
-public record SpecialOffer(int numberOfItems, int price) implements Offerable {
-    @Override
-    public int getNumberOfItems() {
-        return this.numberOfItems;
+public final class SpecialOffer implements Comparable<SpecialOffer> {
+    private final int numberOfItems;
+    private final int specialPrice;
+    private final double discountPercentage;
+
+    private SpecialOffer(final int numberOfItems,
+                         final int specialPrice,
+                         final double discountPercentage) {
+        this.numberOfItems = numberOfItems;
+        this.specialPrice = specialPrice;
+        this.discountPercentage = discountPercentage;
     }
+
+    public SpecialOffer(final int numberOfItems, final int specialPrice, final int unitOriginalPrice) {
+        this(numberOfItems, specialPrice, calculateDiscountPercentage(numberOfItems, specialPrice, unitOriginalPrice));
+    }
+
+    private static Double calculateDiscountPercentage(int numberOfItems, int specialPrice, int unitOriginalPrice) {
+        double originalPrice = (unitOriginalPrice * numberOfItems);
+        double discountPrice = originalPrice - specialPrice;
+        return (discountPrice / originalPrice) * 100;
+    }
+
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
+
+    public int getSpecialPrice() {
+        return specialPrice;
+    }
+
     @Override
-    public int getPrice() {
-        return this.price;
+    public int compareTo(final SpecialOffer o) {
+        return Double.compare(this.discountPercentage, o.discountPercentage);
     }
 }
