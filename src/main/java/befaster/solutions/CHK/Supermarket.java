@@ -28,16 +28,14 @@ public final class Supermarket {
     }
 
     public static List<Offerable> getAllAvailableOffers( Map<StockKeepingUnit, Integer> basket) {
-        List<Offerable> availableOffers = basket.entrySet().stream()
+       return basket.entrySet().stream()
                 .map(entry -> getAvailableOffersBySku(entry.getKey(), entry.getValue()))
                 .flatMap(List::stream)
-                .toList();
-        return availableOffers.stream()
                 .sorted((s1, s2) -> {
-            double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getOffer().getSku()), s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-            double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getOffer().getSku()), s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-            return Double.compare(s2Discount, s1Discount);
-        })
+                    double s1Discount = calculateDiscountPercentage(PRICES.get(s1.getOffer().getSku()), s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+                    double s2Discount = calculateDiscountPercentage(PRICES.get(s2.getOffer().getSku()), s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+                    return Double.compare(s2Discount, s1Discount);
+                })
                 .toList();
     }
 
@@ -114,6 +112,7 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
 
 
 
