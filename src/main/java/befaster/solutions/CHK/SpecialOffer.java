@@ -46,4 +46,3 @@ public final class SpecialOffer {
 //        return Double.compare(this.discountPercentage, o.discountPercentage);
 //    }
 }
-

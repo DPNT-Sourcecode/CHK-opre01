@@ -22,4 +22,3 @@ public class Offer {
         this(item, price, Collections.singletonList(specialOffer));
     }
 }
-
