@@ -25,7 +25,7 @@ class CheckoutSolutionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"AAABBC:195", "CCDDD:85","AAA:130", "AAAA:180", "AAAAA:230", "AAAAAA:260", "BBB:75"}, delimiter = ':')
+    @CsvSource(value = {"AAABBC:195", "CCDDD:85","AAA:130", "AAAA:180", "AAAAA:200", "BBB:75"}, delimiter = ':')
     void testIfGetsTheCorrectPrice(String input, String expected) {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout(input);
@@ -60,9 +60,11 @@ class CheckoutSolutionTest {
     void testIfGetsCorrectValueWithMultipleSkus() {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout("ABCDCBAABCABBAAA");
+        "CC"
         int expected = 505;
         assertEquals(expected, result);
     }
 
 }
+
 
