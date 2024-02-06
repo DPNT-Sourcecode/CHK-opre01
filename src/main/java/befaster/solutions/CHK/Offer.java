@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Offer {
@@ -12,4 +13,13 @@ public class Offer {
         this.price = price;
         this.specialOffers = specialOffers;
     }
+
+    public Offer(final StockKeepingUnit item, final int price){
+        this(item, price, Collections.emptyList());
+    }
+
+    public Offer(final StockKeepingUnit item, final int price, SpecialOffer specialOffer){
+        this(item, price, Collections.singletonList(specialOffer));
+    }
 }
+

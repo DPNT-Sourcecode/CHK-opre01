@@ -11,10 +11,10 @@ public final class Supermarket {
     private static final Map<StockKeepingUnit, Integer> PRICES = new EnumMap<>(StockKeepingUnit.class);
     private static final Map<StockKeepingUnit, List<SpecialOffer>> SPECIAL_OFFERS = new EnumMap<>(StockKeepingUnit.class);
 
-    private static Map<StockKeepingUnit, Offer> offers = new EnumMap<>(StockKeepingUnit.class);
+    private static List<Offer> offers = new ArrayList<>();
 
     static {
-        offers.put(StockKeepingUnit.A, new Offer(StockKeepingUnit.A, 50, List.of(new SpecialOffer(3,130), new SpecialOffer(5, 200))))
+        offers.add(new Offer(StockKeepingUnit.A, 50, List.of(new SpecialOffer(3,130), new SpecialOffer(5, 200))))
 //        PRICES.put(StockKeepingUnit.A, 50);
 //        PRICES.put(StockKeepingUnit.B, 30);
 //        PRICES.put(StockKeepingUnit.C, 20);
@@ -86,3 +86,4 @@ public final class Supermarket {
 //        return totalPrice;
 //    }
 }
+
