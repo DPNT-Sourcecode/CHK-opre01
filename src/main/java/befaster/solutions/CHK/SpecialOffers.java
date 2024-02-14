@@ -85,7 +85,7 @@ public final class SpecialOffers {
         for(Offerable offer : availableOffers) {
             if(offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
-                offers.put(offer.getSku(), Collections.nCopies(eligibleOffers, offer));
+                offers.put(offer.getOffer().getSku(), Collections.nCopies(eligibleOffers, offer.getOffer()));
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
 
                 //offers.addAll(Collections.nCopies(eligibleOffers, offer));
@@ -138,4 +138,5 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
