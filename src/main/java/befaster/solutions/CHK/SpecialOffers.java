@@ -33,6 +33,10 @@ public final class SpecialOffers {
                 .toList();
     }
 
+//    public static List<Offerable> getAllEligibleOffersInTheBasket(Map<StockKeepingUnit, Integer> basket){
+//
+//    }
+
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
         basket.forEach((key, value) -> {
@@ -74,4 +78,5 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
