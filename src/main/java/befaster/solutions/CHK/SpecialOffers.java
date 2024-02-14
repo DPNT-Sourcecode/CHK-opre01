@@ -94,7 +94,3 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
-
-
-
-
