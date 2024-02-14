@@ -38,9 +38,15 @@ public final class SpecialOffers {
         basket.forEach((key, value) -> {
             List<Offerable> eligibleOffers = getEligibleOffers(key, value);
             for (Offerable offer : eligibleOffers) {
-                int skuQuantity = basket.getOrDefault(offer.getSku(), 0);
+                StockKeepingUnit sku = offer.getSku();
+                int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
-                    basket.put(offer.getSku(), basket.get(offer.getSku()) - offer.getNumberOfItems());
+                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+                    if (updatedQuantity == 0) {
+                        basket.remove(sku);
+                    } else {
+                        basket.put(sku, updatedQuantity);
+                    }
                     finalOffers.add(offer);
                 }
 //                int skuQuantity = basket.getOrDefault(offer.getOffer().getSku(), 0);
@@ -114,7 +120,7 @@ public final class SpecialOffers {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
-                if(offer.hasNewOffer()){
+                if (offer.hasNewOffer()) {
                     offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
                 }
 
@@ -148,6 +154,7 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
 
