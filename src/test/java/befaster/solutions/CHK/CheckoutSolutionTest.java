@@ -64,13 +64,14 @@ class CheckoutSolutionTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    void testIfGetsCorrectValueForMultiOffer() {
+    @ParameterizedTest
+    @CsvSource(value = {"EEBB:110", "EE:80"}, delimiter = ':')
+    void testIfGetsCorrectValueForMultiOffer(String input, String expected) {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
-        int result = checkoutSolution.checkout("EEBB");
-        int expected = 110;
-        assertEquals(expected, result);
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
     }
 
 }
+
 
