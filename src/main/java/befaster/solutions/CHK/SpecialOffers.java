@@ -18,10 +18,18 @@ public final class SpecialOffers {
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        List<Offerable> filteredList = SPECIAL_OFFERS.stream()
+        return SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .sorted((s1, s2) -> {
+                    double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
+                            s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+                    double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
+                            s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+                    return Double.compare(s2Discount, s1Discount);
+                })
                 .toList();
-        return getSortedOffers(filteredList);
+        //return getSortedOffers(filteredList);
+        //return filteredList;
     }
 
     public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
@@ -109,8 +117,8 @@ public final class SpecialOffers {
         for (Offerable offer : availableOffers) {
             if (offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
-                offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
+                offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
 
                 //offers.addAll(Collections.nCopies(eligibleOffers, offer));
                 //missingItems -= offer.getNumberOfItems() * eligibleOffers;
@@ -142,6 +150,7 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
 
