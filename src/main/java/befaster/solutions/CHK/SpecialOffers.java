@@ -38,6 +38,7 @@ public final class SpecialOffers {
                         }
                     }
                 }
+                basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
                 finalOffers.add(offer.getOffer());
             }
         });
@@ -135,3 +136,4 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
