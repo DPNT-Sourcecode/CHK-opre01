@@ -17,7 +17,7 @@ public final class PriceTable {
         PRICES.put(StockKeepingUnit.H, 10);
         PRICES.put(StockKeepingUnit.I, 35);
         PRICES.put(StockKeepingUnit.J, 60);
-        PRICES.put(StockKeepingUnit.K, 80);
+        PRICES.put(StockKeepingUnit.K, 70);
         PRICES.put(StockKeepingUnit.L, 90);
         PRICES.put(StockKeepingUnit.M, 15);
         PRICES.put(StockKeepingUnit.N, 40);
@@ -25,12 +25,12 @@ public final class PriceTable {
         PRICES.put(StockKeepingUnit.P, 50);
         PRICES.put(StockKeepingUnit.Q, 30);
         PRICES.put(StockKeepingUnit.R, 50);
-        PRICES.put(StockKeepingUnit.S, 30);
+        PRICES.put(StockKeepingUnit.S, 20);
         PRICES.put(StockKeepingUnit.T, 20);
         PRICES.put(StockKeepingUnit.U, 40);
         PRICES.put(StockKeepingUnit.V, 50);
         PRICES.put(StockKeepingUnit.W, 20);
-        PRICES.put(StockKeepingUnit.X, 90);
+        PRICES.put(StockKeepingUnit.X, 17);
         PRICES.put(StockKeepingUnit.Y, 10);
         PRICES.put(StockKeepingUnit.Z, 50);
     }
@@ -40,3 +40,4 @@ public final class PriceTable {
     }
 
 }
+
