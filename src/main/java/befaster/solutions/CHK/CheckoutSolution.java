@@ -27,21 +27,17 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        //List<List<Offerable>> t = Supermarket.getAllAvailableOffers(basketCount);
+        List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
-        List<Offerable> validOffers = SpecialOffers.updateBasketAndGetValidOffers(basketCount);
+        int dicountPrice = validOffers
+                .stream()
+                .mapToInt(Offerable::getPrice)
+                .reduce(0, Integer::sum);
 
-        int dicountPrice = validOffers.stream().mapToInt(Offerable::getPrice).reduce(0, Integer::sum);
-
-        int totalPrice = basketCount.entrySet().stream().mapToInt(entry -> PriceTable.getPrice(entry.getKey()) * entry.getValue())
+        return basketCount.entrySet()
+                .stream()
+                .mapToInt(entry -> PriceTable.getPrice(entry.getKey()) * entry.getValue())
                 .reduce(dicountPrice, Integer::sum);
-
-        // Calculate total price based on prices and special offers
-//        return basketCount.entrySet().stream()
-//                .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
-//                .reduce(0, Integer::sum);
-
-        return totalPrice;
     }
 
 }

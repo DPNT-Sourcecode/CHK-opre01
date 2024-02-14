@@ -33,7 +33,7 @@ public final class SpecialOffers {
                 .toList();
     }
 
-    public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
         basket.forEach((key, value) -> {
             List<Offerable> eligibleOffers = getEligibleOffers(key, value);
@@ -42,11 +42,7 @@ public final class SpecialOffers {
                 int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
                     int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
-                    if (updatedQuantity == 0) {
-                        basket.remove(sku);
-                    } else {
-                        basket.put(sku, updatedQuantity);
-                    }
+                    basket.put(sku, updatedQuantity);
                     finalOffers.add(offer);
                 }
 //                int skuQuantity = basket.getOrDefault(offer.getOffer().getSku(), 0);
@@ -154,9 +150,3 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
-
-
-
-
-
-
