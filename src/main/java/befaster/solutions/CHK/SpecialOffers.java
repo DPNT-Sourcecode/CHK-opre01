@@ -33,26 +33,42 @@ public final class SpecialOffers {
                 .toList();
     }
 
-//    public static List<Offerable> getAllEligibleOffersInTheBasket(Map<StockKeepingUnit, Integer> basket){
-//
-//    }
+    public static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket){
+        List<Offerable> eligibleOffers = new ArrayList<>();
+        basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
+        return eligibleOffers;
+    }
 
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
-        basket.forEach((key, value) -> {
-            List<Offerable> eligibleOffers = getEligibleOffers(key, value);
-            for (Offerable offer : eligibleOffers) {
-                StockKeepingUnit sku = offer.getSku();
+        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
+            StockKeepingUnit sku = offer.getSku();
                 int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
                     int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
                     basket.put(sku, updatedQuantity);
                     finalOffers.add(offer);
                 }
-            }
         });
         return finalOffers;
     }
+
+//    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+//        List<Offerable> finalOffers = new ArrayList<>();
+//        basket.forEach((key, value) -> {
+//            List<Offerable> eligibleOffers = getEligibleOffers(key, value);
+//            for (Offerable offer : eligibleOffers) {
+//                StockKeepingUnit sku = offer.getSku();
+//                int skuQuantity = basket.getOrDefault(sku, 0);
+//                if (skuQuantity >= offer.getNumberOfItems()) {
+//                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+//                    basket.put(sku, updatedQuantity);
+//                    finalOffers.add(offer);
+//                }
+//            }
+//        });
+//        return finalOffers;
+//    }
 
     public static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> offers = new ArrayList<>();
@@ -78,5 +94,6 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
