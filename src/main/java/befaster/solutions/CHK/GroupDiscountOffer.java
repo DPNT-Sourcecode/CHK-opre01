@@ -46,7 +46,7 @@ public class GroupDiscountOffer implements Offerable{
     }
 
     @Override
-    public boolean hasDiscountGroups(final Set<StockKeepingUnit> stockKeepingUnitList) {
+    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
         Set<StockKeepingUnit> groupDiscountOfferFound = new HashSet<>();
         stockKeepingUnitList.forEach(s -> {
             if(groupDiscountSkus.contains(s)){
@@ -61,3 +61,4 @@ public class GroupDiscountOffer implements Offerable{
         return skus.stream().filter(groupDiscountSkus::contains).toList();
     }
 }
+

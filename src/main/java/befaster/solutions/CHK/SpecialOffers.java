@@ -45,7 +45,7 @@ public final class SpecialOffers {
 
     }
 
-    public static boolean hasGroupDiscountOffers(Set<StockKeepingUnit> skus){
+    public static boolean hasGroupDiscountOffers(List<StockKeepingUnit> skus){
         return SPECIAL_OFFERS.stream().anyMatch(specialOffer -> specialOffer.hasDiscountGroups(skus));
     }
 
@@ -116,4 +116,5 @@ public final class SpecialOffers {
 
     }
 }
+
 

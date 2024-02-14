@@ -11,7 +11,8 @@ public interface Offerable {
     int getNumberOfItems();
     boolean hasNewOffer();
     Offerable getOffer();
-    boolean hasDiscountGroups(Set<StockKeepingUnit> stockKeepingUnitList);
+    boolean hasDiscountGroups(List<StockKeepingUnit> stockKeepingUnitList);
     List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus);
 
 }
+

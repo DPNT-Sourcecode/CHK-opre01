@@ -41,7 +41,7 @@ public final class SpecialOffer implements Offerable{
     }
 
     @Override
-    public boolean hasDiscountGroups(final Set<StockKeepingUnit> stockKeepingUnitList) {
+    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
         return false;
     }
 
@@ -70,3 +70,4 @@ public final class SpecialOffer implements Offerable{
         return result;
     }
 }
+
