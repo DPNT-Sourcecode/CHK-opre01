@@ -12,7 +12,7 @@ public interface Offerable {
     boolean hasNewOffer();
     Offerable getOffer();
     boolean hasDiscountGroups(List<StockKeepingUnit> stockKeepingUnitList);
-    List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus);
 
 }
+
 

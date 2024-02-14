@@ -49,8 +49,8 @@ public final class SpecialOffers {
         return SPECIAL_OFFERS.stream().anyMatch(specialOffer -> specialOffer.hasDiscountGroups(skus));
     }
 
-    public static List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus){
-        return SPECIAL_OFFERS.stream().flatMap(s -> s.getGroupDiscountOffers(skus).stream()).toList();
+    public static List<Offerable> getGroupDiscountOffers(List<StockKeepingUnit> skus){
+        return SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.hasDiscountGroups(skus)).toList();
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
@@ -116,5 +116,6 @@ public final class SpecialOffers {
 
     }
 }
+
 
 

@@ -30,8 +30,8 @@ public class CheckoutSolution {
                 .toList();
 
         if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
-            List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
-            for(StockKeepingUnit stockKeepingUnit)
+            List<Offerable> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
+
             groupDiscountOffers.forEach(System.out::println);
 
         }
@@ -50,6 +50,7 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
 

@@ -50,10 +50,11 @@ public class GroupDiscountOffer implements Offerable{
         return stockKeepingUnitList.stream().filter(groupDiscountSkus::contains).count() >= this.numberOfItems;
     }
 
-    @Override
-    public List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus) {
-        return skus.stream().filter(groupDiscountSkus::contains).toList();
-    }
+//    @Override
+//    public List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus) {
+//        return skus.stream().filter(groupDiscountSkus::contains).toList();
+//    }
 }
+
 
 
