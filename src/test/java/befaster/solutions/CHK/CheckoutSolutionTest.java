@@ -72,4 +72,13 @@ class CheckoutSolutionTest {
         assertEquals(Integer.parseInt(expected), result);
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {"FF:20", "FFF:20"}, delimiter = ':')
+    void testIfGetsCorrectValueForBuyingXAndGetAnotherFree(String input, String expected) {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
+    }
+
 }
+
