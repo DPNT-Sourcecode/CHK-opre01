@@ -31,6 +31,8 @@ public class CheckoutSolution {
                     .toList();
             List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
+            groupDiscountOffers.forEach(System.out::println);
+
         }
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
@@ -47,5 +49,6 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
