@@ -31,8 +31,8 @@ public final class PriceTable {
         PRICES.put(StockKeepingUnit.V, 50);
         PRICES.put(StockKeepingUnit.W, 20);
         PRICES.put(StockKeepingUnit.X, 17);
-        PRICES.put(StockKeepingUnit.Y, 10);
-        PRICES.put(StockKeepingUnit.Z, 50);
+        PRICES.put(StockKeepingUnit.Y, 20);
+        PRICES.put(StockKeepingUnit.Z, 21);
     }
 
     public static int getPrice(StockKeepingUnit sku){
@@ -40,4 +40,5 @@ public final class PriceTable {
     }
 
 }
+
 
