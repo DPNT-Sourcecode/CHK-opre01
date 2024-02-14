@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -40,8 +41,8 @@ public final class SpecialOffer implements Offerable{
     }
 
     @Override
-    public boolean hasDiscountGroup(final Set<StockKeepingUnit> stockKeepingUnitList) {
-        return false;
+    public Set<StockKeepingUnit> getDiscountGroup(final Set<StockKeepingUnit> stockKeepingUnitList) {
+        return Collections.emptySet();
     }
 
     @Override
@@ -64,5 +65,6 @@ public final class SpecialOffer implements Offerable{
         return result;
     }
 }
+
 
 

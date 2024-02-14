@@ -1,6 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -45,8 +46,13 @@ public final class SpecialOffers {
     }
 
     public static List<Offerable> getGroupDiscountOffer(Set<StockKeepingUnit> skus){
-        return SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.hasDiscountGroup(skus))
+        List<Offerable> groupDiscountOffer = new ArrayList<>();
+        SPECIAL_OFFERS.forEach(specialOffer -> {
+                    Set<StockKeepingUnit> discountGroup = specialOffer.getDiscountGroup(skus);
+                    List<StockKeepingUnit> discount
+                    groupDiscountOffer.addAll(new ArrayList<>(discountGroup))
+
+                })
                 .toList();
     }
 
@@ -113,5 +119,6 @@ public final class SpecialOffers {
 
     }
 }
+
 
 
