@@ -31,13 +31,19 @@ public class CheckoutSolution {
 
         List<Offerable> validOffers = SpecialOffers.updateBasketAndGetValidOffers(basketCount);
 
+        int dicountPrice = validOffers.stream().mapToInt(Offerable::getPrice).reduce(0, Integer::sum);
+
+        int totalPrice = basketCount.entrySet().stream().mapToInt(entry -> PriceTable.getPrice(entry.getKey()) * entry.getValue())
+                .reduce(dicountPrice, Integer::sum);
+
         // Calculate total price based on prices and special offers
 //        return basketCount.entrySet().stream()
 //                .mapToInt(entry -> Supermarket.getTotalPriceBySku(entry.getKey(),entry.getValue()))
 //                .reduce(0, Integer::sum);
 
-        return -1;
+        return totalPrice;
     }
 
 }
+
 
