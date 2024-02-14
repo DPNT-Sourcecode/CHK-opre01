@@ -2,7 +2,6 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +16,10 @@ public final class SpecialOffers {
                 new SpecialOffer(StockKeepingUnit.B, 1, 0)));
     }
 
+    private SpecialOffers() {
+
+    }
+
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         return SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
@@ -28,8 +31,6 @@ public final class SpecialOffers {
                     return Double.compare(s2Discount, s1Discount);
                 })
                 .toList();
-        //return getSortedOffers(filteredList);
-        //return filteredList;
     }
 
     public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
@@ -37,19 +38,13 @@ public final class SpecialOffers {
         basket.forEach((key, value) -> {
             List<Offerable> eligibleOffers = getEligibleOffers(key, value);
             for (Offerable offer : eligibleOffers) {
-                int skuQuantity = basket.getOrDefault(offer.getOffer().getSku(), 0);
-                if (skuQuantity >= offer.getOffer().getNumberOfItems()) {
-                    basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
-                    finalOffers.add(offer.getOffer());
+                int skuQuantity = basket.getOrDefault(offer.getSku(), 0);
+                if (skuQuantity >= offer.getNumberOfItems()) {
+                    basket.put(offer.getSku(), basket.get(offer.getSku()) - offer.getNumberOfItems());
+                    finalOffers.add(offer);
                 }
-
-//                if (offer.hasNewOffer()) {
-//                    int skuQuantity = basket.getOrDefault(offer.getOffer().getSku(), 0);
-//                    if (skuQuantity >= offer.getOffer().getNumberOfItems()) {
-//                        basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
-//                        finalOffers.add(offer.getOffer());
-//                    }
-//                } else {
+//                int skuQuantity = basket.getOrDefault(offer.getOffer().getSku(), 0);
+//                if (skuQuantity >= offer.getOffer().getNumberOfItems()) {
 //                    basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
 //                    finalOffers.add(offer.getOffer());
 //                }
@@ -58,57 +53,57 @@ public final class SpecialOffers {
         return finalOffers;
     }
 
-    public static List<Offerable> getValidOffers(Map<StockKeepingUnit, Integer> basket) {
-        Map<StockKeepingUnit, List<Offerable>> finalOffers = new EnumMap<>(StockKeepingUnit.class);
-        return basket.entrySet().stream().flatMap(entry -> {
-            Map<StockKeepingUnit, List<Offerable>> offers = getSpecialOffers(entry.getKey(), entry.getValue());
-            for (Offerable offer : offers.get(entry.getKey())) {
-                if (offer.hasNewOffer()) {
-                    int count = basket.getOrDefault(offer.getOffer().getSku(), 0);
-                    if (offer.getOffer().getNumberOfItems() <= count) {
-                        List<Offerable> t = finalOffers.getOrDefault(offer.getOffer().getSku(), Collections.emptyList());
-                        if (!t.isEmpty()) {
-
-                        }
-//                        if(t.isEmpty()){
-//                            finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
+//    public static List<Offerable> getValidOffers(Map<StockKeepingUnit, Integer> basket) {
+//        Map<StockKeepingUnit, List<Offerable>> finalOffers = new EnumMap<>(StockKeepingUnit.class);
+//        return basket.entrySet().stream().flatMap(entry -> {
+//            Map<StockKeepingUnit, List<Offerable>> offers = getSpecialOffers(entry.getKey(), entry.getValue());
+//            for (Offerable offer : offers.get(entry.getKey())) {
+//                if (offer.hasNewOffer()) {
+//                    int count = basket.getOrDefault(offer.getOffer().getSku(), 0);
+//                    if (offer.getOffer().getNumberOfItems() <= count) {
+//                        List<Offerable> t = finalOffers.getOrDefault(offer.getOffer().getSku(), Collections.emptyList());
+//                        if (!t.isEmpty()) {
+//
 //                        }
-
-                        //int eligibleOffers = count / offer.getOffer().getNumberOfItems();
-                        //Map<StockKeepingUnit, List<Offerable>> t = getSpecialOffers(offer.getOffer().getSku(), count);
-                        //finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
-
-                        //offers.get()
-                    }
-
-                } else {
-                    finalOffers.put(offer.getSku(), offers.get(entry.getKey()));
-                }
-            }
-            return finalOffers.values().stream().flatMap(List::stream);
-        }).toList();
-    }
-
-    public static Map<StockKeepingUnit, List<Offerable>> getSpecialOffers(StockKeepingUnit sku, int numberOfItems) {
-        Map<StockKeepingUnit, List<Offerable>> offers = new EnumMap<>(StockKeepingUnit.class);
-        int missingItems = numberOfItems;
-        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
-        for (Offerable offer : availableOffers) {
-            if (offer.getNumberOfItems() <= missingItems) {
-                int eligibleOffers = missingItems / offer.getNumberOfItems();
-                offers.put(offer.getOffer().getSku(), Collections.nCopies(eligibleOffers, offer.getOffer()));
-                missingItems -= offer.getNumberOfItems() * eligibleOffers;
-
-                //offers.addAll(Collections.nCopies(eligibleOffers, offer));
-                //missingItems -= offer.getNumberOfItems() * eligibleOffers;
-//                if(missingItems == 0) {
-//                    break;
+////                        if(t.isEmpty()){
+////                            finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
+////                        }
+//
+//                        //int eligibleOffers = count / offer.getOffer().getNumberOfItems();
+//                        //Map<StockKeepingUnit, List<Offerable>> t = getSpecialOffers(offer.getOffer().getSku(), count);
+//                        //finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
+//
+//                        //offers.get()
+//                    }
+//
+//                } else {
+//                    finalOffers.put(offer.getSku(), offers.get(entry.getKey()));
 //                }
-            }
-        }
-        return offers;
+//            }
+//            return finalOffers.values().stream().flatMap(List::stream);
+//        }).toList();
+//    }
 
-    }
+//    public static Map<StockKeepingUnit, List<Offerable>> getSpecialOffers(StockKeepingUnit sku, int numberOfItems) {
+//        Map<StockKeepingUnit, List<Offerable>> offers = new EnumMap<>(StockKeepingUnit.class);
+//        int missingItems = numberOfItems;
+//        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
+//        for (Offerable offer : availableOffers) {
+//            if (offer.getNumberOfItems() <= missingItems) {
+//                int eligibleOffers = missingItems / offer.getNumberOfItems();
+//                offers.put(offer.getOffer().getSku(), Collections.nCopies(eligibleOffers, offer.getOffer()));
+//                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+//
+//                //offers.addAll(Collections.nCopies(eligibleOffers, offer));
+//                //missingItems -= offer.getNumberOfItems() * eligibleOffers;
+////                if(missingItems == 0) {
+////                    break;
+////                }
+//            }
+//        }
+//        return offers;
+//
+//    }
 
     public static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> offers = new ArrayList<>();
@@ -118,7 +113,10 @@ public final class SpecialOffers {
             if (offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
-                offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
+                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+                if(offer.hasNewOffer()){
+                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
+                }
 
                 //offers.addAll(Collections.nCopies(eligibleOffers, offer));
                 //missingItems -= offer.getNumberOfItems() * eligibleOffers;
@@ -150,6 +148,7 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
 
