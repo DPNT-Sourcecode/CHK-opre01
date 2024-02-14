@@ -10,6 +10,7 @@ public interface Offerable {
     int getNumberOfItems();
     boolean hasNewOffer();
     Offerable getOffer();
-    Set<StockKeepingUnit> getDiscountGroup(Set<StockKeepingUnit> stockKeepingUnitList);
+    List<StockKeepingUnit> getDiscountGroups(List<StockKeepingUnit> stockKeepingUnitList);
 
 }
+

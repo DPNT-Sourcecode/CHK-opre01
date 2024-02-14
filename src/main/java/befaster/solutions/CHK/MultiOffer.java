@@ -43,8 +43,8 @@ public class MultiOffer implements Offerable {
     }
 
     @Override
-    public Set<StockKeepingUnit> getDiscountGroup(final Set<StockKeepingUnit> stockKeepingUnitList) {
-        return Collections.emptySet();
+    public List<StockKeepingUnit> getDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
+        return Collections.emptyList();
     }
 
 
@@ -70,3 +70,4 @@ public class MultiOffer implements Offerable {
         return result;
     }
 }
+

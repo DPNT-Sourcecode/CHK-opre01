@@ -44,8 +44,8 @@ public class GroupDiscountOffer implements Offerable{
     }
 
     @Override
-    public Set<StockKeepingUnit> getDiscountGroup(Set<StockKeepingUnit> skus) {
-        Set<StockKeepingUnit> groupDiscountOfferFound = new HashSet<>();
+    public List<StockKeepingUnit> getDiscountGroups(List<StockKeepingUnit> skus) {
+        List<StockKeepingUnit> groupDiscountOfferFound = new ArrayList<>();
         skus.forEach(s -> {
             if(groupDiscountSkus.contains(s)){
                 groupDiscountOfferFound.add(s);
@@ -54,3 +54,4 @@ public class GroupDiscountOffer implements Offerable{
         return groupDiscountOfferFound;
     }
 }
+

@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        List<Offerable> groupDiscountOffer = SpecialOffers.getGroupDiscountOffer(basketCount.keySet());
+        List<StockKeepingUnit> groupDiscountOffer = SpecialOffers.getGroupDiscountOffer(new ArrayList<>(basketCount.keySet()));
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
@@ -37,3 +38,4 @@ public class CheckoutSolution {
     }
 
 }
+

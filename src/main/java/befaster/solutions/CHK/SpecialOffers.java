@@ -45,15 +45,14 @@ public final class SpecialOffers {
 
     }
 
-    public static List<Offerable> getGroupDiscountOffer(Set<StockKeepingUnit> skus){
-        List<Offerable> groupDiscountOffer = new ArrayList<>();
+    public static List<StockKeepingUnit> getGroupDiscountOffer(List<StockKeepingUnit> skus){
+        List<StockKeepingUnit> groupDiscountOffer = new ArrayList<>();
         SPECIAL_OFFERS.forEach(specialOffer -> {
-                    Set<StockKeepingUnit> discountGroup = specialOffer.getDiscountGroup(skus);
-                    List<StockKeepingUnit> discount
-                    groupDiscountOffer.addAll(new ArrayList<>(discountGroup))
+                    List<StockKeepingUnit> discountGroups = specialOffer.getDiscountGroups(skus);
+                    groupDiscountOffer.addAll(discountGroups);
 
-                })
-                .toList();
+                });
+        return groupDiscountOffer;
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
@@ -119,3 +118,4 @@ public final class SpecialOffers {
 
     }
 }
+
