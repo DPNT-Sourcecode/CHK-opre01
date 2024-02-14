@@ -4,20 +4,23 @@ import java.util.List;
 import java.util.Set;
 
 public class GroupDiscountOffer implements Offerable{
-    private final Set<StockKeepingUnit> skus;
+    private final StockKeepingUnit sku;
+    private final Set<StockKeepingUnit> groupDiscountSkus;
     private final int numberOfItems;
     private final int price;
 
-
-    public GroupDiscountOffer(final Set<StockKeepingUnit> skus, final int numberOfItems, final int price) {
-        this.skus = skus;
+    public GroupDiscountOffer(final StockKeepingUnit sku, final Set<StockKeepingUnit> groupDiscountSkus, final int numberOfItems, final int price) {
+        this.sku = sku;
+        this.groupDiscountSkus = groupDiscountSkus;
         this.numberOfItems = numberOfItems;
         this.price = price;
     }
 
+    public boolean hasDiscountGroup()
+
     @Override
     public StockKeepingUnit getSku() {
-        return this.skus;
+        return null;
     }
 
     @Override
@@ -40,4 +43,5 @@ public class GroupDiscountOffer implements Offerable{
         return null;
     }
 }
+
 
