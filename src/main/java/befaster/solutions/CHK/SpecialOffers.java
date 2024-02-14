@@ -49,6 +49,8 @@ public final class SpecialOffers {
         return SPECIAL_OFFERS.stream().anyMatch(specialOffer -> specialOffer.hasDiscountGroups(skus));
     }
 
+    public static List<StockKeepingUnit>
+
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
@@ -112,5 +114,6 @@ public final class SpecialOffers {
 
     }
 }
+
 
 

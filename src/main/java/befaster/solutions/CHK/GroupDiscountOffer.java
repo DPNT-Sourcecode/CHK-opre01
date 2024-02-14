@@ -2,7 +2,9 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class GroupDiscountOffer implements Offerable{
@@ -53,6 +55,12 @@ public class GroupDiscountOffer implements Offerable{
         });
         return groupDiscountOfferFound.size() >= this.numberOfItems;
     }
+
+    @Override
+    public List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus) {
+        return skus.stream().filter(groupDiscountSkus::contains).toList();
+    }
 }
+
 
 

@@ -22,7 +22,9 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        System.out.println(SpecialOffers.hasGroupDiscountOffers(basketCount.keySet()));
+        if (SpecialOffers.hasGroupDiscountOffers(basketCount.keySet())) {
+
+        };
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
@@ -38,5 +40,6 @@ public class CheckoutSolution {
     }
 
 }
+
 
 

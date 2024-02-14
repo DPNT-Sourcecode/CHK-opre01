@@ -47,6 +47,11 @@ public class MultiOffer implements Offerable {
         return false;
     }
 
+    @Override
+    public List<StockKeepingUnit> getGroupDiscountOffers(final List<StockKeepingUnit> skus) {
+        return Collections.emptyList();
+    }
+
 
     @Override
     public boolean equals(final Object o) {
@@ -70,5 +75,6 @@ public class MultiOffer implements Offerable {
         return result;
     }
 }
+
 
 
