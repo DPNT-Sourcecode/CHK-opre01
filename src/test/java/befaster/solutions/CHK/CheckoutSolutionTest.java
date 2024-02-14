@@ -67,7 +67,7 @@ class CheckoutSolutionTest {
     @Test
     void testIfGetsCorrectValueForMultiOffer() {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
-        int result = checkoutSolution.checkout("EEB");
+        int result = checkoutSolution.checkout("EEBB");
         int expected = 80;
         assertEquals(expected, result);
     }
