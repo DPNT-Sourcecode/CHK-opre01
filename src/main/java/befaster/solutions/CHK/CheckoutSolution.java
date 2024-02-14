@@ -17,8 +17,6 @@ public class CheckoutSolution {
             skus.chars()
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                     .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
-
-            basketCount.entrySet().forEach(System.out::println);
         } catch (IllegalArgumentException e) {
             return -1; // Illegal input, unknown item
         }
@@ -37,4 +35,5 @@ public class CheckoutSolution {
     }
 
 }
+
 

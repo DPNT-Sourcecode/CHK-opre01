@@ -65,7 +65,7 @@ class CheckoutSolutionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"EEBB:110", "EE:80"}, delimiter = ':')
+    @CsvSource(value = {"EEBB:110", "EE:80", "BEBEEE:160", "ABCDEABCDE:280"}, delimiter = ':')
     void testIfGetsCorrectValueForMultiOffer(String input, String expected) {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout(input);
@@ -73,3 +73,4 @@ class CheckoutSolutionTest {
     }
 
 }
+
