@@ -16,7 +16,9 @@ public class GroupDiscountOffer implements Offerable{
         this.price = price;
     }
 
-    public boolean hasDiscountGroup()
+//    public boolean hasDiscountGroup() {
+//        groupDiscountSkus.retainAll()
+//    }
 
     @Override
     public StockKeepingUnit getSku() {
@@ -43,5 +45,6 @@ public class GroupDiscountOffer implements Offerable{
         return null;
     }
 }
+
 
 
