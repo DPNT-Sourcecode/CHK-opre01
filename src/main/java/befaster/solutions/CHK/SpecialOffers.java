@@ -2,6 +2,7 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public final class SpecialOffers {
     }
 
     public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
-        Map<StockKeepingUnit, List<Offerable>> finalOffers = new TreeMap<>();
+        List<Offerable> finalOffers = new ArrayList<>();
         basket.entrySet().stream()
     }
 
@@ -100,4 +101,5 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
