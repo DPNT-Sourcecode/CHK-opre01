@@ -21,22 +21,28 @@ public final class SpecialOffers {
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        return SPECIAL_OFFERS.stream()
+        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
-                .sorted((s1, s2) -> {
-                    double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
-                            s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-                    double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
-                            s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-                    return Double.compare(s2Discount, s1Discount);
-                })
                 .toList();
+
+        return sortByBestDiscount(filteredList);
+    }
+
+    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
+        return offerableList.stream()
+                .sorted((s1, s2) -> {
+            double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
+                    s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+            double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
+                    s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+            return Double.compare(s2Discount, s1Discount);
+        }).toList();
     }
 
     public static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket){
         List<Offerable> eligibleOffers = new ArrayList<>();
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
-        return eligibleOffers;
+        return sortByBestDiscount(eligibleOffers);
     }
 
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
@@ -94,6 +100,7 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
 
