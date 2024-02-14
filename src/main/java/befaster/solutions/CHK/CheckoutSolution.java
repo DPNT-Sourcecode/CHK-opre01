@@ -1,6 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,11 @@ public class CheckoutSolution {
         }
 
         if (SpecialOffers.hasGroupDiscountOffers(basketCount.keySet())) {
+            List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
+                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku)).toList();
+            List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
-        };
+        }
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
@@ -40,3 +44,4 @@ public class CheckoutSolution {
     }
 
 }
+
