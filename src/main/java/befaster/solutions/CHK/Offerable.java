@@ -15,6 +15,3 @@ public interface Offerable {
     List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus);
 
 }
-
-
-
