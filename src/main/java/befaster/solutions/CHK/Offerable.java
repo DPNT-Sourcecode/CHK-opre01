@@ -14,5 +14,3 @@ public interface Offerable {
     boolean hasDiscountGroups(List<StockKeepingUnit> stockKeepingUnitList);
 
 }
-
-

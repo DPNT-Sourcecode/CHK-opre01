@@ -116,6 +116,3 @@ public final class SpecialOffers {
 
     }
 }
-
-
-
