@@ -1,6 +1,8 @@
 package befaster.solutions.CHK;
 
 import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13,16 +15,21 @@ public class CheckoutSolution {
             return 0; // Empty basket, total price is zero
         }
 
-        Map<StockKeepingUnit, Integer> basketCount = new EnumMap<>(StockKeepingUnit.class);
+        Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
         // Count the occurrences of each item
         try {
             skus.chars()
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                     .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
 
-            Set<StockKeepingUnit> t = skus.chars().mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku)).collect(Collectors.toSet());
 
-            t.forEach(System.out::println);
+//            for(Character c : skus.toCharArray()){
+//                StockKeepingUnit sku = StockKeepingUnit.getStockKeepingUnit(c);
+//                int count = basketCount.getOrDefault(sku, 0) + 1;
+//                basketCount.put(sku, count);
+//            }
+
+            basketCount.entrySet().forEach(System.out::println);
         } catch (IllegalArgumentException e) {
             return -1; // Illegal input, unknown item
         }
@@ -40,3 +47,4 @@ public class CheckoutSolution {
     }
 
 }
+
