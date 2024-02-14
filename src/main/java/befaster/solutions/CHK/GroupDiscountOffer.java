@@ -47,12 +47,13 @@ public class GroupDiscountOffer implements Offerable{
     public boolean hasDiscountGroup(Set<StockKeepingUnit> skus) {
         Set<StockKeepingUnit> groupDiscountOfferFound = new HashSet<>();
         skus.forEach(s -> {
-            if(groupDiscountOfferFound.contains(s)){
+            if(groupDiscountSkus.contains(s)){
                 groupDiscountOfferFound.add(s);
             }
         });
         return groupDiscountOfferFound.size() >= this.numberOfItems;
     }
 }
+
 
 
