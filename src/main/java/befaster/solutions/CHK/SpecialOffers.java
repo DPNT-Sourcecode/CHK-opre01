@@ -28,7 +28,20 @@ public final class SpecialOffers {
 
     public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
-        basket
+        basket.entrySet().stream().forEach(entry -> {
+            List<Offerable> eligibleOffers = getEligibleOffers(entry.getKey(), entry.getValue());
+            for(Offerable offer : eligibleOffers) {
+                if(offer.hasNewOffer()){
+                    if(basket.containsKey(offer.getOffer().getSku())){
+                        if(basket.get(offer.getOffer().getSku()) >= offer.getOffer().getNumberOfItems()){
+                            basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
+                        }
+                    }
+                }
+                finalOffers.add(offer.getOffer());
+            }
+        });
+        return finalOffers;
     }
 
     public static List<Offerable> getValidOffers( Map<StockKeepingUnit, Integer> basket) {
@@ -82,6 +95,27 @@ public final class SpecialOffers {
         return offers;
 
     }
+    public static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
+        List<Offerable> offers = new ArrayList<>();
+        int missingItems = numberOfItems;
+        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
+        for(Offerable offer : availableOffers) {
+            if(offer.getNumberOfItems() <= missingItems) {
+                int eligibleOffers = missingItems / offer.getNumberOfItems();
+                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+
+                //offers.addAll(Collections.nCopies(eligibleOffers, offer));
+                //missingItems -= offer.getNumberOfItems() * eligibleOffers;
+//                if(missingItems == 0) {
+//                    break;
+//                }
+            }
+        }
+        return offers;
+
+    }
+
 
     private static List<Offerable> getSortedOffers(final List<Offerable> offerableList) {
         return offerableList.stream()
@@ -101,6 +135,3 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
-
-
-

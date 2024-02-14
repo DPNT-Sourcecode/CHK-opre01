@@ -29,7 +29,7 @@ public class CheckoutSolution {
 
         //List<List<Offerable>> t = Supermarket.getAllAvailableOffers(basketCount);
 
-        SpecialOffers.getValidOffers(basketCount);
+        SpecialOffers.updateBasketAndGetValidOffers(basketCount);
 
         // Calculate total price based on prices and special offers
 //        return basketCount.entrySet().stream()
@@ -40,5 +40,3 @@ public class CheckoutSolution {
     }
 
 }
-
-
