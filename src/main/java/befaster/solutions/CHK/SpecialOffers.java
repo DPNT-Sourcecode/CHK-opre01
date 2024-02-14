@@ -44,7 +44,7 @@ public final class SpecialOffers {
 
     }
 
-    public static List<Offerable> getGroupDiscountOffer(List<StockKeepingUnit> skus){
+    public static List<Offerable> getGroupDiscountOffer(Set<StockKeepingUnit> skus){
         return SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.hasDiscountGroup(skus))
                 .toList();
@@ -113,4 +113,5 @@ public final class SpecialOffers {
 
     }
 }
+
 

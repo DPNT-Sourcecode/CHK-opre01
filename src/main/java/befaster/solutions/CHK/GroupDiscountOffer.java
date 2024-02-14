@@ -1,6 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,8 +44,8 @@ public class GroupDiscountOffer implements Offerable{
     }
 
     @Override
-    public boolean hasDiscountGroup(List<StockKeepingUnit> skus) {
-        List<StockKeepingUnit> groupDiscountOfferFound = new ArrayList<>();
+    public boolean hasDiscountGroup(Set<StockKeepingUnit> skus) {
+        Set<StockKeepingUnit> groupDiscountOfferFound = new HashSet<>();
         skus.forEach(s -> {
             if(groupDiscountOfferFound.contains(s)){
                 groupDiscountOfferFound.add(s);
@@ -53,4 +54,5 @@ public class GroupDiscountOffer implements Offerable{
         return groupDiscountOfferFound.size() >= this.numberOfItems;
     }
 }
+
 
