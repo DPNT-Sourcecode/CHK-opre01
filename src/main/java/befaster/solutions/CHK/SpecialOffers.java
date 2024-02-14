@@ -33,6 +33,9 @@ public final class SpecialOffers {
                     int count = basket.getOrDefault(offer.getOffer().getSku(), 0);
                     if(offer.getOffer().getNumberOfItems() <= count) {
                         List<Offerable> t = finalOffers.getOrDefault(offer.getOffer().getSku(), Collections.emptyList());
+                        if(!t.isEmpty()){
+
+                        }
 //                        if(t.isEmpty()){
 //                            finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
 //                        }
@@ -44,8 +47,9 @@ public final class SpecialOffers {
                         //offers.get()
                     }
 
+                } else{
+                    finalOffers.put(offer.getSku(), offers.get(entry.getKey()));
                 }
-                finalOffers.put(offer.getSku(), offers.get(entry.getKey()));
             }
             return finalOffers.values().stream().flatMap(List::stream);
         }).toList();
@@ -90,6 +94,7 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
 

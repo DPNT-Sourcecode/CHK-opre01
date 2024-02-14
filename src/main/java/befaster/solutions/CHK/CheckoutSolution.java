@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CheckoutSolution {
     public Integer checkout(String skus) {
@@ -17,6 +19,10 @@ public class CheckoutSolution {
             skus.chars()
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                     .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+
+            Set<StockKeepingUnit> t = skus.chars().mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku)).collect(Collectors.toSet());
+
+            t.forEach(System.out::println);
         } catch (IllegalArgumentException e) {
             return -1; // Illegal input, unknown item
         }
@@ -34,3 +40,4 @@ public class CheckoutSolution {
     }
 
 }
+
