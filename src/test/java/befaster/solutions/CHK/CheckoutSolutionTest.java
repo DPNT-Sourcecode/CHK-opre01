@@ -81,7 +81,7 @@ class CheckoutSolutionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"STX:45"}, delimiter = ':')
+    @CsvSource(value = {"STXSTX:45"}, delimiter = ':')
     void testIfGetsCorrectValueForGroupDiscountOffers(String input, String expected) {
         CheckoutSolution checkoutSolution = new CheckoutSolution();
         int result = checkoutSolution.checkout(input);
@@ -91,4 +91,5 @@ class CheckoutSolutionTest {
 
 
 }
+
 
