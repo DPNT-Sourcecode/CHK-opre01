@@ -1,7 +1,7 @@
 package befaster.solutions.CHK;
 
 public enum StockKeepingUnit {
-    A, B, C, D, E;
+    A, B, C, D, E, F;
 
     public static StockKeepingUnit getStockKeepingUnit(char sku) throws IllegalArgumentException {
         try {
@@ -11,3 +11,4 @@ public enum StockKeepingUnit {
         }
     }
 }
+

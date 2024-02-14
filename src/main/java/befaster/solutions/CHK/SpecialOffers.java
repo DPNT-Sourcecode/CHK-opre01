@@ -14,6 +14,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.B, 2, 45));
         SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.E, 2, PriceTable.getPrice(StockKeepingUnit.E) * 2,
                 new SpecialOffer(StockKeepingUnit.B, 1, 0)));
+        SPECIAL_OFFERS.add()
     }
 
     private SpecialOffers() {
@@ -83,4 +84,5 @@ public final class SpecialOffers {
 
     }
 }
+
 
