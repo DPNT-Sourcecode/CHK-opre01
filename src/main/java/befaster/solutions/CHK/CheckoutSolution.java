@@ -28,8 +28,10 @@ public class CheckoutSolution {
                 .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                 .sorted(Comparator.comparingInt(PriceTable::getPrice).reversed())
                 .toList();
+
         if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
             List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
+            for(StockKeepingUnit stockKeepingUnit)
             groupDiscountOffers.forEach(System.out::println);
 
         }
@@ -48,6 +50,7 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
 
