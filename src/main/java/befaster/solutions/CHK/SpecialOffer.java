@@ -35,4 +35,24 @@ public final class SpecialOffer implements Offerable{
     public Offerable getOffer() {
         return this;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SpecialOffer that = (SpecialOffer) o;
+
+        if (numberOfItems != that.numberOfItems) return false;
+        if (specialPrice != that.specialPrice) return false;
+        return sku == that.sku;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sku.hashCode();
+        result = 31 * result + numberOfItems;
+        result = 31 * result + specialPrice;
+        return result;
+    }
 }

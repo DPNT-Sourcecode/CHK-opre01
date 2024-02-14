@@ -40,5 +40,3 @@ public final class PriceTable {
     }
 
 }
-
-

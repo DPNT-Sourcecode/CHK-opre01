@@ -17,8 +17,18 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.E, 2, PriceTable.getPrice(StockKeepingUnit.E) * 2,
                 new SpecialOffer(StockKeepingUnit.B, 1, 0)));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.F, 3, PriceTable.getPrice(StockKeepingUnit.F) * 2));
-//        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 3, 130));
-//        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 5, 200));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.H, 5, 45));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.H, 10, 80));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.K, 2, 150));
+        SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.N, 3, PriceTable.getPrice(StockKeepingUnit.N) * 3,
+                new SpecialOffer(StockKeepingUnit.M, 1, 0)));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.P, 5, 200));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.Q, 3, 80));
+        SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.R, 3, PriceTable.getPrice(StockKeepingUnit.R) * 3,
+                new SpecialOffer(StockKeepingUnit.Q, 1, 0)));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
     }
 
     private SpecialOffers() {
@@ -88,7 +98,3 @@ public final class SpecialOffers {
 
     }
 }
-
-
-
-

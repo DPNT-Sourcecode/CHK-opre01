@@ -37,4 +37,26 @@ public class MultiOffer implements Offerable {
     public Offerable getOffer() {
         return this.newOffer;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MultiOffer that = (MultiOffer) o;
+
+        if (numberOfItems != that.numberOfItems) return false;
+        if (price != that.price) return false;
+        if (sku != that.sku) return false;
+        return newOffer.equals(that.newOffer);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sku.hashCode();
+        result = 31 * result + numberOfItems;
+        result = 31 * result + price;
+        result = 31 * result + newOffer.hashCode();
+        return result;
+    }
 }
