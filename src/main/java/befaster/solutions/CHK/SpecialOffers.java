@@ -32,14 +32,17 @@ public final class SpecialOffers {
             List<Offerable> eligibleOffers = getEligibleOffers(entry.getKey(), entry.getValue());
             for(Offerable offer : eligibleOffers) {
                 if(offer.hasNewOffer()){
+                    int skuQuantity = 
                     if(basket.containsKey(offer.getOffer().getSku())){
                         if(basket.get(offer.getOffer().getSku()) >= offer.getOffer().getNumberOfItems()){
                             basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
+                            finalOffers.add(offer.getOffer());
                         }
                     }
+                } else{
+                    basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
+                    finalOffers.add(offer.getOffer());
                 }
-                basket.put(offer.getOffer().getSku(), basket.get(offer.getOffer().getSku()) - offer.getOffer().getNumberOfItems());
-                finalOffers.add(offer.getOffer());
             }
         });
         return finalOffers;
@@ -136,4 +139,5 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
