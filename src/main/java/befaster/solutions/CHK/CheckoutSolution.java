@@ -24,13 +24,12 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        if (SpecialOffers.hasGroupDiscountOffers(basketCount.keySet())) {
-            List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
-                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
-                    .sorted(Comparator.comparingInt(PriceTable::getPrice))
-                    .toList();
+        List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
+                .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
+                .sorted(Comparator.comparingInt(PriceTable::getPrice).reversed())
+                .toList();
+        if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
             List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
-
             groupDiscountOffers.forEach(System.out::println);
 
         }
@@ -49,6 +48,7 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
 
