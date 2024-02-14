@@ -28,7 +28,7 @@ public final class SpecialOffers {
 
     public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
-        basket.entrySet().stream()
+        basket
     }
 
     public static List<Offerable> getValidOffers( Map<StockKeepingUnit, Integer> basket) {
@@ -101,5 +101,6 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
