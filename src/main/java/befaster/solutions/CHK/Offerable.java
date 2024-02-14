@@ -13,6 +13,3 @@ public interface Offerable {
     Set<StockKeepingUnit> getDiscountGroup(Set<StockKeepingUnit> stockKeepingUnitList);
 
 }
-
-
-

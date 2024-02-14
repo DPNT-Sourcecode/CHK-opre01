@@ -70,6 +70,3 @@ public class MultiOffer implements Offerable {
         return result;
     }
 }
-
-
-
