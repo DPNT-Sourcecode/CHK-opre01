@@ -32,7 +32,12 @@ public final class SpecialOffers {
                 if(offer.hasNewOffer()) {
                     int count = basket.getOrDefault(offer.getOffer().getSku(), 0);
                     if(offer.getOffer().getNumberOfItems() <= count) {
-                        int eligibleOffers = count / offer.getOffer().getNumberOfItems();
+                        List<Offerable> t = finalOffers.getOrDefault(offer.getOffer().getSku(), Collections.emptyList());
+//                        if(t.isEmpty()){
+//                            finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
+//                        }
+
+                        //int eligibleOffers = count / offer.getOffer().getNumberOfItems();
                         //Map<StockKeepingUnit, List<Offerable>> t = getSpecialOffers(offer.getOffer().getSku(), count);
                         //finalOffers.put(offer.getOffer().getSku(), t.get(offer.getOffer().getSku()));
 
@@ -85,5 +90,6 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
 
 
