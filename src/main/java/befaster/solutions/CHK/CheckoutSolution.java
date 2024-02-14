@@ -22,7 +22,7 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        List<StockKeepingUnit> groupDiscountOffer = SpecialOffers.getGroupDiscountOffer(new ArrayList<>(basketCount.keySet()));
+        System.out.println(SpecialOffers.hasGroupDiscountOffers(basketCount.keySet()));
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
@@ -38,4 +38,5 @@ public class CheckoutSolution {
     }
 
 }
+
 

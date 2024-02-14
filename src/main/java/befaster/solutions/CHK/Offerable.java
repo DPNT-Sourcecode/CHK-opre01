@@ -3,6 +3,7 @@ package befaster.solutions.CHK;
 import java.util.List;
 import java.util.Set;
 
+
 public interface Offerable {
 
     StockKeepingUnit getSku();
@@ -10,7 +11,8 @@ public interface Offerable {
     int getNumberOfItems();
     boolean hasNewOffer();
     Offerable getOffer();
-    List<StockKeepingUnit> getDiscountGroups(List<StockKeepingUnit> stockKeepingUnitList);
+    boolean hasDiscountGroups(Set<StockKeepingUnit> stockKeepingUnitList);
 
 }
+
 

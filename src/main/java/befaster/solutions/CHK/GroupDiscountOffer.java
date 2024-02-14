@@ -44,14 +44,15 @@ public class GroupDiscountOffer implements Offerable{
     }
 
     @Override
-    public List<StockKeepingUnit> getDiscountGroups(List<StockKeepingUnit> skus) {
-        List<StockKeepingUnit> groupDiscountOfferFound = new ArrayList<>();
-        skus.forEach(s -> {
+    public boolean hasDiscountGroups(final Set<StockKeepingUnit> stockKeepingUnitList) {
+        Set<StockKeepingUnit> groupDiscountOfferFound = new HashSet<>();
+        stockKeepingUnitList.forEach(s -> {
             if(groupDiscountSkus.contains(s)){
                 groupDiscountOfferFound.add(s);
             }
         });
-        return groupDiscountOfferFound;
+        return groupDiscountOfferFound.size() >= this.numberOfItems;
     }
 }
+
 
