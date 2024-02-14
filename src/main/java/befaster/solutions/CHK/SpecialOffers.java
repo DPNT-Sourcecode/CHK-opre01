@@ -2,11 +2,13 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class SpecialOffers {
-    private static final List<Offerable> SPECIAL_OFFERS = new ArrayList<>();
+    private static final Set<Offerable> SPECIAL_OFFERS = new HashSet<>();
 
     static {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 3, 130));
@@ -15,6 +17,8 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.E, 2, PriceTable.getPrice(StockKeepingUnit.E) * 2,
                 new SpecialOffer(StockKeepingUnit.B, 1, 0)));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.F, 3, PriceTable.getPrice(StockKeepingUnit.F) * 2));
+//        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 3, 130));
+//        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 5, 200));
     }
 
     private SpecialOffers() {
@@ -84,6 +88,7 @@ public final class SpecialOffers {
 
     }
 }
+
 
 
 
