@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public final class SpecialOffers {
     private static final List<Offerable> SPECIAL_OFFERS = new ArrayList<>();
@@ -22,6 +23,11 @@ public final class SpecialOffers {
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
                 .toList();
         return getSortedOffers(filteredList);
+    }
+
+    public static List<Offerable> updateBasketAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+        Map<StockKeepingUnit, List<Offerable>> finalOffers = new TreeMap<>();
+        basket.entrySet().stream()
     }
 
     public static List<Offerable> getValidOffers( Map<StockKeepingUnit, Integer> basket) {
@@ -94,3 +100,4 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
