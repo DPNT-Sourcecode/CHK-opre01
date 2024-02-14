@@ -2,6 +2,7 @@ package befaster.solutions.CHK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,9 @@ public class CheckoutSolution {
 
         if (SpecialOffers.hasGroupDiscountOffers(basketCount.keySet())) {
             List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
-                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku)).toList();
+                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
+                    .sorted(Comparator.comparingInt(PriceTable::getPrice))
+                    .toList();
             List<StockKeepingUnit> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
         }
@@ -44,4 +47,5 @@ public class CheckoutSolution {
     }
 
 }
+
 
