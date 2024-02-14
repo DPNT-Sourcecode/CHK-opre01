@@ -1,5 +1,7 @@
 package befaster.solutions.CHK;
 
+import java.util.List;
+
 public class MultiOffer implements Offerable {
     private final StockKeepingUnit sku;
     private final int numberOfItems;
@@ -39,6 +41,11 @@ public class MultiOffer implements Offerable {
     }
 
     @Override
+    public boolean hasDiscountGroup(final List<StockKeepingUnit> stockKeepingUnitList) {
+        return false;
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -60,3 +67,4 @@ public class MultiOffer implements Offerable {
         return result;
     }
 }
+

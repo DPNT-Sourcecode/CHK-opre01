@@ -80,4 +80,15 @@ class CheckoutSolutionTest {
         assertEquals(Integer.parseInt(expected), result);
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {"STX:45"}, delimiter = ':')
+    void testIfGetsCorrectValueForGroupDiscountOffers(String input, String expected) {
+        CheckoutSolution checkoutSolution = new CheckoutSolution();
+        int result = checkoutSolution.checkout(input);
+        assertEquals(Integer.parseInt(expected), result);
+    }
+
+
+
 }
+

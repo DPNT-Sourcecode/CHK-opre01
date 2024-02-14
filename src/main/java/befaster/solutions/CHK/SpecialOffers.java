@@ -29,10 +29,25 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
+
+        Set<StockKeepingUnit> groupDiscountOffer = Set.of(
+                StockKeepingUnit.S,
+                StockKeepingUnit.T,
+                StockKeepingUnit.X,
+                StockKeepingUnit.Y,
+                StockKeepingUnit.Z
+        );
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, groupDiscountOffer, 3, 45));
     }
 
     private SpecialOffers() {
 
+    }
+
+    public static List<Offerable> getGroupDiscountOffer(List<StockKeepingUnit> skus){
+        return SPECIAL_OFFERS.stream()
+                .filter(specialOffer -> specialOffer.hasDiscountGroup(skus))
+                .toList();
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
@@ -98,3 +113,4 @@ public final class SpecialOffers {
 
     }
 }
+

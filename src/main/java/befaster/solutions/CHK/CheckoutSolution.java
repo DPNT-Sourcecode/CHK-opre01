@@ -21,6 +21,9 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
+        
+        //List<Offerable> groupDiscountOffer = SpecialOffers.getGroupDiscountOffer()
+
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
         int dicountPrice = validOffers
@@ -35,3 +38,4 @@ public class CheckoutSolution {
     }
 
 }
+
