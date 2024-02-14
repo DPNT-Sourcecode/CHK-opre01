@@ -25,9 +25,9 @@ public final class SpecialOffers {
     }
 
     public static List<Offerable> getValidOffers( Map<StockKeepingUnit, Integer> basket) {
+        Map<StockKeepingUnit, List<Offerable>> finalOffers = new EnumMap<>(StockKeepingUnit.class);
         return basket.entrySet().stream().flatMap(entry -> {
             Map<StockKeepingUnit, List<Offerable>> offers = getSpecialOffers(entry.getKey(), entry.getValue());
-            Map<StockKeepingUnit, List<Offerable>> finalOffers = new EnumMap<>(StockKeepingUnit.class);
             for(Offerable offer : offers.get(entry.getKey())) {
                 if(offer.hasNewOffer()) {
                     int count = basket.getOrDefault(offer.getOffer().getSku(), 0);
@@ -84,3 +84,4 @@ public final class SpecialOffers {
         return (discountPrice / originalPrice) * 100;
     }
 }
+
