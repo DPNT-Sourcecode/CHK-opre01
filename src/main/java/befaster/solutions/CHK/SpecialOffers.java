@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public final class SpecialOffers {
     private static final Set<Offerable> SPECIAL_OFFERS = new HashSet<>();
+    private static final Set<GroupDiscountOffer> GROUP_DISCOUNT_OFFERS = new HashSet<>();
 
     static {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 3, 130));
@@ -32,6 +33,8 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
 
+
+
         Set<StockKeepingUnit> groupDiscountOffer = Set.of(
                 StockKeepingUnit.S,
                 StockKeepingUnit.T,
@@ -39,7 +42,7 @@ public final class SpecialOffers {
                 StockKeepingUnit.Y,
                 StockKeepingUnit.Z
         );
-        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, groupDiscountOffer, 3, 45));
+        GROUP_DISCOUNT_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, groupDiscountOffer, 3, 45));
     }
 
     private SpecialOffers() {
@@ -133,5 +136,6 @@ public final class SpecialOffers {
 
     }
 }
+
 
 
