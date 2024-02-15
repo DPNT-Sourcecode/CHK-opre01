@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,13 +73,24 @@ public final class SpecialOffers {
 //    }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> (specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
-                        || (specialOffer.getSku().equals(sku) && !specialOffer.getDiscountGroupOffer().isEmpty()))
-                .toList();
+        List<Offerable> filteredList = new LinkedList<>();
+        SPECIAL_OFFERS.forEach(specialOffer -> {
+            if(specialOffer.getSku().equals(sku)){
+                if(!specialOffer.getDiscountGroupOffer().isEmpty()) {
+                    filteredList.add(specialOffer);
+                }
+                else if (specialOffer.getNumberOfItems() <= numberOfItems) {
+                    filteredList.add(specialOffer);
+                }
+            }
+        });
+//        List<Offerable> filteredList = SPECIAL_OFFERS.stream()
+//                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+//                .toList();
 
         return sortByBestDiscount(filteredList);
     }
+
 
 //    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
 //        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
@@ -143,5 +155,3 @@ public final class SpecialOffers {
 
     }
 }
-
-
