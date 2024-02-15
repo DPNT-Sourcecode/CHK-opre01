@@ -103,6 +103,7 @@ public final class SpecialOffers {
 //        return sortByBestDiscount(filteredList);
 //    }
 
+    //CHK_4
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
@@ -111,6 +112,7 @@ public final class SpecialOffers {
         return sortByBestDiscount(filteredList);
     }
 
+    //CHK_4
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
         return offerableList.stream()
                 .sorted((s1, s2) -> {
@@ -122,18 +124,21 @@ public final class SpecialOffers {
         }).toList();
     }
 
+    //CHK_4
     private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice) {
         double originalPrice = (unitPrice * numberOfItems);
         double discountPrice = originalPrice - finalSellingPrice;
         return (discountPrice / originalPrice) * 100;
     }
 
+    //CHK_4
     private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket){
         List<Offerable> eligibleOffers = new ArrayList<>();
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
         return sortByBestDiscount(eligibleOffers);
     }
 
+    //CHK_4
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
@@ -197,6 +202,7 @@ public final class SpecialOffers {
 //        return offers;
 //    }
 
+    //CHK_4
     private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
@@ -214,3 +220,4 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
