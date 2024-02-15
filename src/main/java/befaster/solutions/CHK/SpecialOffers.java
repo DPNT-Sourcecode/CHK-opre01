@@ -271,17 +271,27 @@ public final class SpecialOffers {
         List<Offerable> filteredList = new ArrayList<>();
         List<Offerable> groupDiscountOffers = SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.getSkus().size() > 1).toList();
 
-        groupDiscountOffers.forEach(offer -> {
-            List<StockKeepingUnit> t = new ArrayList<>(skus);
-            t.retainAll(offer.getSkus());
+        groupDiscountOffers.forEach(specialOffer -> {
+            List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
+            skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
 
-//            offer.getSkus().forEach(sku -> {
-//                if(skus.contains(sku)) {
-//                    t.add(sku);
-//                }
-//            });
-
-           t.forEach(System.out::println);
+            if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
+                    //Can have more than one discount group
+                    int startIndex = 0;
+                    int endIndex = specialOffer.getNumberOfItems();
+                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
+                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+                        filteredList.add(offer);
+                        startIndex = endIndex;
+                        endIndex += specialOffer.getNumberOfItems();
+                    }
+                } else{
+                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
+                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+                    filteredList.add(offer);
+                }
         });
 
 
@@ -323,6 +333,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
