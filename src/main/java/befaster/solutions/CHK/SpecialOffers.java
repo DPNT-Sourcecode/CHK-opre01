@@ -34,7 +34,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
-        //SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
 
         //Group Discount Offers
 //        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, Set.of(StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
@@ -107,7 +107,7 @@ public final class SpecialOffers {
     //CHK_5
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         Set<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems))
+                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || specialOffer.getSkus().contains(sku))
                 .collect(Collectors.toSet());
 
         return sortByBestDiscount(filteredList);
@@ -257,6 +257,7 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 
 
