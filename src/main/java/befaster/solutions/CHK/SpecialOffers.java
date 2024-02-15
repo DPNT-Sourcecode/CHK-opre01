@@ -34,6 +34,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
         //SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
 
         //Group Discount Offers
@@ -151,7 +152,7 @@ public final class SpecialOffers {
     //CHK_4
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
                 .toList();
 
         return sortByBestDiscount(filteredList);
@@ -173,9 +174,9 @@ public final class SpecialOffers {
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
         return offerableList.stream()
                 .sorted((s1, s2) -> {
-            double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
+            double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSkus().get(0)),
                     s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-            double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
+            double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSkus().get(0)),
                     s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
             return Double.compare(s2Discount, s1Discount);
         }).toList();
@@ -214,7 +215,7 @@ public final class SpecialOffers {
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
-            StockKeepingUnit sku = offer.getSku();
+            StockKeepingUnit sku = offer.getSkus().get(0);
                 int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
                     int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
@@ -292,5 +293,6 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 

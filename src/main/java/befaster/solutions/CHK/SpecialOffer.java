@@ -16,9 +16,14 @@ public final class SpecialOffer implements Offerable{
         this.specialPrice = specialPrice;
     }
 
+//    @Override
+//    public StockKeepingUnit getSku() {
+//        return this.sku;
+//    }
+
     @Override
-    public StockKeepingUnit getSku() {
-        return this.sku;
+    public List<StockKeepingUnit> getSkus() {
+        return Collections.singletonList(sku);
     }
 
     @Override
@@ -72,4 +77,5 @@ public final class SpecialOffer implements Offerable{
         return result;
     }
 }
+
 

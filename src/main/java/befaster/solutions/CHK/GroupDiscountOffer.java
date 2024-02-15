@@ -8,21 +8,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class GroupDiscountOffer implements Offerable{
-    private final StockKeepingUnit sku;
-    private final Set<StockKeepingUnit> groupDiscountSkus;
+    private final List<StockKeepingUnit> skus;
     private final int numberOfItems;
     private final int price;
 
-    public GroupDiscountOffer(final StockKeepingUnit sku, final Set<StockKeepingUnit> groupDiscountSkus, final int numberOfItems, final int price) {
-        this.sku = sku;
-        this.groupDiscountSkus = new HashSet<>(groupDiscountSkus);
+    public GroupDiscountOffer(final List<StockKeepingUnit> skus, final int numberOfItems, final int price) {
+        this.skus = new ArrayList<>(skus);
         this.numberOfItems = numberOfItems;
         this.price = price;
     }
 
     @Override
-    public StockKeepingUnit getSku() {
-        return this.sku;
+    public List<StockKeepingUnit> getSkus() {
+        return new ArrayList<>(skus);
     }
 
     @Override
@@ -60,4 +58,5 @@ public class GroupDiscountOffer implements Offerable{
 //        return skus.stream().filter(groupDiscountSkus::contains).toList();
 //    }
 }
+
 

@@ -17,9 +17,14 @@ public class MultiOffer implements Offerable {
         this.newOffer = newOffer;
     }
 
+//    @Override
+//    public StockKeepingUnit getSku() {
+//        return this.sku;
+//    }
+
     @Override
-    public StockKeepingUnit getSku() {
-        return this.sku;
+    public List<StockKeepingUnit> getSkus() {
+        return Collections.singletonList(sku);
     }
 
     @Override
@@ -74,4 +79,5 @@ public class MultiOffer implements Offerable {
         return result;
     }
 }
+
 
