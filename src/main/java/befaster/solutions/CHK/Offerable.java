@@ -16,5 +16,3 @@ public interface Offerable {
     //Set<StockKeepingUnit> getDiscountGroupOffer();
 
 }
-
-

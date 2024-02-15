@@ -77,5 +77,3 @@ public final class SpecialOffer implements Offerable{
         return result;
     }
 }
-
-
