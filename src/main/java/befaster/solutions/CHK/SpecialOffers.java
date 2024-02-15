@@ -76,13 +76,12 @@ public final class SpecialOffers {
         List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
                 .stream()
                 .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
-                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
                 .toList();
 
-        Collections.reverse(groupDiscountOffers);
-
+        List<Offerable> sortedGroupDiscountOffers = sortByBestDiscount(groupDiscountOffers);
+        
         List<Offerable> filteredList = new LinkedList<>();
-        groupDiscountOffers.forEach(specialOffer -> {
+        sortedGroupDiscountOffers.forEach(specialOffer -> {
             if(skus.contains(specialOffer.getSku())){
                 System.out.println("Contains");
             }
@@ -158,5 +157,6 @@ public final class SpecialOffers {
 
     }
 }
+
 
 
