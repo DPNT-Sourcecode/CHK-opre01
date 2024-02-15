@@ -110,13 +110,16 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.forEach(specialOffer -> {
             if(specialOffer.getSkus().contains(sku)) {
                 if(specialOffer.getSkus().size() > 1) {
-                    List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>();
-                    skus.forEach(s -> {
-                        if(specialOffer.getSkus().contains(s)){
-                            skusWithGroupDiscountOffer.add(s);
-                        }
-                    });
+                    List<StockKeepingUnit> skusWithGroupDiscountOffer = skus
+                            .stream()
+                            .filter(specialOffer.getSkus()::contains)
+                            .toList();
 
+                    if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
+                        //Can have more than one discount group
+                        
+
+                    }
 
                 } else if (specialOffer.getNumberOfItems() <= numberOfItems) {
                     filteredList.add(specialOffer);
@@ -277,4 +280,5 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
