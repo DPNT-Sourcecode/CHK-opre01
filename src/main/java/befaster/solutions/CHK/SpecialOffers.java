@@ -63,6 +63,8 @@ public final class SpecialOffers {
                 .filter(skusFromgroupDiscountOffer::contains)
                 .toList();
 
+        //if(skusWithGroupDiscount.size())
+
         skusWithGroupDiscount.forEach(System.out::println);
 
         return groupDiscountOffers;
@@ -131,4 +133,5 @@ public final class SpecialOffers {
 
     }
 }
+
 
