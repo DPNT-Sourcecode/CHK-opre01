@@ -162,7 +162,7 @@ public final class SpecialOffers {
     private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList){
         List<Offerable> eligibleOffers = new ArrayList<>();
         basket.forEach((key, value) -> {
-            List<Offerable> t = getAllEligibleGroupDiscountOffers(key, stockKeepingUnitList);
+            List<Offerable> t = getAllEligibleGroupDiscountOffers(stockKeepingUnitList);
             eligibleOffers.addAll(getEligibleOffers(key, value));
         });
         return sortByBestDiscount(eligibleOffers);
@@ -267,10 +267,12 @@ public final class SpecialOffers {
 
 
     //CHK_5
-    private static List<Offerable> getAllEligibleGroupDiscountOffers(StockKeepingUnit sku, List<StockKeepingUnit> skus) {
+    private static List<Offerable> getAllEligibleGroupDiscountOffers(List<StockKeepingUnit> skus) {
         List<Offerable> filteredList = new ArrayList<>();
+
         SPECIAL_OFFERS.forEach(specialOffer -> {
-            if(specialOffer.getSkus().size() > 1 && specialOffer.getSkus().contains(sku)) {
+            boolean skuFound = skus.stream().anyMatch(sku -> specialOffer.getSkus().contains(sku));
+            if(specialOffer.getSkus().size() > 1 && skuFound) {
                 List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus
                         .stream()
                         .filter(specialOffer.getSkus()::contains)
@@ -300,5 +302,6 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
