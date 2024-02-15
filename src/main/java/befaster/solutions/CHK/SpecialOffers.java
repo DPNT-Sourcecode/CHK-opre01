@@ -105,7 +105,7 @@ public final class SpecialOffers {
 //    }
 
     //CHK_5
-    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems, List<StockKeepingUnit> skus) {
         Set<Offerable> filteredList =  SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || specialOffer.getSkus().contains(sku))
                 .collect(Collectors.toSet());
@@ -240,7 +240,7 @@ public final class SpecialOffers {
 //    }
 
     //CHK_4
-    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
+    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems,) {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
@@ -257,6 +257,7 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 
 
