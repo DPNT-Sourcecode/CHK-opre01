@@ -158,14 +158,14 @@ public final class SpecialOffers {
                 t.add(offer.getSku());
                 t.add(sku);
             }
-            else if (offer.getNumberOfItems() <= missingItems) {
-                int eligibleOffers = missingItems / offer.getNumberOfItems();
-                missingItems -= offer.getNumberOfItems() * eligibleOffers;
-                offers.addAll(Collections.nCopies(eligibleOffers, offer));
-                if (offer.hasNewOffer()) {
-                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
-                }
-            }
+//            if (offer.getNumberOfItems() <= missingItems) {
+//                int eligibleOffers = missingItems / offer.getNumberOfItems();
+//                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+//                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+//                if (offer.hasNewOffer()) {
+//                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
+//                }
+//            }
         }
         return offers;
 
@@ -189,3 +189,4 @@ public final class SpecialOffers {
 //
 //    }
 }
+
