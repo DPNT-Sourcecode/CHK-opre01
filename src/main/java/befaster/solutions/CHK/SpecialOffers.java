@@ -117,7 +117,8 @@ public final class SpecialOffers {
 
                     if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
                         //Can have more than one discount group
-                        
+                        int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
+
 
                     }
 
@@ -280,5 +281,6 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 
