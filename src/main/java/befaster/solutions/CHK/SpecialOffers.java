@@ -78,8 +78,10 @@ public final class SpecialOffers {
                 .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
                 .toList();
 
-        List<Offerable> sortedGroupDiscountOffers = sortByBestDiscount(groupDiscountOffers);
         
+
+        List<Offerable> sortedGroupDiscountOffers = sortByBestDiscount(groupDiscountOffers);
+
         List<Offerable> filteredList = new LinkedList<>();
         sortedGroupDiscountOffers.forEach(specialOffer -> {
             if(skus.contains(specialOffer.getSku())){
@@ -157,6 +159,7 @@ public final class SpecialOffers {
 
     }
 }
+
 
 
 
