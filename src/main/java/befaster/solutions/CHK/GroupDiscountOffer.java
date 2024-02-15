@@ -1,11 +1,7 @@
 package befaster.solutions.CHK;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class GroupDiscountOffer implements Offerable{
     private final List<StockKeepingUnit> skus;
@@ -42,19 +38,5 @@ public class GroupDiscountOffer implements Offerable{
     public Offerable getOffer() {
         return this;
     }
-
-//    @Override
-//    public Set<StockKeepingUnit> getDiscountGroupOffer() {
-//        return new HashSet<>(this.groupDiscountSkus);
-//    }
-
-//    @Override
-//    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
-//        return stockKeepingUnitList.stream().filter(groupDiscountSkus::contains).count() >= this.numberOfItems;
-//    }
-
-//    @Override
-//    public List<StockKeepingUnit> getGroupDiscountOffers(List<StockKeepingUnit> skus) {
-//        return skus.stream().filter(groupDiscountSkus::contains).toList();
-//    }
 }
+
