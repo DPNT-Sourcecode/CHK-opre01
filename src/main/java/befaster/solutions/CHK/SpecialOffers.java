@@ -159,9 +159,12 @@ public final class SpecialOffers {
 
 
     //CHK_4
-    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket){
+    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList){
         List<Offerable> eligibleOffers = new ArrayList<>();
-        basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
+        basket.forEach((key, value) -> {
+            List<Offerable> t = getAllEligibleGroupDiscountOffers(key, stockKeepingUnitList);
+            eligibleOffers.addAll(getEligibleOffers(key, value));
+        });
         return sortByBestDiscount(eligibleOffers);
     }
 
@@ -181,9 +184,9 @@ public final class SpecialOffers {
 //    }
 
     //CHK_4
-    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> finalOffers = new ArrayList<>();
-        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
+        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
             StockKeepingUnit sku = offer.getSkus().get(0);
                 int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
@@ -297,4 +300,5 @@ public final class SpecialOffers {
     }
 
 }
+
 
