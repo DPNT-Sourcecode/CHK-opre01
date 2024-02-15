@@ -33,6 +33,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
+        SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
 
         //Group Discount Offers
 //        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, Set.of(StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
@@ -255,4 +256,5 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
