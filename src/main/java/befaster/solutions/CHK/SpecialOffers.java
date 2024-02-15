@@ -168,11 +168,8 @@ public final class SpecialOffers {
 
     //CHK_4
     private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList){
-        List<Offerable> eligibleOffers = new ArrayList<>();
-        List<Offerable> t = getAllEligibleGroupDiscountOffers(stockKeepingUnitList);
-        basket.forEach((key, value) -> {
-            eligibleOffers.addAll(getEligibleOffers(key, value));
-        });
+        List<Offerable> eligibleOffers = new ArrayList<>(getAllEligibleGroupDiscountOffers(stockKeepingUnitList));
+        basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
         return sortByBestDiscount(eligibleOffers);
     }
 
@@ -341,11 +338,3 @@ public final class SpecialOffers {
     }
 
 }
-
-
-
-
-
-
-
-
