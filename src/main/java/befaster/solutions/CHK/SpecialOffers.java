@@ -192,8 +192,8 @@ public final class SpecialOffers {
                 offer.getSkus().forEach(sku -> {
                     int updatedQuantity = basket.get(sku) - 1;
                     basket.put(sku, updatedQuantity);
-                    finalOffers.add(offer);
                 });
+                finalOffers.add(offer);
             } else {
                 StockKeepingUnit sku = offer.getSkus().get(0);
                 int skuQuantity = basket.getOrDefault(sku, 0);
@@ -341,4 +341,5 @@ public final class SpecialOffers {
     }
 
 }
+
 
