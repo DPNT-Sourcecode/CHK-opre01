@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
-        SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        //SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
 
         //Group Discount Offers
 //        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, Set.of(StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
@@ -105,9 +106,9 @@ public final class SpecialOffers {
 
     //CHK_5
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || (specialOffer.getSkus().size() > 1 && specialOffer.getSkus().contains(sku)))
-                .toList();
+        Set<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems))
+                .collect(Collectors.toSet());
 
         return sortByBestDiscount(filteredList);
     }
@@ -122,7 +123,7 @@ public final class SpecialOffers {
 //    }
 
     //CHK_5
-    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
+    private static List<Offerable> sortByBestDiscount(Collection<Offerable> offerableList){
         return offerableList.stream()
                 .sorted((s1, s2) -> {
                     double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSkus().get(0)),
@@ -256,6 +257,7 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 
 
