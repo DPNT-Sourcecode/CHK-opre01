@@ -155,9 +155,11 @@ public final class SpecialOffers {
             int skuQuantity = basket.getOrDefault(sku, 0);
 
             if(!offer.getDiscountGroupOffer().isEmpty()){
-                if(skuQuantity >= 1){
-                    
-                }
+                List<StockKeepingUnit> t = offer.getDiscountGroupOffer()
+                        .stream()
+                        .filter(basket::containsKey)
+                        .toList();
+                t.forEach(System.out::println);
             }
 
 
@@ -206,3 +208,4 @@ public final class SpecialOffers {
 //        return offers;
 //    }
 }
+
