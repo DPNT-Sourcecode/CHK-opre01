@@ -76,27 +76,62 @@ public final class SpecialOffers {
         return sortByBestDiscount(eligibleOffers);
     }
 
+//    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
+//        List<Offerable> finalOffers = new ArrayList<>();
+//        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
+//            if (offer.getSkus().size() > 1) {
+//                offer.getSkus().forEach(sku -> {
+//                    int updatedQuantity = basket.get(sku) - 1;
+//                    basket.put(sku, updatedQuantity);
+//                });
+//                finalOffers.add(offer);
+//            } else {
+//                StockKeepingUnit sku = offer.getSkus().get(0);
+//                int skuQuantity = basket.getOrDefault(sku, 0);
+//                if (skuQuantity >= offer.getNumberOfItems()) {
+//                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+//                    basket.put(sku, updatedQuantity);
+//                    finalOffers.add(offer);
+//                }
+//            }
+//
+//        });
+//        return finalOffers;
+//    }
+
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> finalOffers = new ArrayList<>();
-        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
-            if (offer.getSkus().size() > 1) {
-                offer.getSkus().forEach(sku -> {
-                    int updatedQuantity = basket.get(sku) - 1;
-                    basket.put(sku, updatedQuantity);
-                });
-                finalOffers.add(offer);
-            } else {
-                StockKeepingUnit sku = offer.getSkus().get(0);
-                int skuQuantity = basket.getOrDefault(sku, 0);
-                if (skuQuantity >= offer.getNumberOfItems()) {
-                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
-                    basket.put(sku, updatedQuantity);
-                    finalOffers.add(offer);
-                }
-            }
 
+        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
+            if (isOfferApplicable(offer, basket)) {
+                updateBasketForOffer(offer, basket);
+                finalOffers.add(offer);
+            }
         });
+
         return finalOffers;
+    }
+
+    private static boolean isOfferApplicable(Offerable offer, Map<StockKeepingUnit, Integer> basket) {
+        if (offer.getSkus().size() > 1) {
+            return offer.getSkus().stream().allMatch(sku -> basket.getOrDefault(sku, 0) > 0);
+        }
+        StockKeepingUnit sku = offer.getSkus().get(0);
+        int skuQuantity = basket.getOrDefault(sku, 0);
+        return skuQuantity >= offer.getNumberOfItems();
+    }
+
+    private static void updateBasketForOffer(Offerable offer, Map<StockKeepingUnit, Integer> basket) {
+        if (offer.getSkus().size() > 1) {
+            offer.getSkus().forEach(sku -> {
+                int updatedQuantity = basket.get(sku) - 1;
+                basket.put(sku, updatedQuantity);
+            });
+        } else {
+            StockKeepingUnit sku = offer.getSkus().get(0);
+            int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+            basket.put(sku, updatedQuantity);
+        }
     }
 
     private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
@@ -154,6 +189,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
