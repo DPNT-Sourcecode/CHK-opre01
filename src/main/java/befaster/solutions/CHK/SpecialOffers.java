@@ -272,14 +272,16 @@ public final class SpecialOffers {
         List<Offerable> groupDiscountOffers = SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.getSkus().size() > 1).toList();
 
         groupDiscountOffers.forEach(offer -> {
-            List<StockKeepingUnit> t = new ArrayList<>();
-            offer.getSkus().forEach(sku -> {
-                if(skus.contains(sku)) {
-                    t.add(sku);
-                }
-            });
+            List<StockKeepingUnit> t = new ArrayList<>(skus);
+            t.retainAll(offer.getSkus());
 
-            t.forEach(System.out::println);
+//            offer.getSkus().forEach(sku -> {
+//                if(skus.contains(sku)) {
+//                    t.add(sku);
+//                }
+//            });
+
+           t.forEach(System.out::println);
         });
 
 
@@ -321,6 +323,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
