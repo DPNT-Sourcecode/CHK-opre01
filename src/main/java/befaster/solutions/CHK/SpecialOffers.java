@@ -106,7 +106,7 @@ public final class SpecialOffers {
     //CHK_5
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || (specialOffer.getSkus().size() > 1 && specialOffer.getSkus().contains(sku)))
                 .toList();
 
         return sortByBestDiscount(filteredList);
@@ -256,5 +256,6 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 
 
