@@ -38,5 +38,26 @@ public class GroupDiscountOffer implements Offerable{
     public Offerable getOffer() {
         return this;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GroupDiscountOffer that = (GroupDiscountOffer) o;
+
+        if (numberOfItems != that.numberOfItems) return false;
+        if (price != that.price) return false;
+        return skus.equals(that.skus);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = skus.hashCode();
+        result = 31 * result + numberOfItems;
+        result = 31 * result + price;
+        return result;
+    }
 }
+
 
