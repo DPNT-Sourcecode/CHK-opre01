@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class SpecialOffers {
     private static final Set<Offerable> SPECIAL_OFFERS = new HashSet<>();
@@ -45,12 +46,24 @@ public final class SpecialOffers {
 
     }
 
-    public static boolean hasGroupDiscountOffers(List<StockKeepingUnit> skus){
-        return SPECIAL_OFFERS.stream().anyMatch(specialOffer -> specialOffer.hasDiscountGroups(skus));
-    }
 
     public static List<Offerable> getGroupDiscountOffers(List<StockKeepingUnit> skus){
-        return SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.hasDiscountGroups(skus)).toList();
+        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
+                .stream()
+                .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
+                .toList();
+
+        Set<StockKeepingUnit> skusFromgroupDiscountOffer = groupDiscountOffers
+                .stream()
+                .flatMap(i -> i.getDiscountGroupOffer().stream())
+                .collect(Collectors.toSet());
+
+        List<StockKeepingUnit> skusWithGroupDiscount = skus
+                .stream()
+                .filter(skusFromgroupDiscountOffer::contains)
+                .toList();
+
+        skusWithGroupDiscount.forEach(System.out::println);
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {

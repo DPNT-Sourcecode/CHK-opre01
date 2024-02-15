@@ -41,9 +41,14 @@ public final class SpecialOffer implements Offerable{
     }
 
     @Override
-    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
-        return false;
+    public Set<StockKeepingUnit> getDiscountGroupOffer() {
+        return Collections.emptySet();
     }
+
+//    @Override
+//    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
+//        return false;
+//    }
 
     @Override
     public boolean equals(final Object o) {

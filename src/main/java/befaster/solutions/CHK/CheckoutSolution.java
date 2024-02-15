@@ -15,26 +15,32 @@ public class CheckoutSolution {
         }
 
         Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
+        List<StockKeepingUnit> stockKeepingUnitList;
         // Count the occurrences of each item
         try {
-            skus.chars()
+            stockKeepingUnitList = skus.chars()
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
-                    .forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+                    .toList();
+
+             stockKeepingUnitList.forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+
         } catch (IllegalArgumentException e) {
             return -1; // Illegal input, unknown item
         }
 
-        List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
-                .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
-                .sorted(Comparator.comparingInt(PriceTable::getPrice).reversed())
-                .toList();
+//        List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
+//                .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
+//                //.sorted(Comparator.comparingInt(PriceTable::getPrice).reversed())
+//                .toList();
 
-        if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
-            List<Offerable> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
+//        if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
+//            List<Offerable> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
+//
+//            groupDiscountOffers.forEach(System.out::println);
+//
+//        }
 
-            groupDiscountOffers.forEach(System.out::println);
-
-        }
+        SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
