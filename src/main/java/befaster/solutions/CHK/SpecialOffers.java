@@ -153,6 +153,9 @@ public final class SpecialOffers {
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
         for (Offerable offer : availableOffers) {
+            if(offer.getDiscountGroupOffer().contains(sku)){
+                offers.add(offer);
+            }
             if (offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
@@ -163,9 +166,26 @@ public final class SpecialOffers {
             }
         }
         return offers;
-
     }
+
+//    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
+//        List<Offerable> offers = new ArrayList<>();
+//        int missingItems = numberOfItems;
+//        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
+//        for (Offerable offer : availableOffers) {
+//            if (offer.getNumberOfItems() <= missingItems) {
+//                int eligibleOffers = missingItems / offer.getNumberOfItems();
+//                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+//                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+//                if (offer.hasNewOffer()) {
+//                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
+//                }
+//            }
+//        }
+//        return offers;
+//    }
 }
+
 
 
 
