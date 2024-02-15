@@ -156,7 +156,10 @@ public final class SpecialOffers {
         for (Offerable offer : availableOffers) {
             if(offer.getDiscountGroupOffer().contains(sku)){
                 t.add(offer.getSku());
-                t.add(sku);
+                missingItems--;
+                int itemsToAdd = missingItems / offer.getNumberOfItems();
+                t.addAll(Collections.nCopies(itemsToAdd, sku));
+                missingItems -= itemsToAdd;
             }
 //            if (offer.getNumberOfItems() <= missingItems) {
 //                int eligibleOffers = missingItems / offer.getNumberOfItems();
@@ -189,4 +192,5 @@ public final class SpecialOffers {
 //
 //    }
 }
+
 
