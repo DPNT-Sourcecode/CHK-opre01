@@ -20,7 +20,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.F, 3, PriceTable.getPrice(StockKeepingUnit.F) * 2));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.H, 5, 45));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.H, 10, 80));
-        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.K, 2, 150));
+        SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.K, 2, 120));
         SPECIAL_OFFERS.add(new MultiOffer(StockKeepingUnit.N, 3, PriceTable.getPrice(StockKeepingUnit.N) * 3,
                 new SpecialOffer(StockKeepingUnit.M, 1, 0)));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.P, 5, 200));
@@ -369,3 +369,4 @@ public final class SpecialOffers {
     }
 
 }
+
