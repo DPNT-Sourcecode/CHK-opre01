@@ -34,7 +34,7 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.U, 4, PriceTable.getPrice(StockKeepingUnit.U) * 3));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
-        SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        //SPECIAL_OFFERS.add(new SpecialOffer(List.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
 
         //Group Discount Offers
 //        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, Set.of(StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
@@ -104,82 +104,82 @@ public final class SpecialOffers {
 //        return sortByBestDiscount(filteredList);
 //    }
 
-    //CHK_5
-    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems, List<StockKeepingUnit> skus) {
-        List<Offerable> filteredList = new ArrayList<>();
-        SPECIAL_OFFERS.forEach(specialOffer -> {
-            if(specialOffer.getSkus().contains(sku)) {
-                if(specialOffer.getSkus().size() > 1) {
-                    List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus
-                            .stream()
-                            .filter(specialOffer.getSkus()::contains)
-                            .toList());
+//    //CHK_5
+//    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems, List<StockKeepingUnit> skus) {
+//        List<Offerable> filteredList = new ArrayList<>();
+//        SPECIAL_OFFERS.forEach(specialOffer -> {
+//            if(specialOffer.getSkus().contains(sku)) {
+//                if(specialOffer.getSkus().size() > 1) {
+//                    List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus
+//                            .stream()
+//                            .filter(specialOffer.getSkus()::contains)
+//                            .toList());
+//
+//                    if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
+//                        //Can have more than one discount group
+//                        int startIndex = 0;
+//                        int endIndex = specialOffer.getNumberOfItems();
+//                        while (endIndex <= skusWithGroupDiscountOffer.size()) {
+//                            List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+//                            Offerable offer = new SpecialOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                            filteredList.add(offer);
+//                            startIndex = endIndex;
+//                            endIndex += specialOffer.getNumberOfItems();
+//                        }
+//                    } else{
+//                        skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+//                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
+//                        Offerable offer = new SpecialOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                        filteredList.add(offer);
+//                    }
+//
+//                } else if (specialOffer.getNumberOfItems() <= numberOfItems) {
+//                    filteredList.add(specialOffer);
+//                }
+//            }
+//
+//        });
+//
+//
+////        Set<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+////                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || specialOffer.getSkus().contains(sku))
+////                .collect(Collectors.toSet());
+//
+//        return sortByBestDiscount(filteredList);
+ //   }
 
-                    if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
-                        //Can have more than one discount group
-                        int startIndex = 0;
-                        int endIndex = specialOffer.getNumberOfItems();
-                        while (endIndex <= skusWithGroupDiscountOffer.size()) {
-                            List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                            Offerable offer = new SpecialOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                            filteredList.add(offer);
-                            startIndex = endIndex;
-                            endIndex += specialOffer.getNumberOfItems();
-                        }
-                    } else{
-                        skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
-                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
-                        Offerable offer = new SpecialOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                        filteredList.add(offer);
-                    }
-
-                } else if (specialOffer.getNumberOfItems() <= numberOfItems) {
-                    filteredList.add(specialOffer);
-                }
-            }
-
-        });
-
-
-//        Set<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-//                .filter(specialOffer -> (specialOffer.getSkus().contains(sku) && specialOffer.getNumberOfItems() <= numberOfItems) || specialOffer.getSkus().contains(sku))
-//                .collect(Collectors.toSet());
+    //CHK_4
+    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .toList();
 
         return sortByBestDiscount(filteredList);
     }
 
-//    //CHK_4
-//    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-//        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-//                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
-//                .toList();
-//
-//        return sortByBestDiscount(filteredList);
-//    }
-
-    //CHK_5
-    private static List<Offerable> sortByBestDiscount(Collection<Offerable> offerableList){
-        return offerableList.stream()
-                .sorted((s1, s2) -> {
-                    double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSkus().get(0)),
-                            s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-                    double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSkus().get(0)),
-                            s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-                    return Double.compare(s2Discount, s1Discount);
-                }).toList();
-    }
-
-//    //CHK_4
-//    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
+//    //CHK_5
+//    private static List<Offerable> sortByBestDiscount(Collection<Offerable> offerableList){
 //        return offerableList.stream()
 //                .sorted((s1, s2) -> {
-//            double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
-//                    s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-//            double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
-//                    s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-//            return Double.compare(s2Discount, s1Discount);
-//        }).toList();
+//                    double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSkus().get(0)),
+//                            s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+//                    double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSkus().get(0)),
+//                            s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+//                    return Double.compare(s2Discount, s1Discount);
+//                }).toList();
 //    }
+
+    //CHK_4
+    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
+        return offerableList.stream()
+                .sorted((s1, s2) -> {
+            double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSku()),
+                    s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
+            double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSku()),
+                    s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
+            return Double.compare(s2Discount, s1Discount);
+        }).toList();
+    }
 
     //CHK_4
     private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice) {
@@ -189,41 +189,41 @@ public final class SpecialOffers {
     }
 
     //CHK_4
-    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> skus){
+    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket){
         List<Offerable> eligibleOffers = new ArrayList<>();
-        basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value, skus)));
+        basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
         return sortByBestDiscount(eligibleOffers);
     }
 
-    //CHK_5
-    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> skus) {
-        List<Offerable> finalOffers = new ArrayList<>();
-        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, skus).forEach(offer -> {
-            StockKeepingUnit sku = offer.getSkus().get(0);
-            int skuQuantity = basket.getOrDefault(sku, 0);
-            if (skuQuantity >= offer.getNumberOfItems()) {
-                int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
-                basket.put(sku, updatedQuantity);
-                finalOffers.add(offer);
-            }
-        });
-        return finalOffers;
-    }
-
-//    //CHK_4
-//    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+//    //CHK_5
+//    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> skus) {
 //        List<Offerable> finalOffers = new ArrayList<>();
-//        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
-//            StockKeepingUnit sku = offer.getSku();
-//                int skuQuantity = basket.getOrDefault(sku, 0);
-//                if (skuQuantity >= offer.getNumberOfItems()) {
-//                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
-//                    basket.put(sku, updatedQuantity);
-//                    finalOffers.add(offer);
-//                }
+//        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, skus).forEach(offer -> {
+//            StockKeepingUnit sku = offer.getSkus().get(0);
+//            int skuQuantity = basket.getOrDefault(sku, 0);
+//            if (skuQuantity >= offer.getNumberOfItems()) {
+//                int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+//                basket.put(sku, updatedQuantity);
+//                finalOffers.add(offer);
+//            }
 //        });
 //        return finalOffers;
 //    }
+
+    //CHK_4
+    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+        List<Offerable> finalOffers = new ArrayList<>();
+        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
+            StockKeepingUnit sku = offer.getSku();
+                int skuQuantity = basket.getOrDefault(sku, 0);
+                if (skuQuantity >= offer.getNumberOfItems()) {
+                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+                    basket.put(sku, updatedQuantity);
+                    finalOffers.add(offer);
+                }
+        });
+        return finalOffers;
+    }
 
 //    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
 //        List<Offerable> finalOffers = new ArrayList<>();
@@ -275,10 +275,10 @@ public final class SpecialOffers {
 //    }
 
     //CHK_4
-    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems, List<StockKeepingUnit> skus) {
+    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
-        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems, skus);
+        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
         for (Offerable offer : availableOffers) {
             if (offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
@@ -292,4 +292,5 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
 

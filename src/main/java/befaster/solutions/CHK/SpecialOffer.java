@@ -6,23 +6,19 @@ import java.util.List;
 import java.util.Set;
 
 public final class SpecialOffer implements Offerable{
-    private final List<StockKeepingUnit> skus;
+    private final StockKeepingUnit sku;
     private final int numberOfItems;
     private final int specialPrice;
 
-    public SpecialOffer(final List<StockKeepingUnit> skus, final int numberOfItems, final int specialPrice) {
-        this.skus = new ArrayList<>(skus);
+    public SpecialOffer(final StockKeepingUnit sku, final int numberOfItems, final int specialPrice) {
+        this.sku = sku;
         this.numberOfItems = numberOfItems;
         this.specialPrice = specialPrice;
     }
 
-    public SpecialOffer(final StockKeepingUnit sku, final int numberOfItems, final int specialPrice) {
-        this(Collections.singletonList(sku), numberOfItems, specialPrice);
-    }
-
     @Override
-    public List<StockKeepingUnit> getSkus() {
-        return new ArrayList<>(skus);
+    public StockKeepingUnit getSku() {
+        return this.sku;
     }
 
     @Override
@@ -65,14 +61,15 @@ public final class SpecialOffer implements Offerable{
 
         if (numberOfItems != that.numberOfItems) return false;
         if (specialPrice != that.specialPrice) return false;
-        return skus.equals(that.skus);
+        return sku == that.sku;
     }
 
     @Override
     public int hashCode() {
-        int result = skus.hashCode();
+        int result = sku.hashCode();
         result = 31 * result + numberOfItems;
         result = 31 * result + specialPrice;
         return result;
     }
 }
+

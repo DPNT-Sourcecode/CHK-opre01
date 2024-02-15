@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface Offerable {
 
-    List<StockKeepingUnit> getSkus();
+    StockKeepingUnit getSku();
     int getPrice();
     int getNumberOfItems();
     boolean hasNewOffer();
@@ -16,3 +16,4 @@ public interface Offerable {
     //Set<StockKeepingUnit> getDiscountGroupOffer();
 
 }
+
