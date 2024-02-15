@@ -1,16 +1,12 @@
 package befaster.solutions.CHK;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public final class SpecialOffers {
     private static final Set<Offerable> SPECIAL_OFFERS = new HashSet<>();
@@ -107,7 +103,7 @@ public final class SpecialOffers {
 
     //CHK_4
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+        List<Offerable> filteredList = SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
                 .toList();
 
@@ -127,7 +123,7 @@ public final class SpecialOffers {
 //    }
 
     //CHK_5
-    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
+    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList) {
         return offerableList.stream()
                 .sorted((s1, s2) -> {
                     int s1MedianPrice = getMedianPrice(s1);
@@ -167,7 +163,7 @@ public final class SpecialOffers {
 
 
     //CHK_4
-    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList){
+    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> eligibleOffers = new ArrayList<>(getAllEligibleGroupDiscountOffers(stockKeepingUnitList));
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
         return sortByBestDiscount(eligibleOffers);
@@ -192,13 +188,22 @@ public final class SpecialOffers {
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> finalOffers = new ArrayList<>();
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
-            StockKeepingUnit sku = offer.getSkus().get(0);
+            if (offer.getSkus().size() > 1) {
+                offer.getSkus().forEach(sku -> {
+                    int updatedQuantity = basket.get(sku) - 1;
+                    basket.put(sku, updatedQuantity);
+                    finalOffers.add(offer);
+                });
+            } else {
+                StockKeepingUnit sku = offer.getSkus().get(0);
                 int skuQuantity = basket.getOrDefault(sku, 0);
                 if (skuQuantity >= offer.getNumberOfItems()) {
                     int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
                     basket.put(sku, updatedQuantity);
                     finalOffers.add(offer);
                 }
+            }
+
         });
         return finalOffers;
     }
@@ -280,31 +285,29 @@ public final class SpecialOffers {
             List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
             skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
 
-            if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
-                    //Can have more than one discount group
-                    int startIndex = 0;
-                    int endIndex = specialOffer.getNumberOfItems();
-                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
-                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                        filteredList.add(offer);
-                        startIndex = endIndex;
-                        endIndex += specialOffer.getNumberOfItems();
-                    }
-                } else{
-                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
-                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
+            if (skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0) {
+                //Can have more than one discount group
+                int startIndex = 0;
+                int endIndex = specialOffer.getNumberOfItems();
+                while (endIndex <= skusWithGroupDiscountOffer.size()) {
+                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
                     Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
                     filteredList.add(offer);
+                    startIndex = endIndex;
+                    endIndex += specialOffer.getNumberOfItems();
                 }
+            } else {
+                skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+                List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
+                Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+                filteredList.add(offer);
+            }
         });
-
 
 
 //        List<StockKeepingUnit> skusWithGroupDiscountOffer = skus.stream()
 //                .filter(sku -> groupDiscountOffers.stream().anyMatch(specialOffer -> specialOffer.getSkus().contains(sku)))
 //                .toList();
-
 
 
 //            boolean skuFound = skus.stream().filter(specialOffer.getSkus()::contains).count() >= specialOffer.getNumberOfItems();
@@ -338,3 +341,4 @@ public final class SpecialOffers {
     }
 
 }
+
