@@ -117,6 +117,7 @@ public final class SpecialOffers {
                         }
                     });
 
+
                 } else if (specialOffer.getNumberOfItems() <= numberOfItems) {
                     filteredList.add(specialOffer);
                 }
@@ -276,3 +277,4 @@ public final class SpecialOffers {
         return offers;
     }
 }
+
