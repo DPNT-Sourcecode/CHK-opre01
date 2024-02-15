@@ -92,5 +92,3 @@ class CheckoutSolutionTest {
         assertEquals(Integer.parseInt(expected), result);
     }
 }
-
-

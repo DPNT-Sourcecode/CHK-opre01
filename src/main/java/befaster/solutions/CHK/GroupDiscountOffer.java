@@ -59,6 +59,3 @@ public final class GroupDiscountOffer implements Offerable{
         return result;
     }
 }
-
-
-
