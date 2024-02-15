@@ -299,6 +299,7 @@ public final class SpecialOffers {
                     }
                 } else {
                     skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+                    int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
                     List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
                     Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
                     filteredList.add(offer);
@@ -343,6 +344,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
