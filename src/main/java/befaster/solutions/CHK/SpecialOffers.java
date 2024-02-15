@@ -75,9 +75,11 @@ public final class SpecialOffers {
     public static List<Offerable> getAllAvailableGroupDiscountOffers(List<StockKeepingUnit> skus) {
         List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
                 .stream()
-                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
                 .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
+                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
                 .toList();
+
+        Collections.reverse(groupDiscountOffers);
 
         List<Offerable> filteredList = new LinkedList<>();
         groupDiscountOffers.forEach(specialOffer -> {
@@ -156,4 +158,5 @@ public final class SpecialOffers {
 
     }
 }
+
 
