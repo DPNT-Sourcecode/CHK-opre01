@@ -130,6 +130,7 @@ public final class SpecialOffers {
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
         return offerableList.stream()
                 .sorted((s1, s2) -> {
+                    int s1MedianPrice = s1.getSkus().stream().mapToInt(PriceTable::getPrice).reduce(0, Integer::sum) / s1.getNumberOfItems();
                     double s1Discount = calculateDiscountPercentage(PriceTable.getPrice(s1.getOffer().getSkus().get(0)),
                             s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
                     double s2Discount = calculateDiscountPercentage(PriceTable.getPrice(s2.getOffer().getSkus().get(0)),
@@ -333,6 +334,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
