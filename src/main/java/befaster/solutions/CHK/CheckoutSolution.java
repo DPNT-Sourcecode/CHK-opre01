@@ -42,7 +42,7 @@ public class CheckoutSolution {
 
         //SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
-        SpecialOffers.getAllAvailableGroupDiscountOffers(stockKeepingUnitList);
+        //SpecialOffers.getAllAvailableGroupDiscountOffers(stockKeepingUnitList);
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
@@ -58,4 +58,5 @@ public class CheckoutSolution {
     }
 
 }
+
 

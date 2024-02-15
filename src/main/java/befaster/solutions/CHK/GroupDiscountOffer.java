@@ -15,7 +15,7 @@ public class GroupDiscountOffer implements Offerable{
 
     public GroupDiscountOffer(final StockKeepingUnit sku, final Set<StockKeepingUnit> groupDiscountSkus, final int numberOfItems, final int price) {
         this.sku = sku;
-        this.groupDiscountSkus = groupDiscountSkus;
+        this.groupDiscountSkus = new HashSet<>(groupDiscountSkus);
         this.numberOfItems = numberOfItems;
         this.price = price;
     }
@@ -47,7 +47,7 @@ public class GroupDiscountOffer implements Offerable{
 
     @Override
     public Set<StockKeepingUnit> getDiscountGroupOffer() {
-        return this.groupDiscountSkus;
+        return new HashSet<>(this.groupDiscountSkus);
     }
 
 //    @Override
@@ -60,3 +60,4 @@ public class GroupDiscountOffer implements Offerable{
 //        return skus.stream().filter(groupDiscountSkus::contains).toList();
 //    }
 }
+
