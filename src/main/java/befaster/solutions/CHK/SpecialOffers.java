@@ -269,14 +269,12 @@ public final class SpecialOffers {
     //CHK_5
     private static List<Offerable> getAllEligibleGroupDiscountOffers(List<StockKeepingUnit> skus) {
         List<Offerable> filteredList = new ArrayList<>();
+        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.getSkus().size() > 1).toList();
+        List<StockKeepingUnit> l = skus.stream()
+                .filter(sku -> groupDiscountOffers.stream().anyMatch(specialOffer -> specialOffer.getSkus().contains(sku)))
+                .toList();
 
-        SPECIAL_OFFERS.forEach(specialOffer -> {
-            List<StockKeepingUnit> l = skus.stream()
-                    .filter(specialOffer.getSkus()::contains)
-                    .toList();
-
-            l.forEach(System.out::println);
-        });
+    l.forEach(System.out::println);
 
 
 //            boolean skuFound = skus.stream().filter(specialOffer.getSkus()::contains).count() >= specialOffer.getNumberOfItems();
@@ -310,3 +308,4 @@ public final class SpecialOffers {
     }
 
 }
+
