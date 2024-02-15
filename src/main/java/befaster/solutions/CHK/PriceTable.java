@@ -35,8 +35,12 @@ public final class PriceTable {
         PRICES.put(StockKeepingUnit.Z, 21);
     }
 
-    public static int getPrice(StockKeepingUnit sku){
+    private PriceTable() {
+    }
+
+    public static int getPrice(StockKeepingUnit sku) {
         return PRICES.getOrDefault(sku, -1);
     }
 
 }
+

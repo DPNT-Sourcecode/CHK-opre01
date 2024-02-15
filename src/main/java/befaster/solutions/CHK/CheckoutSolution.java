@@ -1,8 +1,5 @@
 package befaster.solutions.CHK;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,27 +19,11 @@ public class CheckoutSolution {
                     .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
                     .toList();
 
-             stockKeepingUnitList.forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+            stockKeepingUnitList.forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
 
         } catch (IllegalArgumentException e) {
             return -1; // Illegal input, unknown item
         }
-
-//        List<StockKeepingUnit> stockKeepingUnitList = skus.chars()
-//                .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
-//                //.sorted(Comparator.comparingInt(PriceTable::getPrice).reversed())
-//                .toList();
-
-//        if (SpecialOffers.hasGroupDiscountOffers(stockKeepingUnitList)) {
-//            List<Offerable> groupDiscountOffers = SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
-//
-//            groupDiscountOffers.forEach(System.out::println);
-//
-//        }
-
-        //SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
-
-        //SpecialOffers.getAllAvailableGroupDiscountOffers(stockKeepingUnitList);
 
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount, stockKeepingUnitList);
 
@@ -56,5 +37,5 @@ public class CheckoutSolution {
                 .mapToInt(entry -> PriceTable.getPrice(entry.getKey()) * entry.getValue())
                 .reduce(dicountPrice, Integer::sum);
     }
-
 }
+

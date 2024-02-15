@@ -1,9 +1,7 @@
 package befaster.solutions.CHK;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public final class SpecialOffer implements Offerable{
     private final StockKeepingUnit sku;
@@ -15,11 +13,6 @@ public final class SpecialOffer implements Offerable{
         this.numberOfItems = numberOfItems;
         this.specialPrice = specialPrice;
     }
-
-//    @Override
-//    public StockKeepingUnit getSku() {
-//        return this.sku;
-//    }
 
     @Override
     public List<StockKeepingUnit> getSkus() {
@@ -46,16 +39,6 @@ public final class SpecialOffer implements Offerable{
         return this;
     }
 
-//    @Override
-//    public Set<StockKeepingUnit> getDiscountGroupOffer() {
-//        return Collections.emptySet();
-//    }
-
-//    @Override
-//    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
-//        return false;
-//    }
-
 
     @Override
     public boolean equals(final Object o) {
@@ -77,3 +60,4 @@ public final class SpecialOffer implements Offerable{
         return result;
     }
 }
+

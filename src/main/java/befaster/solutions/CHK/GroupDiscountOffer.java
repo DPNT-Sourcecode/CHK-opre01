@@ -3,7 +3,7 @@ package befaster.solutions.CHK;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDiscountOffer implements Offerable{
+public final class GroupDiscountOffer implements Offerable{
     private final List<StockKeepingUnit> skus;
     private final int numberOfItems;
     private final int price;
@@ -59,5 +59,6 @@ public class GroupDiscountOffer implements Offerable{
         return result;
     }
 }
+
 
 
