@@ -47,37 +47,46 @@ public final class SpecialOffers {
     }
 
 
-    public static List<Offerable> getGroupDiscountOffers(List<StockKeepingUnit> skus){
-        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
-                .stream()
-                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
-                //.filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
-                .toList();
-
-        Set<StockKeepingUnit> skusFromgroupDiscountOffer = groupDiscountOffers
-                .stream()
-                .flatMap(i -> i.getDiscountGroupOffer().stream())
-                .collect(Collectors.toSet());
-
-        List<StockKeepingUnit> skusWithGroupDiscount = skus
-                .stream()
-                .filter(skusFromgroupDiscountOffer::contains)
-                .toList();
-
-        //if(skusWithGroupDiscount.size())
-
-        skusWithGroupDiscount.forEach(System.out::println);
-
-        return groupDiscountOffers;
-    }
+//    public static List<Offerable> getGroupDiscountOffers(List<StockKeepingUnit> skus){
+//        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
+//                .stream()
+//                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
+//                //.filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
+//                .toList();
+//
+//        Set<StockKeepingUnit> skusFromgroupDiscountOffer = groupDiscountOffers
+//                .stream()
+//                .flatMap(i -> i.getDiscountGroupOffer().stream())
+//                .collect(Collectors.toSet());
+//
+//        List<StockKeepingUnit> skusWithGroupDiscount = skus
+//                .stream()
+//                .filter(skusFromgroupDiscountOffer::contains)
+//                .toList();
+//
+//        //if(skusWithGroupDiscount.size())
+//
+//        skusWithGroupDiscount.forEach(System.out::println);
+//
+//        return groupDiscountOffers;
+//    }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
         List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .filter(specialOffer -> (specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                        || (specialOffer.getSku().equals(sku) && !specialOffer.getDiscountGroupOffer().isEmpty()))
                 .toList();
 
         return sortByBestDiscount(filteredList);
     }
+
+//    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+//        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+//                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+//                .toList();
+//
+//        return sortByBestDiscount(filteredList);
+//    }
 
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
         return offerableList.stream()
@@ -134,4 +143,5 @@ public final class SpecialOffers {
 
     }
 }
+
 
