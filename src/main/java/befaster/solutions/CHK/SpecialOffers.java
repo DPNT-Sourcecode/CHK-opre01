@@ -153,13 +153,18 @@ public final class SpecialOffers {
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
             StockKeepingUnit sku = offer.getSku();
             int skuQuantity = basket.getOrDefault(sku, 0);
-            List<StockKeepingUnit> t = new ArrayList<>();
+            List<StockKeepingUnit> availableDiscountOffers = new ArrayList<>();
 
-            if(!offer.getDiscountGroupOffer().isEmpty()){
-                t = offer.getDiscountGroupOffer()
+            if(skuQuantity >= 1 && !offer.getDiscountGroupOffer().isEmpty()){
+                availableDiscountOffers.addAll(Collections.nCopies(skuQuantity, sku));
+
+                List<StockKeepingUnit> t  = offer.getDiscountGroupOffer()
                         .stream()
                         .filter(s -> basket.containsKey(s))
                         .toList();
+
+                int availableSpace = 
+
                 t.forEach(System.out::println);
             }
 
@@ -209,5 +214,6 @@ public final class SpecialOffers {
 //        return offers;
 //    }
 }
+
 
 
