@@ -1,23 +1,28 @@
 package befaster.solutions.CHK;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 public final class SpecialOffer implements Offerable{
-    private final StockKeepingUnit sku;
+    private final List<StockKeepingUnit> skus;
     private final int numberOfItems;
     private final int specialPrice;
 
-    public SpecialOffer(final StockKeepingUnit sku, final int numberOfItems, final int specialPrice) {
-        this.sku = sku;
+    public SpecialOffer(final List<StockKeepingUnit> skus, final int numberOfItems, final int specialPrice) {
+        this.skus = new ArrayList<>(skus);
         this.numberOfItems = numberOfItems;
         this.specialPrice = specialPrice;
     }
 
+    public SpecialOffer(final StockKeepingUnit sku, final int numberOfItems, final int specialPrice) {
+        this(Collections.singletonList(sku), numberOfItems, specialPrice);
+    }
+
     @Override
-    public StockKeepingUnit getSku() {
-        return this.sku;
+    public List<StockKeepingUnit> getSkus() {
+        return new ArrayList<>(skus);
     }
 
     @Override
@@ -40,15 +45,16 @@ public final class SpecialOffer implements Offerable{
         return this;
     }
 
-    @Override
-    public Set<StockKeepingUnit> getDiscountGroupOffer() {
-        return Collections.emptySet();
-    }
+//    @Override
+//    public Set<StockKeepingUnit> getDiscountGroupOffer() {
+//        return Collections.emptySet();
+//    }
 
 //    @Override
 //    public boolean hasDiscountGroups(final List<StockKeepingUnit> stockKeepingUnitList) {
 //        return false;
 //    }
+
 
     @Override
     public boolean equals(final Object o) {
@@ -59,14 +65,15 @@ public final class SpecialOffer implements Offerable{
 
         if (numberOfItems != that.numberOfItems) return false;
         if (specialPrice != that.specialPrice) return false;
-        return sku == that.sku;
+        return skus.equals(that.skus);
     }
 
     @Override
     public int hashCode() {
-        int result = sku.hashCode();
+        int result = skus.hashCode();
         result = 31 * result + numberOfItems;
         result = 31 * result + specialPrice;
         return result;
     }
 }
+
