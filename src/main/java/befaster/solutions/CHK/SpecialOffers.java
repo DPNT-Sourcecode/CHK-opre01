@@ -280,7 +280,10 @@ public final class SpecialOffers {
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems, skus);
         for (Offerable offer : availableOffers) {
-            if (offer.getNumberOfItems() <= missingItems) {
+            if(offer.getSkus().size() > 1){
+                offers.add(offer);
+            }
+            else if (offer.getNumberOfItems() <= missingItems) {
                 int eligibleOffers = missingItems / offer.getNumberOfItems();
                 missingItems -= offer.getNumberOfItems() * eligibleOffers;
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
@@ -292,9 +295,3 @@ public final class SpecialOffers {
         return offers;
     }
 }
-
-
-
-
-
-
