@@ -300,9 +300,17 @@ public final class SpecialOffers {
                 } else {
                     skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
                     int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
-                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
-                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                    filteredList.add(offer);
+                    int startIndex = 0;
+                    int endIndex = specialOffer.getNumberOfItems();
+                    int count = 0;
+                    while (count <= eligibleOffers) {
+                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+                        filteredList.add(offer);
+                        startIndex = endIndex;
+                        endIndex += specialOffer.getNumberOfItems();
+                        count++;
+                    }
                 }
             }
         });
@@ -344,6 +352,7 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
 
