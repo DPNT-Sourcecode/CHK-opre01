@@ -271,37 +271,46 @@ public final class SpecialOffers {
         List<Offerable> filteredList = new ArrayList<>();
 
         SPECIAL_OFFERS.forEach(specialOffer -> {
-            boolean skuFound = skus.stream().anyMatch(sku -> specialOffer.getSkus().contains(sku));
-            if(specialOffer.getSkus().size() > 1 && skuFound) {
-                List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus
-                        .stream()
-                        .filter(specialOffer.getSkus()::contains)
-                        .toList());
+            List<StockKeepingUnit> l = skus.stream()
+                    .filter(specialOffer.getSkus()::contains)
+                    .toList();
 
-                if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
-                    //Can have more than one discount group
-                    int startIndex = 0;
-                    int endIndex = specialOffer.getNumberOfItems();
-                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
-                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                        filteredList.add(offer);
-                        startIndex = endIndex;
-                        endIndex += specialOffer.getNumberOfItems();
-                    }
-                } else{
-                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
-                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
-                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                    filteredList.add(offer);
-                }
-            }
+            l.forEach(System.out::println);
         });
+
+
+//            boolean skuFound = skus.stream().filter(specialOffer.getSkus()::contains).count() >= specialOffer.getNumberOfItems();
+//            if(specialOffer.getSkus().size() > 1 && skuFound) {
+//                List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus
+//                        .stream()
+//                        .filter(specialOffer.getSkus()::contains)
+//                        .toList());
+//
+//                if(skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0){
+//                    //Can have more than one discount group
+//                    int startIndex = 0;
+//                    int endIndex = specialOffer.getNumberOfItems();
+//                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
+//                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+//                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                        filteredList.add(offer);
+//                        startIndex = endIndex;
+//                        endIndex += specialOffer.getNumberOfItems();
+//                    }
+//                } else{
+//                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+//                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(0, specialOffer.getNumberOfItems());
+//                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                    filteredList.add(offer);
+//                }
+//            }
+//        });
 
         return filteredList;
     }
 
 }
+
 
 
 
