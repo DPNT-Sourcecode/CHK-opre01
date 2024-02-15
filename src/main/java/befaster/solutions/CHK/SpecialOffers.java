@@ -152,46 +152,21 @@ public final class SpecialOffers {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
-        List<StockKeepingUnit> t = new ArrayList<>();
         for (Offerable offer : availableOffers) {
-            if(offer.getDiscountGroupOffer().contains(sku)){
-                t.add(offer.getSku());
-                missingItems--;
-                int itemsToAdd = offer.getNumberOfItems() - missingItems;
-                t.addAll(Collections.nCopies(itemsToAdd, sku));
-                missingItems -= itemsToAdd;
+            if (offer.getNumberOfItems() <= missingItems) {
+                int eligibleOffers = missingItems / offer.getNumberOfItems();
+                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+                offers.addAll(Collections.nCopies(eligibleOffers, offer));
+                if (offer.hasNewOffer()) {
+                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
+                }
             }
-//            if (offer.getNumberOfItems() <= missingItems) {
-//                int eligibleOffers = missingItems / offer.getNumberOfItems();
-//                missingItems -= offer.getNumberOfItems() * eligibleOffers;
-//                offers.addAll(Collections.nCopies(eligibleOffers, offer));
-//                if (offer.hasNewOffer()) {
-//                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
-//                }
-//            }
         }
         return offers;
 
     }
-
-//    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
-//        List<Offerable> offers = new ArrayList<>();
-//        int missingItems = numberOfItems;
-//        List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
-//        for (Offerable offer : availableOffers) {
-//            if (offer.getNumberOfItems() <= missingItems) {
-//                int eligibleOffers = missingItems / offer.getNumberOfItems();
-//                missingItems -= offer.getNumberOfItems() * eligibleOffers;
-//                offers.addAll(Collections.nCopies(eligibleOffers, offer));
-//                if (offer.hasNewOffer()) {
-//                    offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
-//                }
-//            }
-//        }
-//        return offers;
-//
-//    }
 }
+
 
 
 
