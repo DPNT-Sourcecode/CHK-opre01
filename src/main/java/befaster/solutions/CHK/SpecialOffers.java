@@ -103,10 +103,12 @@ public final class SpecialOffers {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
+
         for (Offerable offer : availableOffers) {
-            if (offer.getNumberOfItems() <= missingItems) {
-                int eligibleOffers = missingItems / offer.getNumberOfItems();
-                missingItems -= offer.getNumberOfItems() * eligibleOffers;
+            int offerItems = offer.getNumberOfItems();
+            if (offerItems <= missingItems) {
+                int eligibleOffers = missingItems / offerItems;
+                missingItems -= offerItems * eligibleOffers;
                 offers.addAll(Collections.nCopies(eligibleOffers, offer));
                 if (offer.hasNewOffer()) {
                     offers.addAll(Collections.nCopies(eligibleOffers, offer.getOffer()));
@@ -115,36 +117,6 @@ public final class SpecialOffers {
         }
         return offers;
     }
-
-
-//    private static List<Offerable> getAllEligibleGroupDiscountOffers(List<StockKeepingUnit> skus) {
-//        List<Offerable> filteredList = new ArrayList<>();
-//        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS.stream().filter(specialOffer -> specialOffer.getSkus().size() > 1).toList();
-//
-//        groupDiscountOffers.forEach(specialOffer -> {
-//            List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
-//            skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
-//
-//            if (skusWithGroupDiscountOffer.size() >= specialOffer.getNumberOfItems()) {
-//                if (skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() != 0) {
-//                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
-//                }
-//                int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
-//                int startIndex = 0;
-//                int endIndex = specialOffer.getNumberOfItems();
-//                int count = 0;
-//                while (count < eligibleOffers) {
-//                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-//                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-//                    filteredList.add(offer);
-//                    startIndex = endIndex;
-//                    endIndex += specialOffer.getNumberOfItems();
-//                    count++;
-//                }
-//            }
-//        });
-//        return filteredList;
-//    }
 
     private static List<Offerable> getAllEligibleGroupDiscountOffers(List<StockKeepingUnit> skus) {
         List<Offerable> filteredList = new ArrayList<>();
@@ -182,5 +154,6 @@ public final class SpecialOffers {
     }
 
 }
+
 
 
