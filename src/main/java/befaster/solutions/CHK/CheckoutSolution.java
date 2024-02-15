@@ -42,6 +42,8 @@ public class CheckoutSolution {
 
         //SpecialOffers.getGroupDiscountOffers(stockKeepingUnitList);
 
+        SpecialOffers.getAllAvailableGroupDiscountOffers(stockKeepingUnitList);
+
         List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount);
 
         int dicountPrice = validOffers
@@ -56,3 +58,4 @@ public class CheckoutSolution {
     }
 
 }
+

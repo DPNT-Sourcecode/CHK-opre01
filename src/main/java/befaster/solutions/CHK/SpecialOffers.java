@@ -72,16 +72,17 @@ public final class SpecialOffers {
 //        return groupDiscountOffers;
 //    }
 
-    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+    public static List<Offerable> getAllAvailableGroupDiscountOffers(List<StockKeepingUnit> skus) {
+        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
+                .stream()
+                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
+                .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
+                .toList();
+
         List<Offerable> filteredList = new LinkedList<>();
-        SPECIAL_OFFERS.forEach(specialOffer -> {
-            if(specialOffer.getSku().equals(sku)){
-                if(!specialOffer.getDiscountGroupOffer().isEmpty()) {
-                    filteredList.add(specialOffer);
-                }
-                else if (specialOffer.getNumberOfItems() <= numberOfItems) {
-                    filteredList.add(specialOffer);
-                }
+        groupDiscountOffers.forEach(specialOffer -> {
+            if(skus.contains(specialOffer.getSku())){
+                System.out.println("Contains");
             }
         });
 //        List<Offerable> filteredList = SPECIAL_OFFERS.stream()
@@ -92,13 +93,13 @@ public final class SpecialOffers {
     }
 
 
-//    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-//        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
-//                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
-//                .toList();
-//
-//        return sortByBestDiscount(filteredList);
-//    }
+    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+        List<Offerable> filteredList =  SPECIAL_OFFERS.stream()
+                .filter(specialOffer -> specialOffer.getSku().equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .toList();
+
+        return sortByBestDiscount(filteredList);
+    }
 
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList){
         return offerableList.stream()
@@ -155,3 +156,4 @@ public final class SpecialOffers {
 
     }
 }
+
