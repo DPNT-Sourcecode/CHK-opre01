@@ -134,16 +134,38 @@ public final class SpecialOffers {
         return sortByBestDiscount(eligibleOffers);
     }
 
+//    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
+//        List<Offerable> finalOffers = new ArrayList<>();
+//        getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
+//            StockKeepingUnit sku = offer.getSku();
+//                int skuQuantity = basket.getOrDefault(sku, 0);
+//                if (skuQuantity >= offer.getNumberOfItems()) {
+//                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+//                    basket.put(sku, updatedQuantity);
+//                    finalOffers.add(offer);
+//                }
+//        });
+//        return finalOffers;
+//    }
+
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket) {
         List<Offerable> finalOffers = new ArrayList<>();
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket).forEach(offer -> {
             StockKeepingUnit sku = offer.getSku();
-                int skuQuantity = basket.getOrDefault(sku, 0);
-                if (skuQuantity >= offer.getNumberOfItems()) {
-                    int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
-                    basket.put(sku, updatedQuantity);
-                    finalOffers.add(offer);
+            int skuQuantity = basket.getOrDefault(sku, 0);
+
+            if(!offer.getDiscountGroupOffer().isEmpty()){
+                if(skuQuantity >= 1){
+                    
                 }
+            }
+
+
+            if (skuQuantity >= offer.getNumberOfItems()) {
+                int updatedQuantity = basket.get(sku) - offer.getNumberOfItems();
+                basket.put(sku, updatedQuantity);
+                finalOffers.add(offer);
+            }
         });
         return finalOffers;
     }
@@ -184,10 +206,3 @@ public final class SpecialOffers {
 //        return offers;
 //    }
 }
-
-
-
-
-
-
-
