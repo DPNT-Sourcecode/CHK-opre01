@@ -64,6 +64,8 @@ public final class SpecialOffers {
                 .toList();
 
         skusWithGroupDiscount.forEach(System.out::println);
+
+        return groupDiscountOffers;
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
@@ -129,3 +131,4 @@ public final class SpecialOffers {
 
     }
 }
+
