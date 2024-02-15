@@ -285,33 +285,50 @@ public final class SpecialOffers {
             List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
             skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
 
-            if(skusWithGroupDiscountOffer.size() >= specialOffer.getNumberOfItems()) {
-                if (skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0) {
-                    //Can have more than one discount group
-                    int startIndex = 0;
-                    int endIndex = specialOffer.getNumberOfItems();
-                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
-                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                        filteredList.add(offer);
-                        startIndex = endIndex;
-                        endIndex += specialOffer.getNumberOfItems();
-                    }
-                } else {
+            if (skusWithGroupDiscountOffer.size() >= specialOffer.getNumberOfItems()) {
+                if (skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() != 0) {
                     skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
-                    int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
-                    int startIndex = 0;
-                    int endIndex = specialOffer.getNumberOfItems();
-                    int count = 0;
-                    while (count <= eligibleOffers) {
-                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
-                        filteredList.add(offer);
-                        startIndex = endIndex;
-                        endIndex += specialOffer.getNumberOfItems();
-                        count++;
-                    }
                 }
+                int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
+                int startIndex = 0;
+                int endIndex = specialOffer.getNumberOfItems();
+                int count = 0;
+                while (count < eligibleOffers) {
+                    List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+                    filteredList.add(offer);
+                    startIndex = endIndex;
+                    endIndex += specialOffer.getNumberOfItems();
+                    count++;
+                }
+
+
+//                if (skusWithGroupDiscountOffer.size() % specialOffer.getNumberOfItems() == 0) {
+//                    //Can have more than one discount group
+//                    int startIndex = 0;
+//                    int endIndex = specialOffer.getNumberOfItems();
+//                    while (endIndex <= skusWithGroupDiscountOffer.size()) {
+//                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+//                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                        filteredList.add(offer);
+//                        startIndex = endIndex;
+//                        endIndex += specialOffer.getNumberOfItems();
+//                    }
+//                } else {
+//                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+//                    int eligibleOffers = skusWithGroupDiscountOffer.size() / specialOffer.getNumberOfItems();
+//                    int startIndex = 0;
+//                    int endIndex = specialOffer.getNumberOfItems();
+//                    int count = 0;
+//                    while (count < eligibleOffers) {
+//                        List<StockKeepingUnit> skusWithGroupDiscountOfferSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
+//                        Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOfferSubList, specialOffer.getNumberOfItems(), specialOffer.getPrice());
+//                        filteredList.add(offer);
+//                        startIndex = endIndex;
+//                        endIndex += specialOffer.getNumberOfItems();
+//                        count++;
+//                    }
+//                }
             }
         });
 
@@ -352,8 +369,3 @@ public final class SpecialOffers {
     }
 
 }
-
-
-
-
-
