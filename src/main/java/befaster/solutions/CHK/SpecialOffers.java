@@ -3,6 +3,7 @@ package befaster.solutions.CHK;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 public final class SpecialOffers {
     private static final Set<Offerable> SPECIAL_OFFERS = new HashSet<>();
-    private static final Set<GroupDiscountOffer> GROUP_DISCOUNT_OFFERS = new HashSet<>();
+    //private static final Set<Offerable> GROUP_DISCOUNT_OFFERS = new HashSet<>();
 
     static {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.A, 3, 130));
@@ -33,16 +34,12 @@ public final class SpecialOffers {
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 2, 90));
         SPECIAL_OFFERS.add(new SpecialOffer(StockKeepingUnit.V, 3, 130));
 
-
-
-        Set<StockKeepingUnit> groupDiscountOffer = Set.of(
-                StockKeepingUnit.S,
-                StockKeepingUnit.T,
-                StockKeepingUnit.X,
-                StockKeepingUnit.Y,
-                StockKeepingUnit.Z
-        );
-        GROUP_DISCOUNT_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, groupDiscountOffer, 3, 45));
+        //Group Discount Offers
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.S, Set.of(StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.T, Set.of(StockKeepingUnit.S, StockKeepingUnit.X, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.X, Set.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.Y, StockKeepingUnit.Z), 3, 45));
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.Y, Set.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Z), 3, 45));
+        SPECIAL_OFFERS.add(new GroupDiscountOffer(StockKeepingUnit.Z, Set.of(StockKeepingUnit.S, StockKeepingUnit.T, StockKeepingUnit.X, StockKeepingUnit.Y), 3, 45));
     }
 
     private SpecialOffers() {
@@ -53,7 +50,8 @@ public final class SpecialOffers {
     public static List<Offerable> getGroupDiscountOffers(List<StockKeepingUnit> skus){
         List<Offerable> groupDiscountOffers = SPECIAL_OFFERS
                 .stream()
-                .filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
+                .sorted(Comparator.comparingInt(o -> PriceTable.getPrice(o.getSku())))
+                //.filter(specialOffer -> !specialOffer.getDiscountGroupOffer().isEmpty())
                 .toList();
 
         Set<StockKeepingUnit> skusFromgroupDiscountOffer = groupDiscountOffers
@@ -136,3 +134,4 @@ public final class SpecialOffers {
 
     }
 }
+
