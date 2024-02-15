@@ -214,7 +214,3 @@ public final class SpecialOffers {
         return offers;
     }
 }
-
-
-
-
