@@ -155,11 +155,9 @@ public final class SpecialOffers {
         List<StockKeepingUnit> t = new ArrayList<>();
         for (Offerable offer : availableOffers) {
             if(offer.getDiscountGroupOffer().contains(sku)){
-                //t.add(offer.getSku());
+                t.add(offer.getSku());
                 missingItems--;
-                int itemsToAdd = missingItems / offer.getNumberOfItems();
-                //t.add(sku);
-                //        t.add(sku);
+                int itemsToAdd = offer.getNumberOfItems() - missingItems;
                 t.addAll(Collections.nCopies(itemsToAdd, sku));
                 missingItems -= itemsToAdd;
             }
@@ -194,6 +192,7 @@ public final class SpecialOffers {
 //
 //    }
 }
+
 
 
 
