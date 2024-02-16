@@ -38,23 +38,30 @@ public final class SpecialOffers {
     }
 
     private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
-        List<Offerable> filteredList = SPECIAL_OFFERS.stream()
+        return SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .sorted(SpecialOffers::compareByBestDiscount)
                 .toList();
-
-        return sortByBestDiscount(filteredList);
     }
 
-    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList) {
-        return offerableList.stream()
-                .sorted((offer1, offer2) -> {
-                    double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
-                            offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
-                    double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
-                            offer2.getOffer().getNumberOfItems(), offer2.getOffer().getPrice());
-                    return Double.compare(offer2Discount, offer1Discount);
-                }).toList();
+    private static int compareByBestDiscount(Offerable offer1, Offerable offer2) {
+        double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
+                offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
+        double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
+                offer2.getOffer().getNumberOfItems(), offer2.getOffer().getPrice());
+        return Double.compare(offer2Discount, offer1Discount);
     }
+
+//    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList) {
+//        return offerableList.stream()
+//                .sorted((offer1, offer2) -> {
+//                    double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
+//                            offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
+//                    double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
+//                            offer2.getOffer().getNumberOfItems(), offer2.getOffer().getPrice());
+//                    return Double.compare(offer2Discount, offer1Discount);
+//                }).toList();
+//    }
 
     private static int getPrice(final Offerable offer) {
         return offer.getSkus()
@@ -71,8 +78,12 @@ public final class SpecialOffers {
 
     private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> eligibleOffers = new ArrayList<>(getAllEligibleGroupDiscountOffers(stockKeepingUnitList));
+
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
-        return sortByBestDiscount(eligibleOffers);
+
+        eligibleOffers.sort(SpecialOffers::compareByBestDiscount);
+
+        return eligibleOffers;
     }
 
     public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
@@ -167,3 +178,4 @@ public final class SpecialOffers {
     }
 
 }
+
