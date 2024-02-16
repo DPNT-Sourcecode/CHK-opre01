@@ -187,4 +187,3 @@ public final class SpecialOffers {
                 .toList();
     }
 }
-
