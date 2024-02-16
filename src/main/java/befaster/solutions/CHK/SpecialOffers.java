@@ -148,7 +148,7 @@ public final class SpecialOffers {
 
             if (size >= numberOfItems) {
                 if (size % numberOfItems != 0) {
-                    sortByHighestPrice(skusWithGroupDiscountOffer);
+                    sortByHighestPriceDescendingOrder(skusWithGroupDiscountOffer);
                 }
 
                 int eligibleOffers = size / numberOfItems;
@@ -167,7 +167,7 @@ public final class SpecialOffers {
         return filteredList;
     }
 
-    private static void sortByHighestPrice(final List<StockKeepingUnit> skusWithGroupDiscountOffer) {
+    private static void sortByHighestPriceDescendingOrder(final List<StockKeepingUnit> skusWithGroupDiscountOffer) {
         skusWithGroupDiscountOffer
                 .sort(Comparator.comparingInt(PriceTable::getPrice)
                 .reversed());
