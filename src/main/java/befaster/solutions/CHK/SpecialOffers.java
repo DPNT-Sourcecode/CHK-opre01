@@ -141,22 +141,24 @@ public final class SpecialOffers {
         List<Offerable> filteredList = new ArrayList<>();
 
         getGroupDiscountOffers().forEach(specialOffer -> {
-            List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
-            skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
+            List<StockKeepingUnit> skusWithGroupDiscountOffer = getSkusWithGroupDiscountOffer(skus, specialOffer.getSkus());
 
             int numberOfItems = specialOffer.getNumberOfItems();
+            int size = skusWithGroupDiscountOffer.size();
 
-            if (skusWithGroupDiscountOffer.size() >= numberOfItems) {
-                if (skusWithGroupDiscountOffer.size() % numberOfItems != 0) {
-                    skusWithGroupDiscountOffer.sort(Comparator.comparingInt(PriceTable::getPrice).reversed());
+            if (size >= numberOfItems) {
+                if (size % numberOfItems != 0) {
+                    skusWithGroupDiscountOffer
+                            .sort(Comparator.comparingInt(PriceTable::getPrice)
+                            .reversed());
                 }
 
-                int eligibleOffers = skusWithGroupDiscountOffer.size() / numberOfItems;
+                int eligibleOffers = size / numberOfItems;
                 int startIndex = 0;
                 int endIndex = numberOfItems;
                 for (int count = 0; count < eligibleOffers; count++) {
-                    List<StockKeepingUnit> skusSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
-                    Offerable offer = new GroupDiscountOffer(skusSubList, numberOfItems, specialOffer.getPrice());
+                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOffer.subList(startIndex, endIndex),
+                            numberOfItems, specialOffer.getPrice());
                     filteredList.add(offer);
                     startIndex = endIndex;
                     endIndex += numberOfItems;
@@ -165,6 +167,12 @@ public final class SpecialOffers {
         });
 
         return filteredList;
+    }
+
+    private static List<StockKeepingUnit> getSkusWithGroupDiscountOffer(final List<StockKeepingUnit> skus, final List<StockKeepingUnit> offerSkus) {
+        List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
+        skusWithGroupDiscountOffer.retainAll(offerSkus);
+        return skusWithGroupDiscountOffer;
     }
 
     private static List<Offerable> getGroupDiscountOffers() {
