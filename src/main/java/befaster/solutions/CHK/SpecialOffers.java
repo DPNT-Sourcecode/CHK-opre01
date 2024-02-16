@@ -41,11 +41,11 @@ public final class SpecialOffers {
         return SPECIAL_OFFERS.stream()
                 .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku)
                         && specialOffer.getNumberOfItems() <= numberOfItems)
-                .sorted(SpecialOffers::compareByBestDiscount)
+                .sorted(SpecialOffers::compareByBestDiscountReverseOrder)
                 .toList();
     }
 
-    private static int compareByBestDiscount(final Offerable offer1, final Offerable offer2) {
+    private static int compareByBestDiscountReverseOrder(final Offerable offer1, final Offerable offer2) {
         double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
                 offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
         double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
@@ -75,7 +75,7 @@ public final class SpecialOffers {
 
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
 
-        eligibleOffers.sort(SpecialOffers::compareByBestDiscount);
+        eligibleOffers.sort(SpecialOffers::compareByBestDiscountReverseOrder);
 
         return eligibleOffers;
     }
@@ -185,3 +185,4 @@ public final class SpecialOffers {
                 .toList();
     }
 }
+
