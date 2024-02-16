@@ -52,17 +52,6 @@ public final class SpecialOffers {
         return Double.compare(offer2Discount, offer1Discount);
     }
 
-//    private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList) {
-//        return offerableList.stream()
-//                .sorted((offer1, offer2) -> {
-//                    double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
-//                            offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
-//                    double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
-//                            offer2.getOffer().getNumberOfItems(), offer2.getOffer().getPrice());
-//                    return Double.compare(offer2Discount, offer1Discount);
-//                }).toList();
-//    }
-
     private static int getPrice(final Offerable offer) {
         return offer.getSkus()
                 .stream()
@@ -178,4 +167,5 @@ public final class SpecialOffers {
     }
 
 }
+
 
