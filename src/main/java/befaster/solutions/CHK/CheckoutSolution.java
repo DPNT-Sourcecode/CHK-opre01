@@ -7,34 +7,57 @@ import java.util.Objects;
 
 public class CheckoutSolution {
     public Integer checkout(String skus) {
-        if (Objects.isNull(skus) || skus.isEmpty()) {
+        if (inputIsNotValid(skus)) {
             return 0; // Empty basket, total price is zero
         }
 
-        final Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
-        final List<StockKeepingUnit> stockKeepingUnitList;
-        // Count the occurrences of each item
-        try {
-            stockKeepingUnitList = skus.chars()
-                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
-                    .toList();
+        final List<StockKeepingUnit> stockKeepingUnitList = mapToStockKeepingUnit(skus);
 
-            stockKeepingUnitList.forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
-
-        } catch (IllegalArgumentException e) {
+        if (Objects.isNull(stockKeepingUnitList)) {
             return -1; // Illegal input, unknown item
         }
 
-        final List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount, stockKeepingUnitList);
+        final Map<StockKeepingUnit, Integer> basketCount =  countNumberOfSameStockKeepingUnits(stockKeepingUnitList);
+        int dicountPrice = getDicountPrice(basketCount, stockKeepingUnitList);
 
-        int dicountPrice = validOffers
-                .stream()
-                .mapToInt(Offerable::getPrice)
-                .reduce(0, Integer::sum);
+        return sumTotal(basketCount, dicountPrice);
+    }
 
+    private static int sumTotal(final Map<StockKeepingUnit, Integer> basketCount, final int dicountPrice) {
         return basketCount.entrySet()
                 .stream()
                 .mapToInt(entry -> PriceTable.getPrice(entry.getKey()) * entry.getValue())
                 .reduce(dicountPrice, Integer::sum);
+    }
+
+    private static int getDicountPrice(final Map<StockKeepingUnit, Integer> basketCount,
+                                       final List<StockKeepingUnit> stockKeepingUnitList) {
+        final List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount, stockKeepingUnitList);
+
+        return validOffers
+                .stream()
+                .mapToInt(Offerable::getPrice)
+                .reduce(0, Integer::sum);
+    }
+
+    private static Map<StockKeepingUnit, Integer> countNumberOfSameStockKeepingUnits(final List<StockKeepingUnit> stockKeepingUnitList) {
+        final Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
+        stockKeepingUnitList.forEach(sku -> basketCount.merge(sku, 1, Integer::sum));
+        return basketCount;
+    }
+
+    private static boolean inputIsNotValid(final String skus) {
+        return Objects.isNull(skus) || skus.isEmpty();
+    }
+
+    private static List<StockKeepingUnit> mapToStockKeepingUnit(final String skus) {
+        try {
+            return skus.chars()
+                    .mapToObj(sku -> StockKeepingUnit.getStockKeepingUnit((char) sku))
+                    .toList();
+
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }
