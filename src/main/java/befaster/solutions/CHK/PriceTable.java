@@ -38,7 +38,7 @@ public final class PriceTable {
     private PriceTable() {
     }
 
-    public static int getPrice(StockKeepingUnit sku) {
+    public static int getPrice(final StockKeepingUnit sku) {
         return PRICES.getOrDefault(sku, -1);
     }
 

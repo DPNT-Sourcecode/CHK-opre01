@@ -11,8 +11,8 @@ public class CheckoutSolution {
             return 0; // Empty basket, total price is zero
         }
 
-        Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
-        List<StockKeepingUnit> stockKeepingUnitList;
+        final Map<StockKeepingUnit, Integer> basketCount = new LinkedHashMap<>();
+        final List<StockKeepingUnit> stockKeepingUnitList;
         // Count the occurrences of each item
         try {
             stockKeepingUnitList = skus.chars()
@@ -25,7 +25,7 @@ public class CheckoutSolution {
             return -1; // Illegal input, unknown item
         }
 
-        List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount, stockKeepingUnitList);
+        final List<Offerable> validOffers = SpecialOffers.updateBasketCountAndGetValidOffers(basketCount, stockKeepingUnitList);
 
         int dicountPrice = validOffers
                 .stream()

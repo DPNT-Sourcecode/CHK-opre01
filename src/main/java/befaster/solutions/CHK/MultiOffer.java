@@ -3,7 +3,7 @@ package befaster.solutions.CHK;
 import java.util.Collections;
 import java.util.List;
 
-public class MultiOffer implements Offerable {
+public final class MultiOffer implements Offerable {
     private final StockKeepingUnit sku;
     private final int numberOfItems;
     private final int price;
