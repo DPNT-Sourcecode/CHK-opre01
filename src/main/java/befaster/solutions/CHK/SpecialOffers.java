@@ -138,32 +138,34 @@ public final class SpecialOffers {
     }
 
     private static List<Offerable> getAllEligibleGroupDiscountOffers(final List<StockKeepingUnit> skus) {
+        return getGroupDiscountOffers().stream()
+                .flatMap(specialOffer -> getEligibleGroupDiscountOffer(skus, specialOffer).stream())
+                .toList();
+    }
+
+    private static List<Offerable> getEligibleGroupDiscountOffer(final List<StockKeepingUnit> skus, final Offerable specialOffer) {
         List<Offerable> filteredList = new ArrayList<>();
+        List<StockKeepingUnit> skusWithGroupDiscountOffer = getSkusWithGroupDiscountOffer(skus, specialOffer.getSkus());
 
-        getGroupDiscountOffers().forEach(specialOffer -> {
-            List<StockKeepingUnit> skusWithGroupDiscountOffer = getSkusWithGroupDiscountOffer(skus, specialOffer.getSkus());
+        int numberOfItems = specialOffer.getNumberOfItems();
+        int size = skusWithGroupDiscountOffer.size();
 
-            int numberOfItems = specialOffer.getNumberOfItems();
-            int size = skusWithGroupDiscountOffer.size();
-
-            if (size >= numberOfItems) {
-                if (size % numberOfItems != 0) {
-                    sortByHighestPriceDescendingOrder(skusWithGroupDiscountOffer);
-                }
-
-                int eligibleOffers = size / numberOfItems;
-                int startIndex = 0;
-                int endIndex = numberOfItems;
-                for (int count = 0; count < eligibleOffers; count++) {
-                    Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOffer.subList(startIndex, endIndex),
-                            numberOfItems, specialOffer.getPrice());
-                    filteredList.add(offer);
-                    startIndex = endIndex;
-                    endIndex += numberOfItems;
-                }
+        if (size >= numberOfItems) {
+            if (size % numberOfItems != 0) {
+                sortByHighestPriceDescendingOrder(skusWithGroupDiscountOffer);
             }
-        });
 
+            int eligibleOffers = size / numberOfItems;
+            int startIndex = 0;
+            int endIndex = numberOfItems;
+            for (int count = 0; count < eligibleOffers; count++) {
+                Offerable offer = new GroupDiscountOffer(skusWithGroupDiscountOffer.subList(startIndex, endIndex),
+                        numberOfItems, specialOffer.getPrice());
+                filteredList.add(offer);
+                startIndex = endIndex;
+                endIndex += numberOfItems;
+            }
+        }
         return filteredList;
     }
 
@@ -185,3 +187,4 @@ public final class SpecialOffers {
                 .toList();
     }
 }
+
