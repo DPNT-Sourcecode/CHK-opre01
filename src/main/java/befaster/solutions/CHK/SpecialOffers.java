@@ -148,9 +148,7 @@ public final class SpecialOffers {
 
             if (size >= numberOfItems) {
                 if (size % numberOfItems != 0) {
-                    skusWithGroupDiscountOffer
-                            .sort(Comparator.comparingInt(PriceTable::getPrice)
-                            .reversed());
+                    sortByHighestPrice(skusWithGroupDiscountOffer);
                 }
 
                 int eligibleOffers = size / numberOfItems;
@@ -169,6 +167,12 @@ public final class SpecialOffers {
         return filteredList;
     }
 
+    private static void sortByHighestPrice(final List<StockKeepingUnit> skusWithGroupDiscountOffer) {
+        skusWithGroupDiscountOffer
+                .sort(Comparator.comparingInt(PriceTable::getPrice)
+                .reversed());
+    }
+
     private static List<StockKeepingUnit> getSkusWithGroupDiscountOffer(final List<StockKeepingUnit> skus, final List<StockKeepingUnit> offerSkus) {
         List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
         skusWithGroupDiscountOffer.retainAll(offerSkus);
@@ -181,3 +185,4 @@ public final class SpecialOffers {
                 .toList();
     }
 }
+
