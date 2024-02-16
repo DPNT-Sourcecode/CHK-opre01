@@ -172,5 +172,5 @@ public final class SpecialOffers {
                 .filter(specialOffer -> specialOffer.getSkus().size() > 1)
                 .toList();
     }
-
 }
+

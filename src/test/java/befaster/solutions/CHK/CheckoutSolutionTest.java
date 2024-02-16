@@ -1,6 +1,5 @@
 package befaster.solutions.CHK;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -92,3 +91,4 @@ class CheckoutSolutionTest {
         assertEquals(Integer.parseInt(expected), result);
     }
 }
+
