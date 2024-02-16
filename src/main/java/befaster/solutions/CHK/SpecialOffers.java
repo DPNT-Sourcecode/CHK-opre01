@@ -47,22 +47,26 @@ public final class SpecialOffers {
 
     private static List<Offerable> sortByBestDiscount(List<Offerable> offerableList) {
         return offerableList.stream()
-                .sorted((s1, s2) -> {
-                    int s1MedianPrice = getMedianPrice(s1);
-                    int s1Price = s1.getSkus().size() > 1 ? s1MedianPrice : PriceTable.getPrice(s1.getOffer().getSkus().get(0));
-                    double s1Discount = calculateDiscountPercentage(s1Price,
-                            s1.getOffer().getNumberOfItems(), s1.getOffer().getPrice());
-                    int s2MedianPrice = getMedianPrice(s2);
-                    int s2Price = s2.getSkus().size() > 1 ? s2MedianPrice : PriceTable.getPrice(s2.getOffer().getSkus().get(0));
-                    double s2Discount = calculateDiscountPercentage(s2Price,
-                            s2.getOffer().getNumberOfItems(), s2.getOffer().getPrice());
-                    return Double.compare(s2Discount, s1Discount);
+                .sorted((offer1, offer2) -> {
+                    //int s1MedianPrice = getMedianPrice(s1);
+                    //int s1Price = s1.getSkus().size() > 1 ? s1MedianPrice : PriceTable.getPrice(s1.getOffer().getSkus().get(0));
+                    double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
+                            offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
+                    //int s2MedianPrice = getMedianPrice(s2);
+                    //int s2Price = s2.getSkus().size() > 1 ? s2MedianPrice : PriceTable.getPrice(s2.getOffer().getSkus().get(0));
+                    double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
+                            offer2.getOffer().getNumberOfItems(), offer2.getOffer().getPrice());
+                    return Double.compare(offer2Discount, offer1Discount);
                 }).toList();
     }
 
-    private static int getMedianPrice(final Offerable s1) {
-        return s1.getSkus().stream().mapToInt(PriceTable::getPrice).reduce(0, Integer::sum) / s1.getNumberOfItems();
+    private static int getPrice(final Offerable offer) {
+        return offer.getSkus().stream().mapToInt(PriceTable::getPrice).reduce(0, Integer::sum);
     }
+
+//    private static int getMedianPrice(final Offerable s1) {
+//        return s1.getSkus().stream().mapToInt(PriceTable::getPrice).reduce(0, Integer::sum) / s1.getNumberOfItems();
+//    }
 
     private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice) {
         double originalPrice = (unitPrice * numberOfItems);
@@ -168,3 +172,4 @@ public final class SpecialOffers {
     }
 
 }
+
