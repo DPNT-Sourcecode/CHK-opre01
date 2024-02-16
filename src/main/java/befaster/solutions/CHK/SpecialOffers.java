@@ -37,14 +37,15 @@ public final class SpecialOffers {
 
     }
 
-    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(StockKeepingUnit sku, int numberOfItems) {
+    private static List<Offerable> getAllAvailableOffersBySkuAndNumberOfItems(final StockKeepingUnit sku, final int numberOfItems) {
         return SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku) && specialOffer.getNumberOfItems() <= numberOfItems)
+                .filter(specialOffer -> specialOffer.getSkus().size() == 1 && specialOffer.getSkus().get(0).equals(sku)
+                        && specialOffer.getNumberOfItems() <= numberOfItems)
                 .sorted(SpecialOffers::compareByBestDiscount)
                 .toList();
     }
 
-    private static int compareByBestDiscount(Offerable offer1, Offerable offer2) {
+    private static int compareByBestDiscount(final Offerable offer1, final Offerable offer2) {
         double offer1Discount = calculateDiscountPercentage(getPrice(offer1),
                 offer1.getOffer().getNumberOfItems(), offer1.getOffer().getPrice());
         double offer2Discount = calculateDiscountPercentage(getPrice(offer2),
@@ -59,13 +60,17 @@ public final class SpecialOffers {
                 .reduce(0, Integer::sum);
     }
 
-    private static Double calculateDiscountPercentage(int unitPrice, int numberOfItems, int finalSellingPrice) {
+    private static Double calculateDiscountPercentage(final int unitPrice,
+                                                      final int numberOfItems,
+                                                      final int finalSellingPrice) {
         double originalPrice = (unitPrice * numberOfItems);
         double discountPrice = originalPrice - finalSellingPrice;
         return (discountPrice / originalPrice) * 100;
     }
 
-    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
+    private static List<Offerable> getAllEligibleOffersInTheBasketSortedByBestDiscount(
+            final Map<StockKeepingUnit, Integer> basket,
+            final List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> eligibleOffers = new ArrayList<>(getAllEligibleGroupDiscountOffers(stockKeepingUnitList));
 
         basket.forEach((key, value) -> eligibleOffers.addAll(getEligibleOffers(key, value)));
@@ -75,7 +80,8 @@ public final class SpecialOffers {
         return eligibleOffers;
     }
 
-    public static List<Offerable> updateBasketCountAndGetValidOffers(Map<StockKeepingUnit, Integer> basket, List<StockKeepingUnit> stockKeepingUnitList) {
+    public static List<Offerable> updateBasketCountAndGetValidOffers(final Map<StockKeepingUnit, Integer> basket,
+                                                                     final List<StockKeepingUnit> stockKeepingUnitList) {
         List<Offerable> finalOffers = new ArrayList<>();
 
         getAllEligibleOffersInTheBasketSortedByBestDiscount(basket, stockKeepingUnitList).forEach(offer -> {
@@ -88,7 +94,7 @@ public final class SpecialOffers {
         return finalOffers;
     }
 
-    private static boolean isOfferApplicable(Offerable offer, Map<StockKeepingUnit, Integer> basket) {
+    private static boolean isOfferApplicable(final Offerable offer, final Map<StockKeepingUnit, Integer> basket) {
         List<StockKeepingUnit> offerSkus = offer.getSkus();
         if (offerSkus.size() > 1) {
             return offerSkus.stream().allMatch(sku -> basket.getOrDefault(sku, 0) > 0);
@@ -98,7 +104,7 @@ public final class SpecialOffers {
         return skuQuantity >= offer.getNumberOfItems();
     }
 
-    private static void updateBasketForOffer(Offerable offer, Map<StockKeepingUnit, Integer> basket) {
+    private static void updateBasketForOffer(final Offerable offer, final Map<StockKeepingUnit, Integer> basket) {
         List<StockKeepingUnit> offerSkus = offer.getSkus();
         if (offerSkus.size() > 1) {
             offerSkus.forEach(sku -> {
@@ -112,7 +118,7 @@ public final class SpecialOffers {
         }
     }
 
-    private static List<Offerable> getEligibleOffers(StockKeepingUnit sku, int numberOfItems) {
+    private static List<Offerable> getEligibleOffers(final StockKeepingUnit sku, final int numberOfItems) {
         List<Offerable> offers = new ArrayList<>();
         int missingItems = numberOfItems;
         List<Offerable> availableOffers = getAllAvailableOffersBySkuAndNumberOfItems(sku, numberOfItems);
@@ -131,14 +137,10 @@ public final class SpecialOffers {
         return offers;
     }
 
-    private static List<Offerable> getAllEligibleGroupDiscountOffers(List<StockKeepingUnit> skus) {
+    private static List<Offerable> getAllEligibleGroupDiscountOffers(final List<StockKeepingUnit> skus) {
         List<Offerable> filteredList = new ArrayList<>();
 
-        List<Offerable> groupDiscountOffers = SPECIAL_OFFERS.stream()
-                .filter(specialOffer -> specialOffer.getSkus().size() > 1)
-                .toList();
-
-        groupDiscountOffers.forEach(specialOffer -> {
+        getGroupDiscountOffers().forEach(specialOffer -> {
             List<StockKeepingUnit> skusWithGroupDiscountOffer = new ArrayList<>(skus);
             skusWithGroupDiscountOffer.retainAll(specialOffer.getSkus());
 
@@ -152,7 +154,6 @@ public final class SpecialOffers {
                 int eligibleOffers = skusWithGroupDiscountOffer.size() / numberOfItems;
                 int startIndex = 0;
                 int endIndex = numberOfItems;
-
                 for (int count = 0; count < eligibleOffers; count++) {
                     List<StockKeepingUnit> skusSubList = skusWithGroupDiscountOffer.subList(startIndex, endIndex);
                     Offerable offer = new GroupDiscountOffer(skusSubList, numberOfItems, specialOffer.getPrice());
@@ -166,6 +167,10 @@ public final class SpecialOffers {
         return filteredList;
     }
 
+    private static List<Offerable> getGroupDiscountOffers() {
+        return SPECIAL_OFFERS.stream()
+                .filter(specialOffer -> specialOffer.getSkus().size() > 1)
+                .toList();
+    }
+
 }
-
-
